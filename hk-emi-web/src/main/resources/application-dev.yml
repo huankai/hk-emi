@@ -1,0 +1,72 @@
+################################################################### server port
+server:
+  port: 8002
+  context-path: /
+
+spring:
+################################################################### thymeleaf
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    content-type: text/html; charset=utf-8
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    properties:
+      hibernate: 
+#        hbm2ddl:
+#         auto: upload
+         dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+################################################################### datasource
+  datasource:
+    name: druid
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/hk_emi?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
+    username: root
+    password: root
+################################################################### druid
+    druid:
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      max-wait: 6000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'x' FROM DUAL
+      test-on-borrow: true
+      test-while-idle: true
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      filter-class-names:
+      - stat
+      - wall
+      - log4j2
+#      connect-properties: 
+#        druid.stat.mergeSql: true
+#        druid.stat.slowSqlMillis: 5000
+
+################################################################### redis
+#  redis:
+#    host: 192.168.184.128
+#    port: 6379
+#    pool:
+#      max-active: 1000
+#      max-idle: 100
+#      min-idle: 1
+#      max-wait: -1
+#    database: 0
+#    password: 1234567
+#    timeout: 0
+
+################################################################### 自定义属性
+#hk: 
+#  web: 
+#    resources: 
+#      url: http://127.0.0.1:8080
+
+  
