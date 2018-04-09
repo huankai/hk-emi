@@ -51,17 +51,17 @@ spring:
 #        druid.stat.slowSqlMillis: 5000
 
 ################################################################### redis
-#  redis:
-#    host: 192.168.184.128
-#    port: 6379
-#    pool:
-#      max-active: 1000
-#      max-idle: 100
-#      min-idle: 1
-#      max-wait: -1
-#    database: 0
-#    password: 1234567
-#    timeout: 0
+  redis:
+    host: 192.168.184.128
+    port: 6379
+    pool:
+      max-active: 1000
+      max-idle: 100
+      min-idle: 1
+      max-wait: -1
+    database: 0
+    password: 1234567
+    timeout: 0
 
 ################################################################### 自定义属性
 #hk: 

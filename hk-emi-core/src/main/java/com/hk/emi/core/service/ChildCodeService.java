@@ -20,7 +20,9 @@ public interface ChildCodeService extends BaseService<ChildCode, String> {
      * @param baseCodeId baseCodeId
      * @return
      */
-    List<ChildCode> findByBaseCodeId(String baseCodeId);
+    default List<ChildCode> findByBaseCodeId(String baseCodeId) {
+        return findByBaseCodeIngoreChildCodes(baseCodeId);
+    }
 
     /**
      * 查询子字典，并忽略指定的Code

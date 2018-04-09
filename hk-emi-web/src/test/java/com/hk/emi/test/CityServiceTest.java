@@ -3,14 +3,11 @@
  */
 package com.hk.emi.test;
 
-import com.hk.commons.fastjson.JsonUtils;
-import com.hk.core.query.JpaQueryModel;
-import com.hk.core.query.Order;
-import com.hk.core.query.QueryModel;
-import com.hk.core.query.QueryPageable;
-import com.hk.emi.EmiApplication;
-import com.hk.emi.core.domain.City;
-import com.hk.emi.core.service.CityService;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.List;
+
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +16,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
+import com.alibaba.fastjson.JSON;
+import com.hk.commons.fastjson.JsonUtils;
+import com.hk.core.query.JpaQueryModel;
+import com.hk.core.query.Order;
+import com.hk.core.query.QueryModel;
+import com.hk.core.query.QueryPageable;
+import com.hk.emi.EmiApplication;
+import com.hk.emi.core.domain.City;
+import com.hk.emi.core.service.CityService;
 
 /**
  * @author huangkai
@@ -46,13 +51,13 @@ public class CityServiceTest {
 		china.setShortName("中国");
 		china.setPostOffice("1");
 		City parent = cityService.saveOrUpdate(china);
-//		if(null != parent) {
-//			InputStream inputStream = CityServiceTest.class.getResourceAsStream("city.json");
-//			String jsonString = JSON.parseObject(inputStream, Charset.defaultCharset(), String.class);
-//			List<City> list = JsonUtils.parseObjectToList(jsonString, City.class);
-//			list.forEach(item -> item.setParent(parent));
-//			cityService.saveOrUpdate(list);
-//		}
+		if(null != parent) {
+			InputStream inputStream = CityServiceTest.class.getResourceAsStream("city.json");
+			String jsonString = JSON.parseObject(inputStream, Charset.defaultCharset(), String.class);
+			List<City> list = JsonUtils.parseObjectToList(jsonString, City.class);
+			list.forEach(item -> item.setParent(parent));
+			cityService.saveOrUpdate(list);
+		}
 	}
 
 	/**
@@ -62,7 +67,7 @@ public class CityServiceTest {
 	@Test
 	@Transactional(readOnly = true)
 	public void testFindOnePK() {
-		City city = cityService.findOne("4028c081628f91d301628f91deef0000");
+		City city = cityService.findOne("4028c081612643ff016126440caf0000");
 		System.out.println(JsonUtils.toJSONString(city));
 //		System.out.println(city.getFullName());
 //		System.out.println(city.getParent());
@@ -107,7 +112,6 @@ public class CityServiceTest {
 	 */
 	@Test
 	public void testGetOne() {
-		System.out.println(cityService.getOne("4028c081628f91d301628f91deef0000"));
 	}
 
 	/**

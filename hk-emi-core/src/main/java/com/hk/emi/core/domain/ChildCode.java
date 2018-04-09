@@ -16,10 +16,10 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = false)
 public class ChildCode extends ModelHolder.ChildCodeBase {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6562442354700499998L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6562442354700499998L;
 
 
 }
