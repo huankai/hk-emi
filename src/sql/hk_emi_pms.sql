@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 192.168.1.76
+Source Server         : localhost
 Source Server Version : 50715
-Source Host           : 192.168.1.76:3306
+Source Host           : localhost:3306
 Source Database       : hk_emi
 
 Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2018-04-12 18:06:19
+Date: 2018-04-12 23:43:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -127,10 +127,11 @@ CREATE TABLE `sys_dept_role` (
 DROP TABLE IF EXISTS `sys_org`;
 CREATE TABLE `sys_org` (
   `id` char(32) NOT NULL,
+  `parent_id` char(32) NOT NULL,
   `org_name` varchar(50) NOT NULL COMMENT '机构名称',
   `description` varchar(200) DEFAULT NULL COMMENT '描述',
   `org_icon` varchar(100) DEFAULT NULL COMMENT '机构图标',
-  `responsible_id` char(32) NOT NULL COMMENT '责任人id',
+  `responsible_id` char(32) DEFAULT NULL COMMENT '责任人id',
   `created_by` char(32) NOT NULL,
   `created_date` datetime NOT NULL,
   `last_modified_by` char(32) NOT NULL,
@@ -143,6 +144,7 @@ CREATE TABLE `sys_org` (
 -- ----------------------------
 -- Records of sys_org
 -- ----------------------------
+INSERT INTO `sys_org` VALUES ('402881e662ba5fff0162ba602bff0000', '402881e662ba5fff0162ba602bff0000', '根节点', null, 'a.png', null, '1', '2018-04-12 23:01:27', '1', '2018-04-12 23:01:28');
 
 -- ----------------------------
 -- Table structure for sys_org_dept
@@ -153,7 +155,7 @@ CREATE TABLE `sys_org_dept` (
   `org_id` char(32) NOT NULL,
   `dept_name` varchar(20) NOT NULL COMMENT '部门名称',
   `parent_id` char(32) NOT NULL COMMENT '上级部门id',
-  `responsible_id` char(32) NOT NULL COMMENT '责任人id',
+  `responsible_id` char(32) DEFAULT NULL COMMENT '责任人id',
   `description` varchar(200) DEFAULT NULL COMMENT '描述',
   `created_by` char(32) NOT NULL,
   `created_date` datetime NOT NULL,

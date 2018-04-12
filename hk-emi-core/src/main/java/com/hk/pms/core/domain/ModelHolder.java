@@ -5,8 +5,7 @@ import com.hk.core.domain.AbstractUUIDPersistable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
@@ -20,6 +19,10 @@ public class ModelHolder {
     @Data
     public static class SysOrgBase extends AbstractAuditable {
 
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "parent_id")
+        private SysOrg parent;
+
         @Column(name = "org_name")
         private String orgName;
 
@@ -29,6 +32,7 @@ public class ModelHolder {
         @Column(name = "org_icon")
         private String orgIcon;
 
+        @OneToOne(fetch = FetchType.LAZY)
         private SysUser responsible;
     }
 
