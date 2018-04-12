@@ -16,6 +16,7 @@ import com.hk.emi.core.domain.City;
 import com.hk.emi.core.repository.CityRepository;
 import com.hk.emi.core.service.CityService;
 
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,5 +53,15 @@ public class CityServiceImpl extends BaseServiceImpl<City, String> implements Ci
     @Override
     public List<City> findChildList(String parentId) {
         return StringUtils.isEmpty(parentId) ? Collections.emptyList() : cityRepository.findByParentId(parentId);
+    }
+
+    /**
+     * 导入
+     *
+     * @param in excel文件
+     */
+    @Override
+    public void importExcel(InputStream in) {
+
     }
 }

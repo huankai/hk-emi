@@ -5,14 +5,18 @@ package com.hk.emi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * @author kally
  * @date 2018年1月24日上午11:39:55
  */
 @ServletComponentScan(basePackages = { "com.hk.core" })
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.hk"})
+@EnableJpaRepositories(basePackages = {"com.hk"})
+@EntityScan(basePackages = {"com.hk"})
 // @EnableCaching
 // @EnableScheduling
 public class EmiApplication /* extends SpringBootServletInitializer */ {

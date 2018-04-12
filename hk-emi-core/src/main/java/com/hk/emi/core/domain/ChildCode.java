@@ -1,7 +1,6 @@
 package com.hk.emi.core.domain;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,9 +10,8 @@ import javax.persistence.Table;
  * @date 2017-11-29 17:11
  */
 @Entity
-@Table(name = "sys_clild_code")
+@Table(name = "sys_child_code")
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class ChildCode extends ModelHolder.ChildCodeBase {
 
     /**

@@ -7,13 +7,17 @@ import com.hk.commons.fastjson.JsonUtils;
 import com.hk.core.query.JpaQueryModel;
 import com.hk.core.query.QueryPageable;
 import com.hk.core.web.JsonResult;
+import com.hk.core.web.Webs;
 import com.hk.core.web.controller.BaseController;
 import com.hk.emi.core.domain.City;
 import com.hk.emi.core.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -73,5 +77,23 @@ public class CityController extends BaseController {
     public String deleteById(@PathVariable String id) {
         cityService.delete(id);
         return JsonUtils.toJSONString(JsonResult.success());
+    }
+
+    /**
+     * 导入
+     *
+     * @param multipartFile
+     * @return
+     */
+    @PostMapping("/import")
+    public String importExcel(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        cityService.importExcel(multipartFile.getInputStream());
+        return JsonUtils.toJSONString(JsonResult.success());
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportExcel(City city) {
+        cityService.findAll(city);
+        return Webs.toDownResponseEntity("", new byte[]{});
     }
 }

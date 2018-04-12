@@ -6,6 +6,7 @@ package com.hk.emi.core.service;
 import com.hk.core.service.BaseService;
 import com.hk.emi.core.domain.City;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -21,4 +22,10 @@ public interface CityService extends BaseService<City, String> {
      */
     List<City> findChildList(String parentId);
 
+    /**
+     * 导入
+     *
+     * @param in excel文件
+     */
+    void importExcel(InputStream in);
 }

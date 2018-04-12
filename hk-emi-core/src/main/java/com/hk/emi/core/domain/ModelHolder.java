@@ -4,7 +4,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.hk.core.domain.AbstractAuditable;
 import com.hk.core.domain.AbstractUUIDPersistable;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,7 +20,6 @@ public class ModelHolder {
     }
 
     @Data
-    @EqualsAndHashCode(callSuper = false)
     @MappedSuperclass
     public static class BaseCodeBase extends AbstractUUIDPersistable {
 
@@ -32,6 +30,9 @@ public class ModelHolder {
         @JoinColumn(name = "base_code_id", referencedColumnName = "id")
         private List<ChildCode> childCodes;
 
+        @Column(name = "base_code")
+        private String baseCode;
+
         @Column(name = "code_name")
         private String codeName;
 
@@ -41,12 +42,11 @@ public class ModelHolder {
     }
 
     @Data
-    @EqualsAndHashCode(callSuper = false)
     @MappedSuperclass
-    public static class ChildCodeBase extends AbstractUUIDPersistable {
+    public static class ChildCodeBase extends AbstractAuditable {
 
         @ManyToOne(optional = false)
-        private BaseCode sysBaseCode;
+        private BaseCode baseCode;
 
         @Column(name = "child_code")
         private String childCode;
@@ -64,7 +64,6 @@ public class ModelHolder {
 
 
     @Data
-    @EqualsAndHashCode(callSuper = false)
     @MappedSuperclass
     public static class CityBase extends AbstractAuditable {
 

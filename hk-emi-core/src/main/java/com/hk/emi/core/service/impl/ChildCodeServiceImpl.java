@@ -3,6 +3,7 @@
  */
 package com.hk.emi.core.service.impl;
 
+import com.google.common.collect.Lists;
 import com.hk.commons.util.ArrayUtils;
 import com.hk.core.repository.BaseRepository;
 import com.hk.core.service.impl.BaseServiceImpl;
@@ -39,7 +40,7 @@ public class ChildCodeServiceImpl extends BaseServiceImpl<ChildCode, String> imp
      */
     @Override
     public List<ChildCode> findByBaseCodeIngoreChildCodes(String baseCodeId, String... ingoreChildCodes) {
-        List<ChildCode> childCodeList = childCodeRepostory.findByBaseCodeId(baseCodeId);
+        List<ChildCode> childCodeList = Lists.newArrayList();
         if (ArrayUtils.isNotEmpty(ingoreChildCodes)) {
             childCodeList = childCodeList.stream().filter(item -> ArrayUtils.noContains(ingoreChildCodes, item)).collect(Collectors.toList());
         }
