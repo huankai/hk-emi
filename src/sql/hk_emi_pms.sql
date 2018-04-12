@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2018-04-12 17:06:44
+Date: 2018-04-12 18:06:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,15 +36,48 @@ CREATE TABLE `sys_app` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用系统表';
 
 -- ----------------------------
+-- Records of sys_app
+-- ----------------------------
+INSERT INTO `sys_app` VALUES ('4028c08162b9340f0162b93427c40000', 'HK_PMS', '权限管理系统', '127.0.0.1', 'a.png', '80', '1', '1', '2018-04-12 17:33:46', '1', '2018-04-12 17:33:46');
+
+-- ----------------------------
 -- Table structure for sys_base_code
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_base_code`;
 CREATE TABLE `sys_base_code` (
   `id` char(32) NOT NULL,
-  `code_name` varchar(20) NOT NULL,
+  `base_code` varchar(20) NOT NULL,
+  `code_name` varchar(50) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`,`code_name`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_base_code
+-- ----------------------------
+INSERT INTO `sys_base_code` VALUES ('4028c08162a353ad0162a356e5b40000', '', '001', '001-description');
+
+-- ----------------------------
+-- Table structure for sys_child_code
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_child_code`;
+CREATE TABLE `sys_child_code` (
+  `id` char(32) NOT NULL,
+  `base_code_id` char(32) NOT NULL,
+  `child_code` varchar(20) NOT NULL,
+  `code_name` varchar(50) NOT NULL,
+  `state` tinyint(1) NOT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `created_by` char(32) NOT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `last_modified_by` char(32) NOT NULL,
+  `last_modified_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_child_code
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_city
@@ -65,6 +98,11 @@ CREATE TABLE `sys_city` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of sys_city
+-- ----------------------------
+INSERT INTO `sys_city` VALUES ('4028c081628f91d301628f91deef0000', '4028c081628f91d301628f91deef0000', '1', '中国', '中国', 'China', '1', null);
+
+-- ----------------------------
 -- Table structure for sys_dept_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dept_role`;
@@ -72,14 +110,16 @@ CREATE TABLE `sys_dept_role` (
   `id` char(32) NOT NULL,
   `dept_id` char(32) NOT NULL,
   `role_id` char(32) NOT NULL,
-  `created_date` datetime NOT NULL,
-  `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Reference_5` (`dept_id`) USING BTREE,
   KEY `FK_Reference_6` (`role_id`) USING BTREE,
   CONSTRAINT `sys_dept_role_ibfk_1` FOREIGN KEY (`dept_id`) REFERENCES `sys_org_dept` (`id`),
   CONSTRAINT `sys_dept_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门角色表';
+
+-- ----------------------------
+-- Records of sys_dept_role
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_org
@@ -91,12 +131,18 @@ CREATE TABLE `sys_org` (
   `description` varchar(200) DEFAULT NULL COMMENT '描述',
   `org_icon` varchar(100) DEFAULT NULL COMMENT '机构图标',
   `responsible_id` char(32) NOT NULL COMMENT '责任人id',
+  `created_by` char(32) NOT NULL,
   `created_date` datetime NOT NULL,
+  `last_modified_by` char(32) NOT NULL,
   `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Reference_13` (`responsible_id`) USING BTREE,
   CONSTRAINT `sys_org_ibfk_1` FOREIGN KEY (`responsible_id`) REFERENCES `sys_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='机构表';
+
+-- ----------------------------
+-- Records of sys_org
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_org_dept
@@ -109,7 +155,9 @@ CREATE TABLE `sys_org_dept` (
   `parent_id` char(32) NOT NULL COMMENT '上级部门id',
   `responsible_id` char(32) NOT NULL COMMENT '责任人id',
   `description` varchar(200) DEFAULT NULL COMMENT '描述',
+  `created_by` char(32) NOT NULL,
   `created_date` datetime NOT NULL,
+  `last_modified_by` char(32) NOT NULL,
   `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Reference_1` (`org_id`) USING BTREE,
@@ -117,6 +165,10 @@ CREATE TABLE `sys_org_dept` (
   CONSTRAINT `sys_org_dept_ibfk_1` FOREIGN KEY (`org_id`) REFERENCES `sys_org` (`id`),
   CONSTRAINT `sys_org_dept_ibfk_2` FOREIGN KEY (`responsible_id`) REFERENCES `sys_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='机构部门表';
+
+-- ----------------------------
+-- Records of sys_org_dept
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_permission
@@ -128,12 +180,18 @@ CREATE TABLE `sys_permission` (
   `permission_code` varchar(20) NOT NULL COMMENT '权限编号',
   `permission_name` varchar(30) NOT NULL COMMENT '权限名称',
   `description` varchar(200) DEFAULT NULL COMMENT '描述',
+  `created_by` char(32) NOT NULL,
   `created_date` datetime NOT NULL,
+  `last_modified_by` char(32) NOT NULL,
   `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `permission_app_id` (`app_id`) USING BTREE,
   CONSTRAINT `sys_permission_ibfk_1` FOREIGN KEY (`app_id`) REFERENCES `sys_app` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表';
+
+-- ----------------------------
+-- Records of sys_permission
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -146,12 +204,18 @@ CREATE TABLE `sys_role` (
   `role_code` varchar(30) NOT NULL COMMENT '角色编号',
   `role_status` tinyint(1) NOT NULL COMMENT '角色状态(0:禁用,1:启用)',
   `description` varchar(200) DEFAULT NULL COMMENT '描述',
+  `created_by` char(32) NOT NULL,
   `created_date` datetime NOT NULL,
+  `last_modified_by` char(32) NOT NULL,
   `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `role_app_id` (`app_id`) USING BTREE,
   CONSTRAINT `sys_role_ibfk_1` FOREIGN KEY (`app_id`) REFERENCES `sys_app` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
+
+-- ----------------------------
+-- Records of sys_role
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_role_permission
@@ -161,14 +225,16 @@ CREATE TABLE `sys_role_permission` (
   `id` char(32) NOT NULL,
   `role_id` char(32) NOT NULL,
   `permission_id` char(32) NOT NULL,
-  `created_date` datetime NOT NULL,
-  `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Reference_10` (`permission_id`) USING BTREE,
   KEY `FK_Reference_9` (`role_id`) USING BTREE,
   CONSTRAINT `sys_role_permission_ibfk_1` FOREIGN KEY (`permission_id`) REFERENCES `sys_permission` (`id`),
   CONSTRAINT `sys_role_permission_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限表';
+
+-- ----------------------------
+-- Records of sys_role_permission
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -196,6 +262,10 @@ CREATE TABLE `sys_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户基本信息表';
 
 -- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sys_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role`;
@@ -203,13 +273,15 @@ CREATE TABLE `sys_user_role` (
   `id` char(32) NOT NULL,
   `user_id` char(32) NOT NULL,
   `role_id` char(32) NOT NULL,
-  `created_date` datetime NOT NULL,
-  `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Reference_8` (`role_id`) USING BTREE,
   CONSTRAINT `sys_user_role_ibfk_1` FOREIGN KEY (`id`) REFERENCES `sys_user` (`id`),
   CONSTRAINT `sys_user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
+
+-- ----------------------------
+-- Records of sys_user_role
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_user_third
@@ -229,3 +301,7 @@ CREATE TABLE `sys_user_third` (
   KEY `FK_Reference_12` (`user_id`) USING BTREE,
   CONSTRAINT `sys_user_third_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='第三方用户';
+
+-- ----------------------------
+-- Records of sys_user_third
+-- ----------------------------
