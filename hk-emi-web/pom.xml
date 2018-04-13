@@ -22,11 +22,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.hk</groupId>
-			<artifactId>hk-core-data</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.hk</groupId>
-			<artifactId>hk-core-authentication-api</artifactId>
+			<artifactId>hk-core-webmvc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.hk</groupId>
@@ -37,15 +33,6 @@
 			<artifactId>hk-emi-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.hk</groupId>
-			<artifactId>hk-core-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.hk</groupId>
-			<artifactId>hk-core-webmvc</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

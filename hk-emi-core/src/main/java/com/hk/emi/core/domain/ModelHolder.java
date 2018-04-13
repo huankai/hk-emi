@@ -1,6 +1,5 @@
 package com.hk.emi.core.domain;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.hk.core.domain.AbstractAuditable;
 import com.hk.core.domain.AbstractUUIDPersistable;
 import lombok.Data;
@@ -24,9 +23,9 @@ public class ModelHolder {
     public static class BaseCodeBase extends AbstractUUIDPersistable {
 
         /**
-         *
+         * 使用级联删除
          */
-        @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+        @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
         @JoinColumn(name = "base_code_id", referencedColumnName = "id")
         private List<ChildCode> childCodes;
 
@@ -45,7 +44,7 @@ public class ModelHolder {
     @MappedSuperclass
     public static class ChildCodeBase extends AbstractAuditable {
 
-        @ManyToOne(optional = false)
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
         private BaseCode baseCode;
 
         @Column(name = "child_code")
@@ -80,7 +79,7 @@ public class ModelHolder {
         private String fullName;
 
         /**
-         * 简称
+         * 简名
          */
         @Column(name = "short_name")
         private String shortName;
@@ -107,13 +106,12 @@ public class ModelHolder {
          * 上级
          */
         @ManyToOne(fetch = FetchType.LAZY, optional = false)
-        @JSONField(serialize = false)
         private City parent;
 
         /**
          * 子级
          */
-        @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = {CascadeType.ALL})
+        @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
         @JoinColumn(name = "parent_id", referencedColumnName = "id")
         private List<City> childs;
 

@@ -3,6 +3,7 @@
  */
 package com.hk.emi;
 
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -31,7 +32,10 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
 	// private String basePath;
 
 	public static void main(String[] args) {
-		SpringApplication.run(EmiApplication.class, args);
+		SpringApplication application = new SpringApplication();
+		application.setBannerMode(Banner.Mode.OFF);
+		application.run(EmiApplication.class,args);
+//		SpringApplication.run(EmiApplication.class, args);
 	}
 
 	// @Override

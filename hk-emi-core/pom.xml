@@ -21,15 +21,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.hk</groupId>
-			<artifactId>hk-core-data</artifactId>
+			<artifactId>hk-commons-poi</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.hk</groupId>
-			<artifactId>hk-core-authentication-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.hk</groupId>
-			<artifactId>hk-core-authentication-security</artifactId>
+			<artifactId>hk-core-service</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
