@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
+Source Server         : 192.168.1.76
 Source Server Version : 50715
-Source Host           : localhost:3306
+Source Host           : 192.168.1.76:3306
 Source Database       : hk_emi
 
 Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2018-04-12 23:43:54
+Date: 2018-04-13 18:00:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -55,7 +55,8 @@ CREATE TABLE `sys_base_code` (
 -- ----------------------------
 -- Records of sys_base_code
 -- ----------------------------
-INSERT INTO `sys_base_code` VALUES ('4028c08162a353ad0162a356e5b40000', '', '001', '001-description');
+INSERT INTO `sys_base_code` VALUES ('4028c08162be1cfa0162be1d0a900000', 'DSFZHLY', '第三方账号类型', null);
+INSERT INTO `sys_base_code` VALUES ('4028c08162be20a70162be20b7b70000', 'SFLX', '是否类型', null);
 
 -- ----------------------------
 -- Table structure for sys_child_code
@@ -63,7 +64,7 @@ INSERT INTO `sys_base_code` VALUES ('4028c08162a353ad0162a356e5b40000', '', '001
 DROP TABLE IF EXISTS `sys_child_code`;
 CREATE TABLE `sys_child_code` (
   `id` char(32) NOT NULL,
-  `base_code_id` char(32) NOT NULL,
+  `base_code_id` char(32) DEFAULT NULL,
   `child_code` varchar(20) NOT NULL,
   `code_name` varchar(50) NOT NULL,
   `state` tinyint(1) NOT NULL,
@@ -72,12 +73,18 @@ CREATE TABLE `sys_child_code` (
   `created_date` datetime DEFAULT NULL,
   `last_modified_by` char(32) NOT NULL,
   `last_modified_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `base_code_id` (`base_code_id`),
+  CONSTRAINT `base_code_id` FOREIGN KEY (`base_code_id`) REFERENCES `sys_base_code` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_child_code
 -- ----------------------------
+INSERT INTO `sys_child_code` VALUES ('4028c08162be1de30162be1df4ca0000', '4028c08162be1cfa0162be1d0a900000', 'weixin', '微信', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:27:37', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:27:37');
+INSERT INTO `sys_child_code` VALUES ('4028c08162be1ed60162be1ee88b0000', '4028c08162be1cfa0162be1d0a900000', 'alipay', '支付宝', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:28:39', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:28:39');
+INSERT INTO `sys_child_code` VALUES ('4028c08162be216e0162be217e760000', '4028c08162be20a70162be20b7b70000', 'YES', '是', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:31:29', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:31:29');
+INSERT INTO `sys_child_code` VALUES ('4028c08162be216e0162be217eda0001', '4028c08162be20a70162be20b7b70000', 'NO', '否', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:31:29', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:31:29');
 
 -- ----------------------------
 -- Table structure for sys_city
@@ -90,8 +97,12 @@ CREATE TABLE `sys_city` (
   `full_name` varchar(50) NOT NULL,
   `short_name` varchar(50) NOT NULL,
   `english_name` varchar(100) DEFAULT NULL,
-  `post_office` varchar(10) NOT NULL,
+  `post_office` varchar(10) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
+  `created_by` char(32) NOT NULL,
+  `created_date` datetime NOT NULL,
+  `last_modified_by` char(32) NOT NULL,
+  `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`) USING BTREE,
   KEY `parent_id` (`parent_id`) USING BTREE
@@ -100,7 +111,7 @@ CREATE TABLE `sys_city` (
 -- ----------------------------
 -- Records of sys_city
 -- ----------------------------
-INSERT INTO `sys_city` VALUES ('4028c081628f91d301628f91deef0000', '4028c081628f91d301628f91deef0000', '1', '中国', '中国', 'China', '1', null);
+INSERT INTO `sys_city` VALUES ('4028c08162be57660162be5779cb0000', '4028c08162be57660162be5779cb0000', '1', '中国', '中国', 'China', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 17:16:44', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 17:16:49');
 
 -- ----------------------------
 -- Table structure for sys_dept_role
@@ -138,13 +149,15 @@ CREATE TABLE `sys_org` (
   `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Reference_13` (`responsible_id`) USING BTREE,
-  CONSTRAINT `sys_org_ibfk_1` FOREIGN KEY (`responsible_id`) REFERENCES `sys_user` (`id`)
+  KEY `sys_org_parent_id` (`parent_id`),
+  CONSTRAINT `sys_org_ibfk_1` FOREIGN KEY (`responsible_id`) REFERENCES `sys_user` (`id`),
+  CONSTRAINT `sys_org_parent_id` FOREIGN KEY (`parent_id`) REFERENCES `sys_org` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='机构表';
 
 -- ----------------------------
 -- Records of sys_org
 -- ----------------------------
-INSERT INTO `sys_org` VALUES ('402881e662ba5fff0162ba602bff0000', '402881e662ba5fff0162ba602bff0000', '根节点', null, 'a.png', null, '1', '2018-04-12 23:01:27', '1', '2018-04-12 23:01:28');
+INSERT INTO `sys_org` VALUES ('402881e662ba5fff0162ba602bff0000', '402881e662ba5fff0162ba602bff0000', '根节点', null, 'a.png', '4028c08162bda8ce0162bda8df6a0000', '4028c08162bda8ce0162bda8df6a0000', '2018-04-12 23:01:27', '4028c08162bda8ce0162bda8df6a0000', '2018-04-12 23:01:28');
 
 -- ----------------------------
 -- Table structure for sys_org_dept
@@ -164,13 +177,16 @@ CREATE TABLE `sys_org_dept` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_1` (`org_id`) USING BTREE,
   KEY `FK_Reference_14` (`responsible_id`) USING BTREE,
+  KEY `sys_org_dept_ibfk_3` (`parent_id`),
   CONSTRAINT `sys_org_dept_ibfk_1` FOREIGN KEY (`org_id`) REFERENCES `sys_org` (`id`),
-  CONSTRAINT `sys_org_dept_ibfk_2` FOREIGN KEY (`responsible_id`) REFERENCES `sys_user` (`id`)
+  CONSTRAINT `sys_org_dept_ibfk_2` FOREIGN KEY (`responsible_id`) REFERENCES `sys_user` (`id`),
+  CONSTRAINT `sys_org_dept_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `sys_org_dept` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='机构部门表';
 
 -- ----------------------------
 -- Records of sys_org_dept
 -- ----------------------------
+INSERT INTO `sys_org_dept` VALUES ('4028c08162bda84d0162bda85d6b0000', '402881e662ba5fff0162ba602bff0000', '研发部', '4028c08162bda84d0162bda85d6b0000', '4028c08162bda8ce0162bda8df6a0000', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:10', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:10');
 
 -- ----------------------------
 -- Table structure for sys_permission
@@ -244,9 +260,10 @@ CREATE TABLE `sys_role_permission` (
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
   `id` char(32) NOT NULL COMMENT '主键',
-  `org_id` char(32) NOT NULL COMMENT '机构id',
+  `org_id` char(32) NOT NULL,
   `dept_id` char(32) NOT NULL COMMENT '部门id',
   `phone` varchar(15) NOT NULL COMMENT '手机号',
+  `password` varchar(100) NOT NULL,
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱虚',
   `real_name` varchar(20) NOT NULL COMMENT '真实名称',
   `is_protect` tinyint(1) NOT NULL COMMENT '是否受保护的账号(0,否,1:是)，保护的账号有全部权限',
@@ -256,16 +273,23 @@ CREATE TABLE `sys_user` (
   `privince_id` char(32) DEFAULT NULL COMMENT '省份id',
   `city_id` char(32) DEFAULT NULL COMMENT '市id',
   `user_status` tinyint(1) NOT NULL COMMENT '用户状态(0,禁用,1:启用)',
-  `created_by` char(32) DEFAULT NULL,
-  `created_date` datetime DEFAULT NULL COMMENT '创建日期',
-  `last_modified_by` char(32) DEFAULT NULL,
-  `last_modified_date` datetime DEFAULT NULL COMMENT '最后修改日期',
-  PRIMARY KEY (`id`)
+  `created_by` char(32) NOT NULL,
+  `created_date` datetime NOT NULL COMMENT '创建日期',
+  `last_modified_by` char(32) NOT NULL,
+  `last_modified_date` datetime NOT NULL COMMENT '最后修改日期',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_phone` (`phone`),
+  UNIQUE KEY `user_email` (`email`),
+  KEY `user_org_id` (`org_id`),
+  KEY `user_org_dept_id` (`dept_id`),
+  CONSTRAINT `user_org_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `sys_org_dept` (`id`),
+  CONSTRAINT `user_org_id` FOREIGN KEY (`org_id`) REFERENCES `sys_org` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户基本信息表';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
+INSERT INTO `sys_user` VALUES ('4028c08162bda8ce0162bda8df6a0000', '402881e662ba5fff0162ba602bff0000', '4028c08162bda84d0162bda85d6b0000', '18820136090', '$2a$10$KgOArE6QpbY2iTQC0WGGS.hP72PQsHpToqbNVEEmUrd5LcEqrbzAG', 'xx@xx.com', '系统管理员', '1', '1', null, '2000-01-01', null, null, '1', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:44', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:44');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -293,12 +317,13 @@ CREATE TABLE `sys_user_third` (
   `id` char(32) NOT NULL,
   `user_id` char(32) NOT NULL COMMENT '用户id',
   `user_third_name` varchar(50) NOT NULL COMMENT '用户名',
+  `open_id` varchar(50) NOT NULL,
   `icon_url` varchar(100) DEFAULT NULL COMMENT '头像url',
   `account_type` tinyint(1) NOT NULL COMMENT '账号类型(见数据字典account_type)',
-  `created_by` char(32) DEFAULT NULL,
+  `created_by` char(32) NOT NULL,
   `created_date` datetime NOT NULL,
-  `last_mudified_by` char(32) DEFAULT NULL,
-  `last_mudified_date` datetime NOT NULL,
+  `last_modified_by` char(32) NOT NULL,
+  `last_modified_date` datetime NOT NULL,
   PRIMARY KEY (`id`,`user_id`),
   KEY `FK_Reference_12` (`user_id`) USING BTREE,
   CONSTRAINT `sys_user_third_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
@@ -307,3 +332,4 @@ CREATE TABLE `sys_user_third` (
 -- ----------------------------
 -- Records of sys_user_third
 -- ----------------------------
+INSERT INTO `sys_user_third` VALUES ('4028c08162bdb2aa0162bdb2b9ea0000', '4028c08162bda8ce0162bda8df6a0000', 'haha', 'oNvZtv__To1bNI5clj3-oB05OO4U', null, '1', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:30:30', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:30:30');
