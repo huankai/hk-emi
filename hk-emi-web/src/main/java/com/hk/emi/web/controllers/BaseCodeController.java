@@ -4,6 +4,7 @@ import com.hk.commons.fastjson.JsonUtils;
 import com.hk.core.query.JpaQueryModel;
 import com.hk.core.query.QueryPageable;
 import com.hk.core.web.JsonResult;
+import com.hk.core.web.controller.BaseController;
 import com.hk.emi.core.domain.BaseCode;
 import com.hk.emi.core.service.BaseCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/basecodes")
-public class BaseCodeController {
+public class BaseCodeController extends BaseController {
 
     @Autowired
     private BaseCodeService baseCodeService;
@@ -40,9 +41,9 @@ public class BaseCodeController {
      * @param id
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public String get(@PathVariable String id) {
-        return JsonUtils.toJSONString(JsonResult.success(baseCodeService.getOne(id)), "childCodes");
+        return JsonUtils.toJSONStringExcludes(JsonResult.success(baseCodeService.getOne(id)), "childCodes");
     }
 
     /**
@@ -51,8 +52,7 @@ public class BaseCodeController {
      * @param id
      * @return
      */
-    @PostMapping("/{id}")
-    @ResponseBody
+    @DeleteMapping("{id}")
     public String delete(@PathVariable String id) {
         baseCodeService.delete(id);
         return JsonUtils.toJSONString(JsonResult.success());
@@ -65,7 +65,7 @@ public class BaseCodeController {
      * @param errors
      * @return
      */
-    @PostMapping("/save")
+    @PostMapping("save")
     public String saveOrUpdate(BaseCode baseCode, Errors errors) {
         if (errors.hasErrors()) {
             return JsonUtils.toJSONString(JsonResult.badRueqest(errors.getFieldError().getDefaultMessage()));

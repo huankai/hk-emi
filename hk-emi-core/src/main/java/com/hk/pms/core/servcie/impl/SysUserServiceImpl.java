@@ -28,4 +28,13 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
     protected BaseRepository<SysUser, String> getBaseRepository() {
         return sysUserRepository;
     }
+
+    @Override
+    public SysUser findByLoginUsername(String username) {
+        SysUser sysUser = sysUserRepository.findByUserName(username);
+        if (null != sysUser) {
+            //查询用户权限
+        }
+        return sysUser;
+    }
 }

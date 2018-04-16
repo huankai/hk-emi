@@ -168,6 +168,9 @@ public class ModelHolder {
         @Column(name = "password")
         private String password;
 
+        @Column(name = "user_type")
+        private Integer userType;
+
         @Column(name = "is_protect")
         private Boolean isProtect;
 

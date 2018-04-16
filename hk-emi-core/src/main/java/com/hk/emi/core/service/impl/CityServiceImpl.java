@@ -5,8 +5,11 @@ package com.hk.emi.core.service.impl;
 
 import com.hk.commons.poi.excel.model.ReadResult;
 import com.hk.commons.poi.excel.model.ReadableParam;
+import com.hk.commons.poi.excel.model.WriteParam;
 import com.hk.commons.poi.excel.read.ReadableExcel;
 import com.hk.commons.poi.excel.read.SimpleSaxReadableExcel;
+import com.hk.commons.poi.excel.write.WriteableExcel;
+import com.hk.commons.poi.excel.write.XSSFWriteableExcel;
 import com.hk.commons.util.BeanUtils;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.repository.BaseRepository;
@@ -14,7 +17,7 @@ import com.hk.core.service.impl.BaseServiceImpl;
 import com.hk.emi.core.domain.City;
 import com.hk.emi.core.repository.CityRepository;
 import com.hk.emi.core.service.CityService;
-import com.hk.emi.core.vo.CityImportVo;
+import com.hk.emi.core.vo.CityExcelVo;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -23,6 +26,7 @@ import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
@@ -71,12 +75,12 @@ public class CityServiceImpl extends BaseServiceImpl<City, String> implements Ci
     @Override
     @Transactional
     public void importExcel(InputStream in) {
-        ReadableParam<CityImportVo> readableParam = new ReadableParam<>();
-        readableParam.setBeanClazz(CityImportVo.class);
-        ReadableExcel<CityImportVo> readableExcel = new SimpleSaxReadableExcel<>(readableParam);
-        ReadResult<CityImportVo> result = readableExcel.read(in);
+        ReadableParam<CityExcelVo> readableParam = new ReadableParam<>();
+        readableParam.setBeanClazz(CityExcelVo.class);
+        ReadableExcel<CityExcelVo> readableExcel = new SimpleSaxReadableExcel<>(readableParam);
+        ReadResult<CityExcelVo> result = readableExcel.read(in);
         if (!result.hasErrors()) {
-            List<CityImportVo> resultList = result.getAllSheetData();
+            List<CityExcelVo> resultList = result.getAllSheetData();
             List<City> cityList = findAll();
             resultList.forEach(item -> {
                 City city = new City();
@@ -95,5 +99,17 @@ public class CityServiceImpl extends BaseServiceImpl<City, String> implements Ci
             });
             saveOrUpdate(cityList);
         }
+    }
+
+    @Override
+    public byte[] exportExcelData(City city) {
+        List<CityExcelVo> cityList = cityRepository.findExportExcelData(city);
+        WriteParam<CityExcelVo> param = new WriteParam<>();
+        param.setBeanClazz(CityExcelVo.class);
+        param.setData(cityList);
+        WriteableExcel<CityExcelVo> writeableExcel = new XSSFWriteableExcel<>();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        writeableExcel.write(param, baos);
+        return baos.toByteArray();
     }
 }

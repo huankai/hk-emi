@@ -44,4 +44,5 @@ public class SyUserServiceTest extends BaseTest {
         user.setLastModifiedDate(DateTime.now());
         System.out.println(JsonUtils.toJSONStringExcludes(userService.saveOrUpdate(user), "org", "orgDept"));
     }
+
 }

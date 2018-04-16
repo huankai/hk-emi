@@ -25,14 +25,14 @@ import java.util.List;
  * @date 2018年1月24日上午9:45:58
  */
 @RestController
-@RequestMapping("/city")
+@RequestMapping("/citys")
 public class CityController extends BaseController {
 
     @Autowired
     private CityService cityService;
 
     @RequestMapping
-    public String search(JpaQueryModel<City> query) {
+    public String search(@RequestBody JpaQueryModel<City> query) {
         QueryPageable<City> page = cityService.queryForPage(query);
         return JsonUtils.toJSONString(JsonResult.success(page));
     }
@@ -43,7 +43,7 @@ public class CityController extends BaseController {
      * @param parentId
      * @return
      */
-    @RequestMapping("/child/{parentId}")
+    @RequestMapping("child/{parentId}")
     public String childList(@PathVariable String parentId) {
         List<City> childList = cityService.findChildList(parentId);
         return JsonUtils.toJSONString(JsonResult.success(childList));
@@ -57,7 +57,7 @@ public class CityController extends BaseController {
      */
     @RequestMapping("{id}")
     public String get(@PathVariable String id) {
-        return JsonUtils.toJSONString(cityService.getOne(id), "parentId");
+        return JsonUtils.toJSONStringExcludes(cityService.getOne(id), "parentId");
     }
 
     @PostMapping("save")
@@ -85,15 +85,21 @@ public class CityController extends BaseController {
      * @param multipartFile
      * @return
      */
-    @PostMapping("/import")
+    @PostMapping("import")
     public String importExcel(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         cityService.importExcel(multipartFile.getInputStream());
         return JsonUtils.toJSONString(JsonResult.success());
     }
 
-    @GetMapping("/export")
+    /**
+     * 导出
+     *
+     * @param city
+     * @return
+     */
+    @GetMapping("export")
     public ResponseEntity<byte[]> exportExcel(City city) {
-        cityService.findAll(city);
-        return Webs.toDownResponseEntity("", new byte[]{});
+        byte[] byteData = cityService.exportExcelData(city);
+        return Webs.toDownResponseEntity(getMessage("city.export.filename"), byteData);
     }
 }

@@ -28,9 +28,15 @@ public class ChildCodeController extends BaseController {
         return JsonUtils.toJSONStringExcludes(JsonResult.success(queryResult));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public String get(@PathVariable String id) {
         return JsonUtils.toJSONString(JsonResult.success(childCodeService.getOne(id)));
+    }
+
+    @DeleteMapping("{id}")
+    public String deleteById(@PathVariable String id) {
+        childCodeService.delete(id);
+        return JsonUtils.toJSONString(JsonResult.success());
     }
 
     /**
@@ -39,12 +45,14 @@ public class ChildCodeController extends BaseController {
      * @param baseId
      * @return
      */
-    @GetMapping("/get_base_id/{baseId}")
+    @GetMapping("get_base_id/{baseId}")
     public String getByBaseId(@PathVariable String baseId) {
         return JsonUtils.toJSONString(JsonResult.success(childCodeService.findByBaseCodeId(baseId)));
     }
 
-    @PostMapping("/save")
+
+
+    @PostMapping("save")
     public String save(ChildCode childCode, Errors errors) {
         if (errors.hasErrors()) {
             return JsonUtils.toJSONString(JsonResult.badRueqest(errors.getFieldError().getDefaultMessage()));

@@ -4,16 +4,16 @@ spring:
 #    message-codes-resolver-format: postfix-error-code
 #    date-format: yyyy-MM-dd
 #    static-path-pattern: /resources/**
-#  http: 
-#    multipart:
-#      enabled: true
-#      max-file-size: 50
-#      max-request-size: 50
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 50
+      max-request-size: 50
       
-#  messages:
-#    basename: messages # 指定message的basename，多个以逗号分隔，如果不加包名的话，默认从classpath路径开始，默认: messages
-#    cache-seconds: -1  # 设定加载的资源文件缓存失效时间，-1的话为永不过期，默认为-1
-#    encoding: UTF-8    # 设定Message bundles的编码，默认: UTF-8
+  messages:
+    basename: org/springframework/security/messages_zh_CN,messages_zh_CN # 指定message的basename，多个以逗号分隔，如果不加包名的话，默认从classpath路径开始，默认: messages
+    cache-seconds: -1  # 设定加载的资源文件缓存失效时间，-1的话为永不过期，默认为-1
+    encoding: UTF-8    # 设定Message bundles的编码，默认: UTF-8
       
 #  output:
 #    ansi:
