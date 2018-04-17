@@ -1,16 +1,16 @@
-spring: 
-  thymeleaf: 
-    cache: true
-    encoding: UTF-8
-    prefix: classpath:/templates/
-    suffix: .html
-    mode: HTML5
-    content-type: text/html; charset=utf-8
+spring:
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    properties:
+      hibernate:
+         enable_lazy_load_no_trans: true
+         dialect: org.hibernate.dialect.MySQL57InnoDBDialect
   datasource: 
     name: druid
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/hk_dict?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/hk_emi?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true
     username: root
     password: root
     druid: 

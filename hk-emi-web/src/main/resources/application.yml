@@ -21,6 +21,8 @@ spring:
   profiles: 
     active:
     - dev
+  application:
+    name: HK_EMI
     
 #################################################### 日志配置    
 logging: 

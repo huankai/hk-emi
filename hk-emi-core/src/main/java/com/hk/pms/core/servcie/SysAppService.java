@@ -16,5 +16,4 @@ public interface SysAppService extends BaseService<SysApp, String> {
      * @return
      */
     SysApp findByAppCode(String appCode);
-
 }

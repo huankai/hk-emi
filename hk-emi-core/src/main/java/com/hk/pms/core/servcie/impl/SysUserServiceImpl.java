@@ -31,10 +31,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
 
     @Override
     public SysUser findByLoginUsername(String username) {
-        SysUser sysUser = sysUserRepository.findByUserName(username);
-        if (null != sysUser) {
-            //查询用户权限
-        }
-        return sysUser;
+        return sysUserRepository.findByUserName(username);
     }
 }

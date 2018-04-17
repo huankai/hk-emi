@@ -9,4 +9,5 @@ import com.hk.pms.core.domain.SysPermission;
  */
 public interface SysPermissionService extends BaseService<SysPermission,String> {
 
+
 }

@@ -19,19 +19,18 @@ public class SysAppServiceTest extends BaseTest {
     @Autowired
     private SysAppService appService;
 
-
     @Test
     public void saveTest() {
         SysApp sysApp = new SysApp();
-        sysApp.setAppCode("HK_PMS");
-        sysApp.setAppName("权限管理系统");
+        sysApp.setAppCode("HK_EMI");
+        sysApp.setAppName("字典管理系统");
         sysApp.setAppIp("127.0.0.1");
         sysApp.setAppPort(80);
-        sysApp.setAppIcon("a.png");
+        sysApp.setAppIcon("b.png");
         sysApp.setCreatedDate(DateTime.now());
         sysApp.setAppStatus(1);
-        sysApp.setCreatedBy("1");
-        sysApp.setLastModifiedBy("1");
+        sysApp.setCreatedBy("4028c08162bda8ce0162bda8df6a0000");
+        sysApp.setLastModifiedBy("4028c08162bda8ce0162bda8df6a0000");
         sysApp.setLastModifiedDate(DateTime.now());
         SysApp result = appService.saveOrUpdate(sysApp);
         System.out.println(JsonUtils.toJSONString(result));

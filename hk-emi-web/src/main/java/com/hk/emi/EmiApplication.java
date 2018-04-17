@@ -3,8 +3,15 @@
  */
 package com.hk.emi;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.hk.commons.util.CollectionUtils;
 import com.hk.core.authentication.security.AbstractUserDetailService;
 import com.hk.core.authentication.security.SecurityUserPrincipal;
+import com.hk.core.web.AppCodeUtils;
+import com.hk.pms.core.domain.ModelHolder;
+import com.hk.pms.core.domain.SysPermission;
+import com.hk.pms.core.domain.SysRole;
 import com.hk.pms.core.domain.SysUser;
 import com.hk.pms.core.servcie.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +24,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author kally
@@ -62,8 +73,38 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
                 if (!user.getIsProtect() && user.getUserStatus() == 0) {
                     throw new LockedException("用户账号已锁定");
                 }
-                return new SecurityUserPrincipal(user.getId(), user.getRealName(), user.getPassword(), user.getRealName(),
+                SecurityUserPrincipal principal = new SecurityUserPrincipal(user.getIsProtect(),user.getId(), user.getRealName(), user.getPassword(), user.getRealName(),
                         user.getUserType(), user.getPhone(), user.getEmail(), user.getSex(), user.getIconPath(), user.getUserStatus());
+                Set<SysRole> deptRoleSet = user.getOrgDept().getRoleSet();
+                if (null == deptRoleSet) {
+                    deptRoleSet = Sets.newHashSet();
+                }
+                Set<SysRole> userRoleSet = user.getRoleSet();
+                if (CollectionUtils.isNotEmpty(userRoleSet)) {
+                    deptRoleSet.addAll(userRoleSet);
+                }
+                principal.setAppId(AppCodeUtils.getCurrentAppId());
+                Map<String, Set<String>> roleMap = Maps.newHashMap();
+                Map<String, Set<String>> permissionMap = Maps.newHashMap();
+                Set<String> permissionSet = Sets.newHashSet();
+                deptRoleSet.forEach(item -> {
+                    String appId = item.getApp().getId();
+                    roleMap.merge(appId, Sets.newHashSet(item.getRoleCode()), (t, u) -> {
+                        t.add(item.getRoleCode());
+                        return t;
+                    });
+                    Set<SysPermission> rolePermissionSet = item.getPermissionSet();
+                    if (CollectionUtils.isNotEmpty(rolePermissionSet)) {
+                        Set<String> permissions = rolePermissionSet.stream().map(ModelHolder.SysPermissionBase::getPermissionCode).collect(Collectors.toSet());
+                        permissionMap.merge(appId, permissions, (t, u) -> {
+                            t.addAll(permissions);
+                            return t;
+                        });
+                    }
+                });
+                principal.setAppRoleSet(roleMap);
+                principal.setAppPermissionSet(permissionMap);
+                return principal;
             }
         };
     }
