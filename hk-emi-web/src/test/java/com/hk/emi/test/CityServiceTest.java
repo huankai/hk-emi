@@ -51,7 +51,7 @@ public class CityServiceTest extends BaseTest {
 
     @Test
     public void importExcel() throws FileNotFoundException {
-        cityService.importExcel(new FileInputStream(new File("/City.xlsx")));
+        cityService.importExcel(CityServiceTest.class.getResourceAsStream("City.xlsx"));
     }
 
     /**
