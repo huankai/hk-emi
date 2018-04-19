@@ -20,6 +20,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.LockedException;
@@ -37,7 +38,8 @@ import java.util.stream.Collectors;
 @SpringBootApplication(scanBasePackages = {"com.hk"})
 @EnableJpaRepositories(basePackages = {"com.hk"})
 @EntityScan(basePackages = {"com.hk"})
-// @EnableCaching
+@EnableCaching //开启缓存
+
 // @EnableScheduling
 public class EmiApplication /* extends SpringBootServletInitializer */ {
 
@@ -73,7 +75,7 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
                 if (!user.getIsProtect() && user.getUserStatus() == 0) {
                     throw new LockedException("用户账号已锁定");
                 }
-                SecurityUserPrincipal principal = new SecurityUserPrincipal(user.getIsProtect(),user.getId(), user.getRealName(), user.getPassword(), user.getRealName(),
+                SecurityUserPrincipal principal = new SecurityUserPrincipal(user.getIsProtect(), user.getId(), user.getRealName(), user.getPassword(), user.getRealName(),
                         user.getUserType(), user.getPhone(), user.getEmail(), user.getSex(), user.getIconPath(), user.getUserStatus());
                 Set<SysRole> deptRoleSet = user.getOrgDept().getRoleSet();
                 if (null == deptRoleSet) {

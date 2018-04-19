@@ -1,6 +1,7 @@
 package com.hk.emi.test;
 
 import com.hk.commons.fastjson.JsonUtils;
+import com.hk.commons.util.ByteConstants;
 import com.hk.core.web.AppCodeUtils;
 import com.hk.pms.core.domain.SysOrgDept;
 import com.hk.pms.core.domain.SysRole;
@@ -41,15 +42,15 @@ public class SyUserServiceTest extends BaseTest {
         SysOrgDept orgDept = orgDeptService.findOne("4028c08162bda84d0162bda85d6b0000");
         user.setOrgDept(orgDept);
         user.setOrg(orgDept.getOrg());
-        user.setUserStatus(1);
+        user.setUserStatus(ByteConstants.ONE);
         user.setRealName("系统管理员");
         user.setBrith(LocalDate.ofYearDay(2000, 1));
         user.setPassword(new BCryptPasswordEncoder().encode("admin"));
         user.setEmail("xx2@xx.com");
         user.setPhone("18820136091");
-        user.setUserType(0);
+        user.setUserType(ByteConstants.ZERO);
         user.setIsProtect(true);
-        user.setSex(1);
+        user.setSex(ByteConstants.ZERO);
         user.setCreatedBy("1");
         user.setCreatedDate(DateTime.now());
         user.setLastModifiedBy("1");
@@ -58,12 +59,12 @@ public class SyUserServiceTest extends BaseTest {
     }
 
     @Test
-    public void roleTest(){
+    public void roleTest() {
         SysRole role = new SysRole();
         role.setApp(appService.findOne("4028c08162b9340f0162b93427c40000"));
         role.setRoleCode("ADMIN");
         role.setRoleName("系统管理员");
-        role.setRoleStatus(1);
+        role.setRoleStatus(ByteConstants.ONE);
         role.setCreatedBy("1");
         role.setCreatedDate(DateTime.now());
         role.setLastModifiedBy("1");
@@ -72,13 +73,20 @@ public class SyUserServiceTest extends BaseTest {
     }
 
     @Test
-    public void roleDeleteTest(){
+    public void roleDeleteTest() {
         roleService.delete("4028c08162d2850b0162d2851db80000");
     }
 
     @Test
+    public void findUsernameTest() {
+        SysUser user = userService.findByLoginUsername("18820136090");
+        System.out.println(JsonUtils.toJSONStringExcludes(user, "orgDept", "org", "roleSet"));
+    }
+
+
+    @Test
     @Transactional
-    public void findRoleTest(){
+    public void findRoleTest() {
         System.out.println("--------" + AppCodeUtils.getAppCode());
         System.out.println(JsonUtils.toJSONString(roleService.getOne("4028c08162d2866a0162d28687770000")));
     }

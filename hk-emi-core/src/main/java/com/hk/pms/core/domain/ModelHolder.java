@@ -126,7 +126,7 @@ public class ModelHolder {
         private String iconUrl;
 
         @Column(name = "account_type")
-        private Integer accountType;
+        private Byte accountType;
     }
 
     @Data
@@ -144,7 +144,7 @@ public class ModelHolder {
         private String roleCode;
 
         @Column(name = "role_status")
-        private Integer roleStatus;
+        private Byte roleStatus;
 
         @Column(name = "description")
         private String description;
@@ -194,13 +194,13 @@ public class ModelHolder {
         private String password;
 
         @Column(name = "user_type")
-        private Integer userType;
+        private Byte userType;
 
         @Column(name = "is_protect")
         private Boolean isProtect;
 
         @Column(name = "sex")
-        private Integer sex;
+        private Byte sex;
 
         @Column(name = "icon_path")
         private String iconPath;
@@ -209,7 +209,7 @@ public class ModelHolder {
         private LocalDate brith;
 
         @Column(name = "user_status")
-        private Integer userStatus;
+        private Byte userStatus;
 
         /**
          * 用户角色
@@ -240,7 +240,7 @@ public class ModelHolder {
         private Integer appPort;
 
         @Column(name = "app_status")
-        private Integer appStatus;
+        private Byte appStatus;
 
     }
 }

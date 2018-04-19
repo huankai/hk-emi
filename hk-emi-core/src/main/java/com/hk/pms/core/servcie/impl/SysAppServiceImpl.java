@@ -7,7 +7,6 @@ import com.hk.pms.core.domain.SysApp;
 import com.hk.pms.core.repository.SysAppRepository;
 import com.hk.pms.core.servcie.SysAppService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +26,8 @@ public class SysAppServiceImpl extends BaseServiceImpl<SysApp, String> implement
     }
 
     @Override
-    protected Example<SysApp> getExample(SysApp t) {
-        if(null == t){
-            t = new SysApp();
-        }
-        return Example.of(t, ExampleMatcher.matching().withIgnorePaths("appIcon","appPort"));
+    protected ExampleMatcher ofExampleMatcher() {
+        return ExampleMatcher.matching().withIgnorePaths("appIcon", "appPort");
     }
 
     /**

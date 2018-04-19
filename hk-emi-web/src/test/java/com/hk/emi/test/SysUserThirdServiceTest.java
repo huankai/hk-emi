@@ -1,5 +1,6 @@
 package com.hk.emi.test;
 
+import com.hk.commons.util.ByteConstants;
 import com.hk.pms.core.domain.SysUser;
 import com.hk.pms.core.domain.SysUserThird;
 import com.hk.pms.core.servcie.SysUserService;
@@ -21,14 +22,14 @@ public class SysUserThirdServiceTest extends BaseTest {
     private SysUserThirdService userThirdService;
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         SysUserThird userThird = new SysUserThird();
         SysUser user = userService.findOne("4028c08162bda8ce0162bda8df6a0000");
         userThird.setCreatedDate(DateTime.now());
         userThird.setLastModifiedDate(DateTime.now());
         userThird.setCreatedBy(user.getId());
         userThird.setLastModifiedBy(user.getId());
-        userThird.setAccountType(1);
+        userThird.setAccountType(ByteConstants.ONE);
         userThird.setUserThirdName("haha");
         userThird.setOpenId("oNvZtv__To1bNI5slrj-oB05uO4U");
         userThird.setUser(user);

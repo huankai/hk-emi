@@ -11,9 +11,9 @@ import javax.persistence.Table;
  * @author: huangkai
  * @date 2017-11-29 16:27
  */
+@Data
 @Entity
 @Table(name = "sys_base_code")
-@Data
 public class BaseCode extends ModelHolder.BaseCodeBase {
 
 	/**

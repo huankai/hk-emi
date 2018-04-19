@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.hk.emi.test;
 
 import com.alibaba.fastjson.JSON;
@@ -14,7 +11,7 @@ import com.hk.emi.core.service.CityService;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Persistable;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -30,7 +27,7 @@ public class CityServiceTest extends BaseTest {
 
     /**
      * Test method for
-     * {@link com.hk.core.service.BaseService#saveOrUpdate(java.lang.Object)}.
+     * {@link com.hk.core.service.BaseService#saveOrUpdate(Persistable)
      *
      * @throws IOException
      */
@@ -62,9 +59,8 @@ public class CityServiceTest extends BaseTest {
      * {@link com.hk.core.service.BaseService#findOne(java.io.Serializable)}.
      */
     @Test
-    @Transactional(readOnly = true)
     public void testFindOnePK() {
-        City city = cityService.findOne("4028c081612643ff016126440caf0000");
+        City city = cityService.findOne("4028c08162be57660162be5779cb0000");
         System.out.println(JsonUtils.toJSONString(city));
 //		System.out.println(city.getFullName());
 //		System.out.println(city.getParent());

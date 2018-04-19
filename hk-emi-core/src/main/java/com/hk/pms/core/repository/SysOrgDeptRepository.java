@@ -8,4 +8,5 @@ import com.hk.pms.core.domain.SysOrgDept;
  * @date 2018-04-12 16:39
  */
 public interface SysOrgDeptRepository extends StringRepository<SysOrgDept> {
+
 }

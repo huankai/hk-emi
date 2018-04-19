@@ -1,6 +1,7 @@
 package com.hk.emi.test;
 
 import com.hk.commons.fastjson.JsonUtils;
+import com.hk.commons.util.ByteConstants;
 import com.hk.core.query.JpaQueryModel;
 import com.hk.core.query.QueryModel;
 import com.hk.core.query.QueryPageable;
@@ -28,7 +29,7 @@ public class SysAppServiceTest extends BaseTest {
         sysApp.setAppPort(80);
         sysApp.setAppIcon("b.png");
         sysApp.setCreatedDate(DateTime.now());
-        sysApp.setAppStatus(1);
+        sysApp.setAppStatus(ByteConstants.ONE);
         sysApp.setCreatedBy("4028c08162bda8ce0162bda8df6a0000");
         sysApp.setLastModifiedBy("4028c08162bda8ce0162bda8df6a0000");
         sysApp.setLastModifiedDate(DateTime.now());
@@ -37,43 +38,43 @@ public class SysAppServiceTest extends BaseTest {
     }
 
     @Test
-    public void findOneTest(){
+    public void findOneTest() {
         System.out.println(JsonUtils.toJSONString(appService.findOne("4028c08162b930640162b930792d0000")));
     }
 
     @Test
-    public void findOneTest2(){
+    public void findOneTest2() {
         SysApp sysApp = new SysApp();
-        sysApp.setAppStatus(1);
+        sysApp.setAppStatus(ByteConstants.ONE);
         sysApp.setAppCode("HK_PMSss");
         System.out.println(JsonUtils.toJSONString(appService.findOne(sysApp)));
     }
 
     @Test
-    public void findByAppCodeTest(){
+    public void findByAppCodeTest() {
         System.out.println(JsonUtils.toJSONString(appService.findByAppCode("HK_PMS")));
     }
 
     @Test
-    public void deleteById(){
+    public void deleteById() {
         appService.delete("4028c08162b930640162b930792d0000");
     }
 
     @Test
-    public void findPageTest(){
+    public void findPageTest() {
         QueryModel query = new QueryModel();
         QueryPageable<SysApp> pageResult = appService.queryForPage(query);
         System.out.println(JsonUtils.toFormatJSONString(pageResult));
     }
 
     @Test
-    public void findPageTest2(){
+    public void findPageTest2() {
         JpaQueryModel<SysApp> queryModel = new JpaQueryModel<>();
-        SysApp sysApp = new SysApp();
-        sysApp.setAppStatus(1);
-        sysApp.setAppIcon("aa");
-        sysApp.setAppCode("HK_PMSss");
-        queryModel.setParams(sysApp);
+//        SysApp sysApp = new SysApp();
+//        sysApp.setAppStatus(1);
+//        sysApp.setAppIcon("aa");//不会加入条件查询
+//        sysApp.setAppCode("HK_PMSss");
+//        queryModel.setParams(sysApp);
         QueryPageable<SysApp> pageResult = appService.queryForPage(queryModel);
         System.out.println(JsonUtils.toFormatJSONString(pageResult));
     }

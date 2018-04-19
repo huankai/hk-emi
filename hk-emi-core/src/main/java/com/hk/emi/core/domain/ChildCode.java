@@ -9,9 +9,9 @@ import javax.persistence.Table;
  * @author: huangkai
  * @date 2017-11-29 17:11
  */
+@Data
 @Entity
 @Table(name = "sys_child_code")
-@Data
 public class ChildCode extends ModelHolder.ChildCodeBase {
 
     /**

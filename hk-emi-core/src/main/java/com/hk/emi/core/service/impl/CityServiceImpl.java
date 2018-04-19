@@ -13,14 +13,14 @@ import com.hk.commons.poi.excel.write.XSSFWriteableExcel;
 import com.hk.commons.util.BeanUtils;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.repository.BaseRepository;
-import com.hk.core.service.impl.BaseServiceImpl;
+import com.hk.core.service.impl.EnableCacheServiceImpl;
 import com.hk.emi.core.domain.City;
 import com.hk.emi.core.repository.CityRepository;
 import com.hk.emi.core.service.CityService;
 import com.hk.emi.core.vo.CityExcelVo;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,8 @@ import java.util.Optional;
  * @author huangkai
  */
 @Service
-public class CityServiceImpl extends BaseServiceImpl<City, String> implements CityService {
+@CacheConfig(cacheNames = "City")
+public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implements CityService {
 
     @Autowired
     private CityRepository cityRepository;
@@ -47,13 +48,10 @@ public class CityServiceImpl extends BaseServiceImpl<City, String> implements Ci
     }
 
     @Override
-    protected Example<City> getExample(City t) {
-        if (null == t) {
-            t = new City();
-        }
-        return Example.of(t, ExampleMatcher.matching()
+    protected ExampleMatcher ofExampleMatcher() {
+        return ExampleMatcher.matching()
                 .withMatcher("code", GenericPropertyMatchers.exact())
-                .withIgnoreNullValues());
+                .withIgnoreNullValues();
     }
 
     /**
@@ -85,14 +83,18 @@ public class CityServiceImpl extends BaseServiceImpl<City, String> implements Ci
             resultList.forEach(item -> {
                 City city = new City();
                 BeanUtils.copyProperties(item, city);
+
                 city.setCreatedDate(DateTime.now());
                 city.setCreatedBy("4028c08162bda8ce0162bda8df6a0000");
                 city.setLastModifiedDate(DateTime.now());
                 city.setLastModifiedBy("4028c08162bda8ce0162bda8df6a0000");
+
                 if (StringUtils.isNotEmpty(item.getParentName())) {
                     Optional<City> cityOptional = cityList.stream().filter(c -> StringUtils.equals(c.getFullName(), item.getParentName())).findFirst();
                     if (cityOptional.isPresent()) {
-                        city.setParent(cityOptional.get());
+                        City parent = cityOptional.get();
+                        city.setParent(parent);
+                        city.setCityType(Byte.valueOf(Integer.valueOf(parent.getCityType() + 1).toString()));
                     }
                 }
                 cityList.add(city);

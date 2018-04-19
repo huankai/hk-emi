@@ -18,8 +18,8 @@ spring:
     name: druid
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://127.0.0.1:3306/hk_emi?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
-    url: jdbc:mysql://192.168.1.241:3306/sjq_dcp?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
+    url: jdbc:mysql://127.0.0.1:3306/hk_emi?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
+#    url: jdbc:mysql://192.168.1.241:3306/sjq_dcp?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
     username: root
     password: root
 ################################################################### druid
@@ -40,13 +40,13 @@ spring:
       - stat
       - wall
       - log4j2
-#      connect-properties: 
+#      connect-properties:
 #        druid.stat.mergeSql: true
 #        druid.stat.slowSqlMillis: 5000
 
 ################################################################### redis
   redis:
-    host: 192.168.184.128
+    host: 192.168.1.76
     port: 6379
     pool:
       max-active: 1000
@@ -54,7 +54,10 @@ spring:
       min-idle: 1
       max-wait: -1
     database: 0
-    password: 1234567
+    password:
     timeout: 0
+  cache:
+    cache-names:
+      - City
 
   

@@ -25,14 +25,14 @@ public interface CityService extends BaseService<City, String> {
     /**
      * 导入
      *
-     * @param in excel文件
+     * @param excelInput excel文件
      */
-    void importExcel(InputStream in);
+    void importExcel(InputStream excelInput);
 
     /**
      * 根据条件查询生成Excel Byte
      *
-     * @param city 
+     * @param city
      * @return
      */
     byte[] exportExcelData(City city);

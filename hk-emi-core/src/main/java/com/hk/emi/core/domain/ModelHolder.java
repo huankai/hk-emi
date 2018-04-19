@@ -54,7 +54,7 @@ public class ModelHolder {
         private String codeName;
 
         @Column(name = "state")
-        private Integer state;
+        private Byte state;
 
         @Column(name = "description")
         private String description;
@@ -89,6 +89,20 @@ public class ModelHolder {
          */
         @Column(name = "english_name")
         private String englishName;
+
+        /**
+         * <pre>
+         * 城市类型:
+         *     1:国家,
+         *     2:省或直辖市,
+         *     3:市,
+         *     4:区或县,
+         *     5:镇,
+         *     6:村
+         * </pre>
+         */
+        @Column(name = "city_type")
+        private Byte cityType;
 
         /**
          * 邮编

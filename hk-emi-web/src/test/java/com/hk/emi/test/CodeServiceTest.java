@@ -1,6 +1,7 @@
 package com.hk.emi.test;
 
 import com.hk.commons.fastjson.JsonUtils;
+import com.hk.commons.util.ByteConstants;
 import com.hk.emi.core.domain.BaseCode;
 import com.hk.emi.core.domain.ChildCode;
 import com.hk.emi.core.service.BaseCodeService;
@@ -37,7 +38,7 @@ public class CodeServiceTest extends BaseTest {
         childCode.setBaseCode(baseCode);
         childCode.setChildCode("YES");
         childCode.setCodeName("是");
-        childCode.setState(1);
+        childCode.setState(ByteConstants.ONE);
         childCode.setCreatedDate(DateTime.now());
         childCode.setLastModifiedDate(DateTime.now());
         childCode.setCreatedBy("4028c08162bda8ce0162bda8df6a0000");

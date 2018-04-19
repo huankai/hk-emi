@@ -10,6 +10,12 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface SysUserRepository extends StringRepository<SysUser> {
 
-    @Query(value = "select id,org_id,dept_id,phone,password,email,real_name,user_type,is_protect,sex,icon_path,birth,privince_id,city_id,user_status,created_by,created_date,last_modified_by,last_modified_date from sys_user where phone = ?1 or email = ?1", nativeQuery = true)
+    /**
+     * 手机号或邮箱号查询用户
+     *
+     * @param username 手机号或者邮箱号
+     * @return 查询结果
+     */
+    @Query(value = "SELECT id,org_id,dept_id,phone,password,email,real_name,user_type,is_protect,sex,icon_path,birth,privince_id,city_id,user_status,created_by,created_date,last_modified_by,last_modified_date FROM sys_user WHERE (phone = ?1 OR email = ?1)", nativeQuery = true)
     SysUser findByUserName(String username);
 }
