@@ -3,6 +3,7 @@ package com.hk.pms.core.domain;
 import com.hk.core.domain.AbstractAuditable;
 import com.hk.core.domain.AbstractUUIDPersistable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class SysOrgBase extends AbstractAuditable {
 
         @ManyToOne(fetch = FetchType.LAZY)
@@ -39,6 +41,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class SysOrgDeptBase extends AbstractAuditable {
 
         @ManyToOne(fetch = FetchType.LAZY)
@@ -69,6 +72,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class SysPermissionBase extends AbstractAuditable {
 
         @ManyToOne(fetch = FetchType.LAZY)
@@ -87,6 +91,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class SysUserRoleBase extends AbstractUUIDPersistable {
 
         @Column(name = "user_id")
@@ -99,6 +104,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class SysDeptRoleBase extends AbstractUUIDPersistable {
 
         @Column(name = "dept_id")
@@ -110,6 +116,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class SysUserThirdBase extends AbstractAuditable {
 
         @OneToOne(fetch = FetchType.LAZY)
@@ -131,6 +138,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class SysRoleBase extends AbstractAuditable {
 
         @ManyToOne(fetch = FetchType.LAZY)
@@ -159,6 +167,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class SysRolePermissionBase extends AbstractUUIDPersistable {
 
         @Column(name = "rolg_id")
@@ -171,6 +180,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class SysUserBase extends AbstractAuditable {
 
         @ManyToOne(fetch = FetchType.LAZY)
@@ -222,6 +232,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class SysAppBase extends AbstractAuditable {
 
         @Column(name = "app_name")

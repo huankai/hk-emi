@@ -1,6 +1,7 @@
 package com.hk.pms.core.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "sys_org_dept")
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SysOrgDept extends ModelHolder.SysOrgDeptBase {
 
 

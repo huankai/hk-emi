@@ -1,6 +1,7 @@
 package com.hk.emi.core.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "sys_base_code")
+@EqualsAndHashCode(callSuper = true)
 public class BaseCode extends ModelHolder.BaseCodeBase {
 
 	/**

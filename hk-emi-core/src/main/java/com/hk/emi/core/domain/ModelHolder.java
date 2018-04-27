@@ -3,6 +3,7 @@ package com.hk.emi.core.domain;
 import com.hk.core.domain.AbstractAuditable;
 import com.hk.core.domain.AbstractUUIDPersistable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class BaseCodeBase extends AbstractUUIDPersistable {
 
         /**
@@ -42,6 +44,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class ChildCodeBase extends AbstractAuditable {
 
         @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -64,6 +67,7 @@ public class ModelHolder {
 
     @Data
     @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
     public static class CityBase extends AbstractAuditable {
 
         /**

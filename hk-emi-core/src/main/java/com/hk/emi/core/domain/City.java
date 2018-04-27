@@ -5,6 +5,7 @@ package com.hk.emi.core.domain;
 
 import com.hk.emi.core.domain.ModelHolder.CityBase;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -18,6 +19,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "sys_city")
+@EqualsAndHashCode(callSuper = true)
 public class City extends CityBase {
 
 }

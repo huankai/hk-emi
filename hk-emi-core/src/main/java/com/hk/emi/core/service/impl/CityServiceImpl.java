@@ -4,7 +4,7 @@
 package com.hk.emi.core.service.impl;
 
 import com.hk.commons.poi.excel.model.ReadResult;
-import com.hk.commons.poi.excel.model.ReadableParam;
+import com.hk.commons.poi.excel.model.ReadParam;
 import com.hk.commons.poi.excel.model.WriteParam;
 import com.hk.commons.poi.excel.read.ReadableExcel;
 import com.hk.commons.poi.excel.read.SimpleSaxReadableExcel;
@@ -73,7 +73,7 @@ public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implem
     @Override
     @Transactional
     public void importExcel(InputStream in) {
-        ReadableParam<CityExcelVo> readableParam = new ReadableParam<>();
+        ReadParam<CityExcelVo> readableParam = new ReadParam<>();
         readableParam.setBeanClazz(CityExcelVo.class);
         ReadableExcel<CityExcelVo> readableExcel = new SimpleSaxReadableExcel<>(readableParam);
         ReadResult<CityExcelVo> result = readableExcel.read(in);

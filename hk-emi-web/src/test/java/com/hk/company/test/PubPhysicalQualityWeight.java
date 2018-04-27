@@ -29,7 +29,7 @@ public class PubPhysicalQualityWeight {
     private String grade;
 
     @ReadExcel(start = 1)
-    @Transient
+    @Column(name = "grade_name")
     private String gradeName;
 
     /**

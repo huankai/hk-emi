@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import com.hk.commons.fastjson.JsonUtils;
 import com.hk.commons.poi.excel.annotations.ReadExcel;
 import com.hk.commons.poi.excel.model.ReadResult;
-import com.hk.commons.poi.excel.model.ReadableParam;
+import com.hk.commons.poi.excel.model.ReadParam;
 import com.hk.commons.poi.excel.read.ReadableExcel;
 import com.hk.commons.poi.excel.read.SimpleSaxReadableExcel;
 import com.hk.commons.util.StringUtils;
@@ -72,10 +72,10 @@ public class PubPhysicalQualityTest extends BaseTest {
         arguments.setFrom("pub_physical_quality");
         List<PubPhysicalQuality> physicalQualityList = jdbcSession.queryForList(arguments, false, PubPhysicalQuality.class).getResult();
 
-        ReadableParam<PubPhysicalValueExcel> readableParam = new ReadableParam<>();
-        readableParam.setBeanClazz(PubPhysicalValueExcel.class);
-        readableParam.setDataStartRow(2);
-        readableParam.setTitleRow(1);
+
+        ReadParam<PubPhysicalValueExcel> readableParam = new ReadParam<>();
+        readableParam.setBeanClazz(PubPhysicalValueExcel.class)
+                .setDataStartRow(2).setTitleRow(1);
 
         ReadableExcel<PubPhysicalValueExcel> readableExcel = new SimpleSaxReadableExcel<>(readableParam);
         ReadResult<PubPhysicalValueExcel> readResult = readableExcel.read(new FileInputStream(new File("C:/Users/sjq-278/Desktop/体质健康标准 - 整理后v1.5.xls")));

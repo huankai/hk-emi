@@ -31,7 +31,7 @@ public class EtStuPhysicalWeight {
      * 学年ID
      */
     @Column(name = "schoolyear_id")
-    private String schoolYearId;
+    private String schoolyearId;
 
     /**
      * 学年
@@ -117,12 +117,12 @@ public class EtStuPhysicalWeight {
         this.stuName = stuName;
     }
 
-    public String getSchoolYearId() {
-        return schoolYearId;
+    public String getSchoolyearId() {
+        return schoolyearId;
     }
 
-    public void setSchoolYearId(String schoolYearId) {
-        this.schoolYearId = schoolYearId;
+    public void setSchoolyearId(String schoolyearId) {
+        this.schoolyearId = schoolyearId;
     }
 
     public String getSchoolyearName() {
