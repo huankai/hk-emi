@@ -6,6 +6,7 @@ import com.hk.commons.poi.excel.model.ReadParam;
 import com.hk.commons.poi.excel.model.ReadResult;
 import com.hk.commons.poi.excel.read.ReadableExcel;
 import com.hk.commons.poi.excel.read.SimpleDomReadableExcel;
+import com.hk.commons.util.NumberUtils;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.query.jdbc.JdbcSession;
 import com.hk.core.query.jdbc.SelectArguments;
@@ -34,7 +35,6 @@ public class PubPhysicalQualityWeightTest extends BaseTest {
 
     @Autowired
     private EtStuPhysicalWeightRepository stuPhysicalWeightRepository;
-
 
     /**
      * 一键更新学生总权重
@@ -81,8 +81,8 @@ public class PubPhysicalQualityWeightTest extends BaseTest {
                             System.err.println("gradeType :" + gradeType + ",physical_quality_id :" + objectMap.get("physical_quality_id").toString() + "不存在");
                         }
                     } else {
-                        System.err.println("grade_id is noll :" + objectMap.get("grade_id"));
-                    }
+                        System.err.println("grade_id is null :" + objectMap.get("grade_id"));
+                    }//et_stu_totalscore
                 }
                 Optional<EtStuPhysicalWeight> stuPhysicalWeightOptional = stuPhysicalWeight.stream().filter(item -> StringUtils.equals(item.getSemesterId(), semesterId)
                         && StringUtils.equals(item.getStudentId(), studentId.toString())).findFirst();
@@ -91,7 +91,7 @@ public class PubPhysicalQualityWeightTest extends BaseTest {
                         System.err.println("studentId :" + studentId + ",semesterId : " + semesterId + ",合计总分大于100，值为: " + totalScore);
                     } else {
                         EtStuPhysicalWeight physicalWeight = stuPhysicalWeightOptional.get();
-                        physicalWeight.setScore(totalScore);
+                        physicalWeight.setScore(Double.valueOf(NumberUtils.formatDecimal(totalScore)));
                         stuPhysicalWeightRepository.save(physicalWeight);
                     }
                 } else {
