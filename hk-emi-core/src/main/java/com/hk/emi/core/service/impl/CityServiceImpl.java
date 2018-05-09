@@ -3,11 +3,11 @@
  */
 package com.hk.emi.core.service.impl;
 
-import com.hk.commons.poi.excel.model.ReadResult;
 import com.hk.commons.poi.excel.model.ReadParam;
+import com.hk.commons.poi.excel.model.ReadResult;
 import com.hk.commons.poi.excel.model.WriteParam;
 import com.hk.commons.poi.excel.read.ReadableExcel;
-import com.hk.commons.poi.excel.read.SimpleSaxReadableExcel;
+import com.hk.commons.poi.excel.read.SimpleSaxReadExcel;
 import com.hk.commons.poi.excel.write.WriteableExcel;
 import com.hk.commons.poi.excel.write.XSSFWriteableExcel;
 import com.hk.commons.util.BeanUtils;
@@ -73,9 +73,10 @@ public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implem
     @Override
     @Transactional
     public void importExcel(InputStream in) {
-        ReadParam<CityExcelVo> readableParam = new ReadParam<>();
-        readableParam.setBeanClazz(CityExcelVo.class);
-        ReadableExcel<CityExcelVo> readableExcel = new SimpleSaxReadableExcel<>(readableParam);
+        ReadParam<CityExcelVo> readableParam = ReadParam.<CityExcelVo>builder()
+                .beanClazz(CityExcelVo.class)
+                .build();
+        ReadableExcel<CityExcelVo> readableExcel = new SimpleSaxReadExcel<>(readableParam);
         ReadResult<CityExcelVo> result = readableExcel.read(in);
         if (!result.hasErrors()) {
             List<CityExcelVo> resultList = result.getAllSheetData();
@@ -106,9 +107,10 @@ public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implem
     @Override
     public byte[] exportExcelData(City city) {
         List<CityExcelVo> cityList = cityRepository.findExportExcelData(city);
-        WriteParam<CityExcelVo> param = new WriteParam<>();
-        param.setBeanClazz(CityExcelVo.class);
-        param.setData(cityList);
+        WriteParam<CityExcelVo> param = WriteParam.<CityExcelVo>builder()
+                .beanClazz(CityExcelVo.class)
+                .data(cityList)
+                .build();
         WriteableExcel<CityExcelVo> writeableExcel = new XSSFWriteableExcel<>();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         writeableExcel.write(param, baos);

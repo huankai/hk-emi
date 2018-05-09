@@ -1,13 +1,16 @@
 package com.hk.pms.core.servcie.impl;
 
+import com.google.common.collect.Lists;
 import com.hk.commons.util.AssertUtils;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.authentication.api.PermissionContants;
 import com.hk.core.repository.BaseRepository;
 import com.hk.core.service.impl.BaseServiceImpl;
 import com.hk.pms.core.domain.SysPermission;
+import com.hk.pms.core.domain.SysRole;
 import com.hk.pms.core.repository.SysPermissionRepository;
 import com.hk.pms.core.servcie.SysPermissionService;
+import com.hk.pms.core.servcie.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Str
 
     @Autowired
     private SysPermissionRepository sysPermissionRepository;
+
+    @Autowired
+    private SysRoleService roleService;
 
     /**
      * 返回 BaseRepository
@@ -57,5 +63,13 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Str
     public final <S extends SysPermission> S saveOrUpdate(S entity) {
         validatePermissionCode(entity);
         return super.saveOrUpdate(entity);
+    }
+
+    @Override
+    public List<SysPermission> getPermissionList(String userId) {
+        List<SysRole> roleList = roleService.getRoleList(userId);
+        List<SysPermission> permissions = Lists.newArrayList();
+        roleList.forEach(role -> permissions.addAll(role.getPermissionSet()));
+        return permissions;
     }
 }

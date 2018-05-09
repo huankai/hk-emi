@@ -4,10 +4,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.hk.commons.fastjson.JsonUtils;
 import com.hk.commons.poi.excel.annotations.ReadExcel;
-import com.hk.commons.poi.excel.model.ReadResult;
 import com.hk.commons.poi.excel.model.ReadParam;
+import com.hk.commons.poi.excel.model.ReadResult;
 import com.hk.commons.poi.excel.read.ReadableExcel;
-import com.hk.commons.poi.excel.read.SimpleSaxReadableExcel;
+import com.hk.commons.poi.excel.read.SimpleSaxReadExcel;
 import com.hk.commons.util.StringUtils;
 import com.hk.commons.util.date.DateTimeUtils;
 import com.hk.core.query.jdbc.JdbcSession;
@@ -73,11 +73,13 @@ public class PubPhysicalQualityTest extends BaseTest {
         List<PubPhysicalQuality> physicalQualityList = jdbcSession.queryForList(arguments, false, PubPhysicalQuality.class).getResult();
 
 
-        ReadParam<PubPhysicalValueExcel> readableParam = new ReadParam<>();
-        readableParam.setBeanClazz(PubPhysicalValueExcel.class)
-                .setDataStartRow(2).setTitleRow(1);
+        ReadParam<PubPhysicalValueExcel> readableParam = ReadParam.<PubPhysicalValueExcel>builder()
+                .beanClazz(PubPhysicalValueExcel.class)
+                .titleRow(1)
+                .dataStartRow(2)
+                .build();
 
-        ReadableExcel<PubPhysicalValueExcel> readableExcel = new SimpleSaxReadableExcel<>(readableParam);
+        ReadableExcel<PubPhysicalValueExcel> readableExcel = new SimpleSaxReadExcel<>(readableParam);
         ReadResult<PubPhysicalValueExcel> readResult = readableExcel.read(new FileInputStream(new File("C:/Users/sjq-278/Desktop/体质健康标准 - 整理后v1.5.xls")));
 
         List<PubPhysicalValue> list = Lists.newArrayList();

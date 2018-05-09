@@ -5,6 +5,7 @@ package com.hk.emi;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.hk.commons.util.ByteConstants;
 import com.hk.commons.util.CollectionUtils;
 import com.hk.core.authentication.security.AbstractUserDetailService;
 import com.hk.core.authentication.security.SecurityUserPrincipal;
@@ -39,14 +40,13 @@ import java.util.stream.Collectors;
 @EnableJpaRepositories(basePackages = {"com.hk"})
 @EntityScan(basePackages = {"com.hk"})
 @EnableCaching //开启缓存
-
 // @EnableScheduling
 public class EmiApplication /* extends SpringBootServletInitializer */ {
 
     public static void main(String[] args) {
-        SpringApplication application = new SpringApplication();
+        SpringApplication application = new SpringApplication(EmiApplication.class);
         application.setBannerMode(Banner.Mode.OFF);
-        application.run(EmiApplication.class, args);
+        application.run(args);
     }
 
 //	 @Override
@@ -72,15 +72,12 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
                 if (null == user) {
                     throw new UsernameNotFoundException("用户名或密码不正确");
                 }
-                if (!user.getIsProtect() && user.getUserStatus() == 0) {
+                if (!user.getIsProtect() && ByteConstants.ZERO.equals(user.getUserStatus())) {
                     throw new LockedException("用户账号已锁定");
                 }
                 SecurityUserPrincipal principal = new SecurityUserPrincipal(user.getIsProtect(), user.getId(), user.getRealName(), user.getPassword(), user.getRealName(),
                         user.getUserType(), user.getPhone(), user.getEmail(), user.getSex(), user.getIconPath(), user.getUserStatus());
                 Set<SysRole> deptRoleSet = user.getOrgDept().getRoleSet();
-                if (null == deptRoleSet) {
-                    deptRoleSet = Sets.newHashSet();
-                }
                 Set<SysRole> userRoleSet = user.getRoleSet();
                 if (CollectionUtils.isNotEmpty(userRoleSet)) {
                     deptRoleSet.addAll(userRoleSet);

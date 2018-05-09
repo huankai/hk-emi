@@ -5,7 +5,7 @@ import com.hk.commons.fastjson.JsonUtils;
 import com.hk.commons.poi.excel.model.ReadParam;
 import com.hk.commons.poi.excel.model.ReadResult;
 import com.hk.commons.poi.excel.read.ReadableExcel;
-import com.hk.commons.poi.excel.read.SimpleDomReadableExcel;
+import com.hk.commons.poi.excel.read.SimpleDomReadExcel;
 import com.hk.commons.util.NumberUtils;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.query.jdbc.JdbcSession;
@@ -107,10 +107,11 @@ public class PubPhysicalQualityWeightTest extends BaseTest {
      */
     @Test
     public void parseExcelTest() {
-        ReadParam<PubPhysicalQualityWeight> param = new ReadParam<>();
-        param.setBeanClazz(PubPhysicalQualityWeight.class);
+        ReadParam<PubPhysicalQualityWeight> param = ReadParam.<PubPhysicalQualityWeight>builder()
+                .beanClazz(PubPhysicalQualityWeight.class)
+                .build();
 
-        ReadableExcel<PubPhysicalQualityWeight> readableExcel = new SimpleDomReadableExcel<>(param);
+        ReadableExcel<PubPhysicalQualityWeight> readableExcel = new SimpleDomReadExcel<>(param);
         ReadResult<PubPhysicalQualityWeight> result = readableExcel.read(new File("C:\\Users\\sjq-278\\Desktop/单项指标与权重.xlsx"));
 
         SelectArguments arguments = new SelectArguments();
