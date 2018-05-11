@@ -1,6 +1,7 @@
 package com.hk.pms.core.domain;
 
 import com.hk.core.domain.AbstractAuditable;
+import com.hk.core.domain.AbstractTreePersistable;
 import com.hk.core.domain.AbstractUUIDPersistable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,11 +20,7 @@ public class ModelHolder {
     @Data
     @MappedSuperclass
     @EqualsAndHashCode(callSuper = true)
-    public static class SysOrgBase extends AbstractAuditable {
-
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "parent_id")
-        private SysOrg parent;
+    public static class SysOrgBase extends AbstractTreePersistable<SysOrg> {
 
         @Column(name = "org_name")
         private String orgName;
@@ -42,15 +39,11 @@ public class ModelHolder {
     @Data
     @MappedSuperclass
     @EqualsAndHashCode(callSuper = true)
-    public static class SysOrgDeptBase extends AbstractAuditable {
+    public static class SysOrgDeptBase extends AbstractTreePersistable<SysOrgDept> {
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "org_id")
         private SysOrg org;
-
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "parent_id")
-        private SysOrgDept parent;
 
         @Column(name = "dept_name")
         private String deptName;
@@ -73,7 +66,7 @@ public class ModelHolder {
     @Data
     @MappedSuperclass
     @EqualsAndHashCode(callSuper = true)
-    public static class SysPermissionBase extends AbstractAuditable {
+    public static class SysPermissionBase extends AbstractTreePersistable<SysPermission> {
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "app_id")

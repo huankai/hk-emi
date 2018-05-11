@@ -37,9 +37,12 @@ import java.util.stream.Collectors;
  */
 @ServletComponentScan(basePackages = {"com.hk.core"})
 @SpringBootApplication(scanBasePackages = {"com.hk"})
+
 @EnableJpaRepositories(basePackages = {"com.hk"})
 @EntityScan(basePackages = {"com.hk"})
+
 @EnableCaching //开启缓存
+
 // @EnableScheduling
 public class EmiApplication /* extends SpringBootServletInitializer */ {
 

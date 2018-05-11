@@ -40,7 +40,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Str
     }
 
     @Override
-    public final <S extends SysPermission> List<S> saveOrUpdate(Iterable<S> entities) {
+    public <S extends SysPermission> List<S> saveOrUpdate(Iterable<S> entities) {
         entities.forEach(item -> validatePermissionCode(item));
         return super.saveOrUpdate(entities);
     }
@@ -54,14 +54,17 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Str
     }
 
     @Override
-    public final <S extends SysPermission> S saveAndFlush(S entity) {
+    public <S extends SysPermission> S saveAndFlush(S entity) {
         validatePermissionCode(entity);
         return super.saveAndFlush(entity);
     }
 
     @Override
-    public final <S extends SysPermission> S saveOrUpdate(S entity) {
+    public <S extends SysPermission> S saveOrUpdate(S entity) {
         validatePermissionCode(entity);
+        if (null == entity.getParent()) {
+            entity.setParent(entity);
+        }
         return super.saveOrUpdate(entity);
     }
 

@@ -1,6 +1,7 @@
 package com.hk.emi.core.domain;
 
 import com.hk.core.domain.AbstractAuditable;
+import com.hk.core.domain.AbstractTreePersistable;
 import com.hk.core.domain.AbstractUUIDPersistable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -68,7 +69,7 @@ public class ModelHolder {
     @Data
     @MappedSuperclass
     @EqualsAndHashCode(callSuper = true)
-    public static class CityBase extends AbstractAuditable {
+    public static class CityBase extends AbstractTreePersistable<City> {
 
         /**
          * 行政代码
@@ -119,19 +120,6 @@ public class ModelHolder {
          */
         @Column(name = "description")
         private String description;
-
-        /**
-         * 上级
-         */
-        @ManyToOne(fetch = FetchType.LAZY, optional = false)
-        private City parent;
-
-        /**
-         * 子级
-         */
-        @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
-        @JoinColumn(name = "parent_id", referencedColumnName = "id")
-        private List<City> childs;
 
     }
 
