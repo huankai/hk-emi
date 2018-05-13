@@ -78,6 +78,9 @@ public class ModelHolder {
         @Column(name = "permission_name")
         private String permissionName;
 
+        @Column(name = "url")
+        private String url;
+
         @Column(name = "description")
         private String description;
     }

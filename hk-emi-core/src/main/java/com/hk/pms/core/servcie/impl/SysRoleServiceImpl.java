@@ -2,6 +2,7 @@ package com.hk.pms.core.servcie.impl;
 
 import com.google.common.collect.Lists;
 import com.hk.commons.util.ByteConstants;
+import com.hk.commons.util.StringUtils;
 import com.hk.core.repository.BaseRepository;
 import com.hk.core.service.impl.BaseServiceImpl;
 import com.hk.pms.core.domain.SysRole;
@@ -40,15 +41,17 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, String> impleme
     }
 
     @Override
-    public List<SysRole> getRoleList(String userId) {
+    public List<SysRole> getRoleList(String userId, String appId) {
         SysUser user = userService.getOne(userId);
         Set<SysRole> deptRoleSet = user.getOrgDept().getRoleSet();
         List<SysRole> deptRoleList = deptRoleSet.stream()
-                .filter(item -> ByteConstants.ZERO.equals(item.getRoleStatus()))
+                .filter(item -> ByteConstants.ZERO.equals(item.getRoleStatus())
+                        && StringUtils.notEquals(item.getApp().getId(), appId))
                 .collect(Collectors.toList());
         Set<SysRole> roleSet = user.getRoleSet();
         List<SysRole> roleList = roleSet.stream()
-                .filter(item -> ByteConstants.ZERO.equals(item.getRoleStatus()))
+                .filter(item -> ByteConstants.ZERO.equals(item.getRoleStatus())
+                        && StringUtils.notEquals(item.getApp().getId(), appId))
                 .collect(Collectors.toList());
         roleList.addAll(deptRoleList);
         return Lists.newArrayList(roleSet);

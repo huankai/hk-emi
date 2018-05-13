@@ -4,6 +4,7 @@ import com.hk.commons.fastjson.JsonUtils;
 import com.hk.commons.util.date.DatePattern;
 import com.hk.core.query.JdbcQueryModel;
 import com.hk.core.query.QueryPageable;
+import com.hk.core.web.AppCodeUtils;
 import com.hk.core.web.JsonResult;
 import com.hk.core.web.controller.BaseController;
 import com.hk.pms.core.domain.SysPermission;
@@ -11,6 +12,8 @@ import com.hk.pms.core.servcie.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author: huangkai
@@ -32,7 +35,7 @@ public class PermissionController extends BaseController {
     @RequestMapping()
     public String queryByPage(@RequestBody JdbcQueryModel query) {
         QueryPageable<SysPermission> pageResult = permissionService.queryForPage(query);
-        return JsonUtils.toJSONStringExcludes(JsonResult.success(pageResult), "app");
+        return JsonUtils.toJSONStringExcludes(JsonResult.success(pageResult), "app", "parent", "child");
     }
 
     @DeleteMapping("{id}")
@@ -53,7 +56,18 @@ public class PermissionController extends BaseController {
     @GetMapping("{id}")
     public String detail(@PathVariable String id) {
         SysPermission permission = permissionService.findOne(id);
-        return JsonUtils.toJSONStringExcludes(JsonResult.success(permission), DatePattern.YYYY_MM_DD_HH_MM_SS, "app");
+        return JsonUtils.toJSONStringExcludes(JsonResult.success(permission), DatePattern.YYYY_MM_DD_HH_MM_SS, "app", "parent", "child");
+    }
+
+    /**
+     * 获取当前登陆的所有权限列表
+     *
+     * @return
+     */
+    @GetMapping("mypermission")
+    public String getMyPermissionList() {
+        List<SysPermission> permisslonList = permissionService.getCurrentUserPermissionList(AppCodeUtils.getCurrentAppId());
+        return JsonUtils.toJSONString(JsonResult.success(permisslonList), "app", "parent");
     }
 
 }

@@ -69,8 +69,8 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Str
     }
 
     @Override
-    public List<SysPermission> getPermissionList(String userId) {
-        List<SysRole> roleList = roleService.getRoleList(userId);
+    public List<SysPermission> getPermissionList(String userId, String appId) {
+        List<SysRole> roleList = roleService.getRoleList(userId, appId);
         List<SysPermission> permissions = Lists.newArrayList();
         roleList.forEach(role -> permissions.addAll(role.getPermissionSet()));
         return permissions;
