@@ -16,4 +16,18 @@ public interface SysUserService extends BaseService<SysUser, String> {
      * @return
      */
     SysUser findByLoginUsername(String username);
+
+    /**
+     * 禁用用户
+     *
+     * @param userId
+     */
+    SysUser disable(String userId);
+
+    /**
+     * 启用用户
+     *
+     * @param userId
+     */
+    SysUser enable(String userId);
 }

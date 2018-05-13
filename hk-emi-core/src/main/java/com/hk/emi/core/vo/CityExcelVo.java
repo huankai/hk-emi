@@ -2,6 +2,7 @@ package com.hk.emi.core.vo;
 
 import com.hk.commons.poi.excel.annotations.ReadExcel;
 import com.hk.commons.poi.excel.annotations.WriteExcel;
+import com.hk.emi.core.domain.City;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -50,8 +51,15 @@ public class CityExcelVo implements Serializable {
     private String postOffice;
 
     /**
-     * 描述
+     * 城市类型
+     * @see City#getCityType()
      */
     @ReadExcel(start = 5)
+    private Byte cityType;
+
+    /**
+     * 描述
+     */
+    @ReadExcel(start = 6)
     private String description;
 }

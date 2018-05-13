@@ -43,7 +43,7 @@ public class BaseCodeController extends BaseController {
      */
     @GetMapping("{id}")
     public String get(@PathVariable String id) {
-        return JsonUtils.toJSONStringExcludes(JsonResult.success(baseCodeService.getOne(id)), "childCodes");
+        return JsonUtils.toJSONStringExcludes(JsonResult.success(baseCodeService.findOne(id)), "childCodes");
     }
 
     /**

@@ -105,6 +105,7 @@ public class ModelHolder {
          *     5:镇,
          *     6:村
          * </pre>
+         * @see com.hk.emi.core.domain.City.CityType
          */
         @Column(name = "city_type")
         private Byte cityType;
@@ -120,7 +121,6 @@ public class ModelHolder {
          */
         @Column(name = "description")
         private String description;
-
     }
 
 }

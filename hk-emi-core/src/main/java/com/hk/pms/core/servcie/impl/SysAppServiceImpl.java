@@ -1,12 +1,14 @@
 package com.hk.pms.core.servcie.impl;
 
 import com.hk.commons.util.AssertUtils;
+import com.hk.commons.util.ByteConstants;
 import com.hk.core.repository.BaseRepository;
-import com.hk.core.service.impl.BaseServiceImpl;
+import com.hk.core.service.impl.EnableCacheServiceImpl;
 import com.hk.pms.core.domain.SysApp;
 import com.hk.pms.core.repository.SysAppRepository;
 import com.hk.pms.core.servcie.SysAppService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,8 @@ import org.springframework.stereotype.Service;
  * @date 2018-04-12 11:32
  */
 @Service
-public class SysAppServiceImpl extends BaseServiceImpl<SysApp, String> implements SysAppService {
+@CacheConfig(cacheNames = "APP")
+public class SysAppServiceImpl extends EnableCacheServiceImpl<SysApp, String> implements SysAppService {
 
     @Autowired
     private SysAppRepository sysAppRepository;
@@ -42,4 +45,19 @@ public class SysAppServiceImpl extends BaseServiceImpl<SysApp, String> implement
         return sysAppRepository.findByAppCode(appCode);
     }
 
+    @Override
+    public SysApp enable(String appId) {
+        return updateStatus(appId, ByteConstants.ONE);
+    }
+
+    private SysApp updateStatus(String appId, Byte status) {
+        SysApp app = getOne(appId);
+        app.setAppStatus(status);
+        return saveOrUpdate(app);
+    }
+
+    @Override
+    public SysApp disable(String appId) {
+        return updateStatus(appId, ByteConstants.ZERO);
+    }
 }

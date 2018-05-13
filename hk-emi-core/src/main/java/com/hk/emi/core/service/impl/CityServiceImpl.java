@@ -13,14 +13,13 @@ import com.hk.commons.poi.excel.write.XSSFWriteableExcel;
 import com.hk.commons.util.BeanUtils;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.repository.BaseRepository;
-import com.hk.core.service.impl.EnableCacheServiceImpl;
+import com.hk.core.service.impl.BaseServiceImpl;
 import com.hk.emi.core.domain.City;
 import com.hk.emi.core.repository.CityRepository;
 import com.hk.emi.core.service.CityService;
 import com.hk.emi.core.vo.CityExcelVo;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
 import org.springframework.stereotype.Service;
@@ -36,8 +35,8 @@ import java.util.Optional;
  * @author huangkai
  */
 @Service
-@CacheConfig(cacheNames = "City")
-public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implements CityService {
+//@CacheConfig(cacheNames = "City")
+public class CityServiceImpl extends BaseServiceImpl<City, String> implements CityService {
 
     @Autowired
     private CityRepository cityRepository;
@@ -81,8 +80,9 @@ public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implem
         if (!result.hasErrors()) {
             List<CityExcelVo> resultList = result.getAllSheetData();
             List<City> cityList = findAll();
-            resultList.forEach(item -> {
-                City city = new City();
+            City city;
+            for (CityExcelVo item : resultList) {
+                city = new City();
                 BeanUtils.copyProperties(item, city);
 
                 city.setCreatedDate(DateTime.now());
@@ -99,7 +99,7 @@ public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implem
                     }
                 }
                 cityList.add(city);
-            });
+            }
             saveOrUpdate(cityList);
         }
     }

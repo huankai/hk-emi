@@ -1,6 +1,5 @@
 package com.hk.emi.test;
 
-import com.alibaba.fastjson.JSON;
 import com.hk.commons.fastjson.JsonUtils;
 import com.hk.core.query.JpaQueryModel;
 import com.hk.core.query.Order;
@@ -13,9 +12,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Persistable;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.util.List;
+import java.io.IOException;
 
 /**
  * @author huangkai
@@ -39,19 +36,12 @@ public class CityServiceTest extends BaseTest {
         china.setFullName("中国");
         china.setShortName("中国");
         china.setPostOffice("1");
-        City parent = cityService.saveOrUpdate(china);
-        if (null != parent) {
-            InputStream inputStream = CityServiceTest.class.getResourceAsStream("city.json");
-            String jsonString = JSON.parseObject(inputStream, Charset.defaultCharset(), String.class);
-            List<City> list = JsonUtils.parseObjectToList(jsonString, City.class);
-            list.forEach(item -> item.setParent(parent));
-            cityService.saveOrUpdate(list);
-        }
+        cityService.saveOrUpdate(china);
     }
 
     @Test
-    public void importExcel() throws FileNotFoundException {
-        cityService.importExcel(CityServiceTest.class.getResourceAsStream("City.xlsx"));
+    public void importExcel() throws IOException {
+        cityService.importExcel(ClassLoader.getSystemResourceAsStream("City.xlsx"));
     }
 
     /**
@@ -60,8 +50,8 @@ public class CityServiceTest extends BaseTest {
      */
     @Test
     public void testFindOnePK() {
-        City city = cityService.findOne("4028c08162be57660162be5779cb0000");
-        System.out.println(JsonUtils.toJSONString(city));
+        City city = cityService.findOne("402881e7634f6cf701634f6d429c001a");
+        System.out.println(JsonUtils.toJSONStringExcludes(city, "parent"));
 //		System.out.println(city.getFullName());
 //		System.out.println(city.getParent());
 //		List<City> childs = city.getChilds();
@@ -113,7 +103,7 @@ public class CityServiceTest extends BaseTest {
      */
     @Test
     public void testDeletePK() {
-        cityService.delete("402881e66092f9a9016092f9cd320000");
+        cityService.delete("402881e7634f6cf701634f6d429d001c");
     }
 
 }

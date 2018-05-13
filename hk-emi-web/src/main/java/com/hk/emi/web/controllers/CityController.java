@@ -57,7 +57,7 @@ public class CityController extends BaseController {
      */
     @RequestMapping("{id}")
     public String get(@PathVariable String id) {
-        return JsonUtils.toJSONStringExcludes(cityService.getOne(id), "parentId");
+        return JsonUtils.toJSONStringExcludes(cityService.findOne(id), "parentId");
     }
 
     @PostMapping("save")

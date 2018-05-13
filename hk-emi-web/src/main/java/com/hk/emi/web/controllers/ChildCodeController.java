@@ -30,7 +30,7 @@ public class ChildCodeController extends BaseController {
 
     @GetMapping("{id}")
     public String get(@PathVariable String id) {
-        return JsonUtils.toJSONString(JsonResult.success(childCodeService.getOne(id)));
+        return JsonUtils.toJSONString(JsonResult.success(childCodeService.findOne(id)));
     }
 
     @DeleteMapping("{id}")
