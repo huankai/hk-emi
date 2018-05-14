@@ -3,7 +3,6 @@
  */
 package com.hk.emi;
 
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hk.commons.util.ByteConstants;
@@ -22,15 +21,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.redis.cache.DefaultRedisCachePrefix;
-import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -48,7 +42,7 @@ import java.util.stream.Collectors;
 @EnableJpaRepositories(basePackages = {"com.hk"})
 @EntityScan(basePackages = {"com.hk"})
 
-@EnableCaching
+@EnableCaching(mode = AdviceMode.ASPECTJ, proxyTargetClass = true)
 
 // @EnableScheduling
 public class EmiApplication /* extends SpringBootServletInitializer */ {
@@ -65,20 +59,20 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
 //	 return builder.sources(EmiApplication.class).bannerMode(Mode.OFF);
 //	 }
 
-    @Bean
-    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory connectionFactory) {
-        StringRedisTemplate redisTemplate = new StringRedisTemplate(connectionFactory);
-        redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(Persistable.class));
-        return redisTemplate;
-    }
-
-
-    @Bean
-    public CacheManager cacheManager(StringRedisTemplate redisTemplate) {
-        RedisCacheManager manager = new RedisCacheManager(redisTemplate);
-        manager.setCachePrefix(new DefaultRedisCachePrefix());
-        return manager;
-    }
+//    @Bean
+//    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory connectionFactory) {
+//        StringRedisTemplate redisTemplate = new StringRedisTemplate(connectionFactory);
+//        redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(Persistable.class));
+//        return redisTemplate;
+//    }
+//
+//
+//    @Bean
+//    public CacheManager cacheManager(StringRedisTemplate redisTemplate) {
+//        RedisCacheManager manager = new RedisCacheManager(redisTemplate);
+//        manager.setCachePrefix(new DefaultRedisCachePrefix());
+//        return manager;
+//    }
 
 
 

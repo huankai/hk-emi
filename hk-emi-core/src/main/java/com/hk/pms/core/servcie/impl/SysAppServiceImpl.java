@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @date 2018-04-12 11:32
  */
 @Service
-@CacheConfig(cacheNames = "APP")
+@CacheConfig(cacheNames = "SYS_APP")
 public class SysAppServiceImpl extends EnableCacheServiceImpl<SysApp, String> implements SysAppService {
 
     @Autowired
@@ -50,14 +50,14 @@ public class SysAppServiceImpl extends EnableCacheServiceImpl<SysApp, String> im
         return updateStatus(appId, ByteConstants.ONE);
     }
 
+    @Override
+    public SysApp disable(String appId) {
+        return updateStatus(appId, ByteConstants.ZERO);
+    }
+
     private SysApp updateStatus(String appId, Byte status) {
         SysApp app = getOne(appId);
         app.setAppStatus(status);
         return saveOrUpdate(app);
-    }
-
-    @Override
-    public SysApp disable(String appId) {
-        return updateStatus(appId, ByteConstants.ZERO);
     }
 }
