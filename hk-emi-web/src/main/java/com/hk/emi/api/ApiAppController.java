@@ -29,7 +29,7 @@ public class ApiAppController extends BaseController {
         if (null == app) {
             result = JsonResult.badRueqest("不存在的资源:" + appCode);
         } else {
-            result = new JsonResult(JsonResult.Status.SUCCESS, app.getId());
+            result = new JsonResult(app.getId());
         }
         return JsonUtils.toJSONString(result);
     }

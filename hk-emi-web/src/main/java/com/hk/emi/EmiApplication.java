@@ -5,7 +5,6 @@ package com.hk.emi;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.hk.commons.util.ByteConstants;
 import com.hk.commons.util.CollectionUtils;
 import com.hk.core.authentication.security.AbstractUserDetailService;
 import com.hk.core.authentication.security.SecurityUserPrincipal;
@@ -14,6 +13,7 @@ import com.hk.pms.core.domain.ModelHolder;
 import com.hk.pms.core.domain.SysPermission;
 import com.hk.pms.core.domain.SysRole;
 import com.hk.pms.core.domain.SysUser;
+import com.hk.pms.core.servcie.SysRoleService;
 import com.hk.pms.core.servcie.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
@@ -21,13 +21,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,8 +40,6 @@ import java.util.stream.Collectors;
 
 @EnableJpaRepositories(basePackages = {"com.hk"})
 @EntityScan(basePackages = {"com.hk"})
-
-@EnableCaching(mode = AdviceMode.ASPECTJ, proxyTargetClass = true)
 
 // @EnableScheduling
 public class EmiApplication /* extends SpringBootServletInitializer */ {
@@ -59,23 +56,6 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
 //	 return builder.sources(EmiApplication.class).bannerMode(Mode.OFF);
 //	 }
 
-//    @Bean
-//    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory connectionFactory) {
-//        StringRedisTemplate redisTemplate = new StringRedisTemplate(connectionFactory);
-//        redisTemplate.setValueSerializer(new FastJsonRedisSerializer<>(Persistable.class));
-//        return redisTemplate;
-//    }
-//
-//
-//    @Bean
-//    public CacheManager cacheManager(StringRedisTemplate redisTemplate) {
-//        RedisCacheManager manager = new RedisCacheManager(redisTemplate);
-//        manager.setCachePrefix(new DefaultRedisCachePrefix());
-//        return manager;
-//    }
-
-
-
 	/*   **************************Spring Security Config **********************************    */
 
     @Bean
@@ -85,27 +65,26 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
             @Autowired
             private SysUserService sysUserService;
 
+            @Autowired
+            private SysRoleService roleService;
+
             @Override
             protected SecurityUserPrincipal loadUserByLoginUsername(String username) {
                 SysUser user = sysUserService.findByLoginUsername(username);
                 if (null == user) {
                     throw new UsernameNotFoundException("用户名或密码不正确");
                 }
-                if (!user.getIsProtect() && ByteConstants.ZERO.equals(user.getUserStatus())) {
-                    throw new LockedException("用户账号已锁定");
-                }
                 SecurityUserPrincipal principal = new SecurityUserPrincipal(user.getIsProtect(), user.getId(), user.getRealName(), user.getPassword(), user.getRealName(),
                         user.getUserType(), user.getPhone(), user.getEmail(), user.getSex(), user.getIconPath(), user.getUserStatus());
-                Set<SysRole> deptRoleSet = user.getOrgDept().getRoleSet();
-                Set<SysRole> userRoleSet = user.getRoleSet();
-                if (CollectionUtils.isNotEmpty(userRoleSet)) {
-                    deptRoleSet.addAll(userRoleSet);
-                }
+
                 principal.setAppId(AppCodeUtils.getCurrentAppId());
-                Map<String, Set<String>> roleMap = Maps.newHashMap();
-                Map<String, Set<String>> permissionMap = Maps.newHashMap();
+
+                List<SysRole> roleList = roleService.getRoleList(user.getId(), null);
+
+                Map<String, Collection<String>> roleMap = Maps.newHashMap();
+                Map<String, Collection<String>> permissionMap = Maps.newHashMap();
                 Set<String> permissionSet = Sets.newHashSet();
-                deptRoleSet.forEach(item -> {
+                roleList.forEach(item -> {
                     String appId = item.getApp().getId();
                     roleMap.merge(appId, Sets.newHashSet(item.getRoleCode()), (t, u) -> {
                         t.add(item.getRoleCode());

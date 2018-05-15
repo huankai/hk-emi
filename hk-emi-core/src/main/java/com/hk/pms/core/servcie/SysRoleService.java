@@ -1,12 +1,14 @@
 package com.hk.pms.core.servcie;
 
+import com.google.common.collect.Maps;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.authentication.api.SecurityContextUtils;
 import com.hk.core.service.BaseService;
-import com.hk.pms.core.domain.ModelHolder;
 import com.hk.pms.core.domain.SysRole;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +39,18 @@ public interface SysRoleService extends BaseService<SysRole, String> {
         return StringUtils.isNotBlank(roleCode) && getRoleListAsString(userId, appId).contains(roleCode);
     }
 
+
+    /**
+     * @return
+     */
+    default Map<String, Collection<String>> getCurrentUserAllRoleListAsString() {
+        List<SysRole> roleList = getRoleList(SecurityContextUtils.getPrincipal().getUserId(), null);
+        Map<String, List<SysRole>> byAppIdMap = roleList.stream().collect(Collectors.groupingBy((sysRole) -> sysRole.getApp().getId()));
+        Map<String, Collection<String>> result = Maps.newHashMap();
+        byAppIdMap.forEach((key, value) -> result.put(key, value.stream().map(SysRole::getRoleCode).collect(Collectors.toList())));
+        return result;
+    }
+
     /**
      * @param appId appId
      * @return
@@ -53,7 +67,7 @@ public interface SysRoleService extends BaseService<SysRole, String> {
     default List<String> getRoleListAsString(String userId, String appId) {
         return getRoleList(userId, appId)
                 .stream()
-                .map(ModelHolder.SysRoleBase::getRoleCode)
+                .map(SysRole::getRoleCode)
                 .collect(Collectors.toList());
     }
 

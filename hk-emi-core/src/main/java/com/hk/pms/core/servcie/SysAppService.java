@@ -17,7 +17,7 @@ public interface SysAppService extends BaseService<SysApp, String> {
      */
     SysApp findByAppCode(String appCode);
 
-    SysApp disable(String appId);
+    SysApp disable(String id);
 
-    SysApp enable(String appId);
+    SysApp enable(String id);
 }

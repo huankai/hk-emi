@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.hk.commons.util.ByteConstants;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.repository.BaseRepository;
-import com.hk.core.service.impl.EnableCacheServiceImpl;
+import com.hk.core.service.impl.BaseServiceImpl;
 import com.hk.pms.core.domain.SysRole;
 import com.hk.pms.core.domain.SysUser;
 import com.hk.pms.core.repository.SysRoleRepository;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @CacheConfig(cacheNames = {"SYS_ROLE"})
-public class SysRoleServiceImpl extends EnableCacheServiceImpl<SysRole, String> implements SysRoleService {
+public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, String> implements SysRoleService {
 
     @Autowired
     private SysRoleRepository sysRoleRepository;

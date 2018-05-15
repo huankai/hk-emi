@@ -40,32 +40,9 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Str
     }
 
     @Override
-    public <S extends SysPermission> List<S> saveOrUpdate(Iterable<S> entities) {
-        entities.forEach(item -> validatePermissionCode(item));
-        return super.saveOrUpdate(entities);
-    }
-
-    /**
-     * @param entity
-     * @param <S>
-     */
-    private <S extends SysPermission> void validatePermissionCode(S entity) {
+    protected <S extends SysPermission> S saveBefore(S entity) {
         AssertUtils.isTrue(StringUtils.notEquals(entity.getPermissionCode(), PermissionContants.PROTECT_ADMIN_PERMISSION), "非法的权限编号");
-    }
-
-    @Override
-    public <S extends SysPermission> S saveAndFlush(S entity) {
-        validatePermissionCode(entity);
-        return super.saveAndFlush(entity);
-    }
-
-    @Override
-    public <S extends SysPermission> S saveOrUpdate(S entity) {
-        validatePermissionCode(entity);
-        if (null == entity.getParent()) {
-            entity.setParent(entity);
-        }
-        return super.saveOrUpdate(entity);
+        return super.saveBefore(entity);
     }
 
     @Override

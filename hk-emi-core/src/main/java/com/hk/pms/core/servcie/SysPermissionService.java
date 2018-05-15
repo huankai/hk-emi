@@ -1,11 +1,14 @@
 package com.hk.pms.core.servcie;
 
+import com.google.common.collect.Maps;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.authentication.api.SecurityContextUtils;
 import com.hk.core.service.BaseService;
 import com.hk.pms.core.domain.SysPermission;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -41,6 +44,17 @@ public interface SysPermissionService extends BaseService<SysPermission, String>
      */
     default boolean hasPermission(String userId, String appId, String permissionCode) {
         return StringUtils.isNotBlank(permissionCode) && getPermissionListAsString(userId, appId).contains(permissionCode);
+    }
+
+    /**
+     * @return
+     */
+    default Map<String, Collection<String>> getCurrentUserAllRoleListAsString() {
+        List<SysPermission> permissionList = getPermissionList(SecurityContextUtils.getPrincipal().getUserId(), null);
+        Map<String, List<SysPermission>> byAppIdMap = permissionList.stream().collect(Collectors.groupingBy((permission) -> permission.getApp().getId()));
+        Map<String, Collection<String>> result = Maps.newHashMap();
+        byAppIdMap.forEach((key, value) -> result.put(key, value.stream().map(SysPermission::getPermissionCode).collect(Collectors.toList())));
+        return result;
     }
 
     /**

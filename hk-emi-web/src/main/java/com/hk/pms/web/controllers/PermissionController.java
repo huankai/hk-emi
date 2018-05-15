@@ -2,6 +2,7 @@ package com.hk.pms.web.controllers;
 
 import com.hk.commons.fastjson.JsonUtils;
 import com.hk.commons.util.date.DatePattern;
+import com.hk.core.authentication.api.UserPrincipal;
 import com.hk.core.query.JdbcQueryModel;
 import com.hk.core.query.QueryPageable;
 import com.hk.core.web.AppCodeUtils;
@@ -66,8 +67,19 @@ public class PermissionController extends BaseController {
      */
     @GetMapping("mypermission")
     public String getMyPermissionList() {
-        List<SysPermission> permisslonList = permissionService.getCurrentUserPermissionList(AppCodeUtils.getCurrentAppId());
-        return JsonUtils.toJSONString(JsonResult.success(permisslonList), "app", "parent");
+        UserPrincipal principal = getPrincipal();
+        return JsonUtils.toJSONString(JsonResult.success(principal.getAppPermissionSet().get(principal.getAppId())));
+    }
+
+    /**
+     * 获取用户权限详情
+     *
+     * @return
+     */
+    @GetMapping("mypermissiondetail")
+    public String getMyPermissionDetailList() {
+        List<SysPermission> permissionList = permissionService.getCurrentUserPermissionList(AppCodeUtils.getCurrentAppId());
+        return JsonUtils.toJSONStringExcludes(JsonResult.success(permissionList), "app");
     }
 
 }

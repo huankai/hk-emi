@@ -46,13 +46,13 @@ public class SysAppServiceImpl extends EnableCacheServiceImpl<SysApp, String> im
     }
 
     @Override
-    public SysApp enable(String appId) {
-        return updateStatus(appId, ByteConstants.ONE);
+    public SysApp enable(String id) {
+        return updateStatus(id, ByteConstants.ONE);
     }
 
     @Override
-    public SysApp disable(String appId) {
-        return updateStatus(appId, ByteConstants.ZERO);
+    public SysApp disable(String id) {
+        return updateStatus(id, ByteConstants.ZERO);
     }
 
     private SysApp updateStatus(String appId, Byte status) {
