@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2018-04-13 18:00:28
+Date: 2018-05-16 17:57:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,7 +38,8 @@ CREATE TABLE `sys_app` (
 -- ----------------------------
 -- Records of sys_app
 -- ----------------------------
-INSERT INTO `sys_app` VALUES ('4028c08162b9340f0162b93427c40000', 'HK_PMS', '权限管理系统', '127.0.0.1', 'a.png', '80', '1', '1', '2018-04-12 17:33:46', '1', '2018-04-12 17:33:46');
+INSERT INTO `sys_app` VALUES ('4028c08162b9340f0162b93427c40000', 'HK_PMS', '权限管理系统', '127.0.0.1', 'a.png', '80', '1', '4028c08162bda8ce0162bda8df6a0000', '2018-04-12 17:33:46', '4028c08162bda8ce0162bda8df6a0000', '2018-04-12 17:33:46');
+INSERT INTO `sys_app` VALUES ('4028c08162d29e1f0162d29e30a00000', 'HK_EMI', '字典管理系统', '127.0.0.1', 'b.png', '80', '1', '4028c08162bda8ce0162bda8df6a0000', '2018-04-17 16:00:05', '4028c08162bda8ce0162bda8df6a0000', '2018-04-17 16:00:05');
 
 -- ----------------------------
 -- Table structure for sys_base_code
@@ -55,8 +56,6 @@ CREATE TABLE `sys_base_code` (
 -- ----------------------------
 -- Records of sys_base_code
 -- ----------------------------
-INSERT INTO `sys_base_code` VALUES ('4028c08162be1cfa0162be1d0a900000', 'DSFZHLY', '第三方账号类型', null);
-INSERT INTO `sys_base_code` VALUES ('4028c08162be20a70162be20b7b70000', 'SFLX', '是否类型', null);
 
 -- ----------------------------
 -- Table structure for sys_child_code
@@ -81,10 +80,6 @@ CREATE TABLE `sys_child_code` (
 -- ----------------------------
 -- Records of sys_child_code
 -- ----------------------------
-INSERT INTO `sys_child_code` VALUES ('4028c08162be1de30162be1df4ca0000', '4028c08162be1cfa0162be1d0a900000', 'weixin', '微信', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:27:37', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:27:37');
-INSERT INTO `sys_child_code` VALUES ('4028c08162be1ed60162be1ee88b0000', '4028c08162be1cfa0162be1d0a900000', 'alipay', '支付宝', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:28:39', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:28:39');
-INSERT INTO `sys_child_code` VALUES ('4028c08162be216e0162be217e760000', '4028c08162be20a70162be20b7b70000', 'YES', '是', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:31:29', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:31:29');
-INSERT INTO `sys_child_code` VALUES ('4028c08162be216e0162be217eda0001', '4028c08162be20a70162be20b7b70000', 'NO', '否', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:31:29', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 16:31:29');
 
 -- ----------------------------
 -- Table structure for sys_city
@@ -94,6 +89,7 @@ CREATE TABLE `sys_city` (
   `id` char(32) NOT NULL,
   `parent_id` char(32) NOT NULL,
   `code` varchar(20) NOT NULL,
+  `city_type` tinyint(1) NOT NULL COMMENT '城市类型，1:国家,2:省或直辖市,3:市,4:区或县,5:镇,6:村',
   `full_name` varchar(50) NOT NULL,
   `short_name` varchar(50) NOT NULL,
   `english_name` varchar(100) DEFAULT NULL,
@@ -111,7 +107,7 @@ CREATE TABLE `sys_city` (
 -- ----------------------------
 -- Records of sys_city
 -- ----------------------------
-INSERT INTO `sys_city` VALUES ('4028c08162be57660162be5779cb0000', '4028c08162be57660162be5779cb0000', '1', '中国', '中国', 'China', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 17:16:44', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 17:16:49');
+INSERT INTO `sys_city` VALUES ('4028c08162be57660162be5779cb0000', '4028c08162be57660162be5779cb0000', '1', '1', '中国', '中国', 'China', '1', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 17:16:44', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 17:16:49');
 
 -- ----------------------------
 -- Table structure for sys_dept_role
@@ -186,7 +182,7 @@ CREATE TABLE `sys_org_dept` (
 -- ----------------------------
 -- Records of sys_org_dept
 -- ----------------------------
-INSERT INTO `sys_org_dept` VALUES ('4028c08162bda84d0162bda85d6b0000', '402881e662ba5fff0162ba602bff0000', '研发部', '4028c08162bda84d0162bda85d6b0000', '4028c08162bda8ce0162bda8df6a0000', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:10', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:10');
+INSERT INTO `sys_org_dept` VALUES ('4028c08162bda84d0162bda85d6b0000', '402881e662ba5fff0162ba602bff0000', '财务部', '4028c08162bda84d0162bda85d6b0000', '4028c08162bda8ce0162bda8df6a0000', null, '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:10', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:10');
 
 -- ----------------------------
 -- Table structure for sys_permission
@@ -194,6 +190,7 @@ INSERT INTO `sys_org_dept` VALUES ('4028c08162bda84d0162bda85d6b0000', '402881e6
 DROP TABLE IF EXISTS `sys_permission`;
 CREATE TABLE `sys_permission` (
   `id` char(32) NOT NULL,
+  `parent_id` char(32) NOT NULL COMMENT '上级权限id',
   `app_id` char(32) NOT NULL COMMENT '应用名称',
   `permission_code` varchar(20) NOT NULL COMMENT '权限编号',
   `permission_name` varchar(30) NOT NULL COMMENT '权限名称',
@@ -210,6 +207,14 @@ CREATE TABLE `sys_permission` (
 -- ----------------------------
 -- Records of sys_permission
 -- ----------------------------
+INSERT INTO `sys_permission` VALUES ('4028c081634dc57001634dc84de80001', '4028c081634dc57001634dc84de80001', '4028c08162b9340f0162b93427c40000', 'permission_list', '权限管理', null, '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 13:59:23', '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 13:59:23');
+INSERT INTO `sys_permission` VALUES ('4028c081634dc9b001634dd5545a0000', '4028c081634dc57001634dc84de80001', '4028c08162b9340f0162b93427c40000', 'permission_create', '添加权限', null, '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 14:13:36', '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 14:13:36');
+INSERT INTO `sys_permission` VALUES ('4028c081634dc9b001634dd5fb060001', '4028c081634dc57001634dc84de80001', '4028c08162b9340f0162b93427c40000', 'permission_edit', '修改权限', null, '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 14:14:19', '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 14:14:19');
+INSERT INTO `sys_permission` VALUES ('4028c081634dff6501634e0119890001', '4028c081634dc57001634dc84de80001', '4028c08162b9340f0162b93427c40000', 'permission_delete', '删除权限', null, '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 15:01:25', '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 15:01:25');
+INSERT INTO `sys_permission` VALUES ('4028c081634dff6501634e0122c00005', '4028c081634dff6501634e0122c00005', '4028c08162b9340f0162b93427c40000', 'role_list', '角色管理', null, '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 15:01:27', '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 15:01:27');
+INSERT INTO `sys_permission` VALUES ('4028c081634dff6501634e0124df0006', '4028c081634dff6501634e0122c00005', '4028c08162b9340f0162b93427c40000', 'role_create', '添加角色', null, '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 15:01:28', '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 15:01:28');
+INSERT INTO `sys_permission` VALUES ('4028c081634dff6501634e0126b90007', '4028c081634dff6501634e0122c00005', '4028c08162b9340f0162b93427c40000', 'role_edit', '修改角色', null, '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 15:01:28', '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 15:01:28');
+INSERT INTO `sys_permission` VALUES ('4028c081634dff6501634e0128cf0008', '4028c081634dff6501634e0122c00005', '4028c08162b9340f0162b93427c40000', 'role_delete', '删除角色', null, '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 15:01:29', '4028c08162bda8ce0162bda8df6a0000', '2018-05-11 15:01:29');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -234,6 +239,7 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
+INSERT INTO `sys_role` VALUES ('4028c08162d2866a0162d28687770000', '4028c08162b9340f0162b93427c40000', '系统管理员', 'ADMIN', '1', null, '1', '2018-04-17 15:34:15', '1', '2018-04-17 15:34:15');
 
 -- ----------------------------
 -- Table structure for sys_role_permission
@@ -266,6 +272,7 @@ CREATE TABLE `sys_user` (
   `password` varchar(100) NOT NULL,
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱虚',
   `real_name` varchar(20) NOT NULL COMMENT '真实名称',
+  `user_type` tinyint(1) NOT NULL,
   `is_protect` tinyint(1) NOT NULL COMMENT '是否受保护的账号(0,否,1:是)，保护的账号有全部权限',
   `sex` tinyint(1) NOT NULL COMMENT '用户性别(1,男，2：女)',
   `icon_path` varchar(100) DEFAULT NULL COMMENT '用户头像',
@@ -289,7 +296,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('4028c08162bda8ce0162bda8df6a0000', '402881e662ba5fff0162ba602bff0000', '4028c08162bda84d0162bda85d6b0000', '18820136090', '$2a$10$KgOArE6QpbY2iTQC0WGGS.hP72PQsHpToqbNVEEmUrd5LcEqrbzAG', 'xx@xx.com', '系统管理员', '1', '1', null, '2000-01-01', null, null, '1', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:44', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:44');
+INSERT INTO `sys_user` VALUES ('4028c08162bda8ce0162bda8df6a0000', '402881e662ba5fff0162ba602bff0000', '4028c08162bda84d0162bda85d6b0000', '18820136090', '$2a$10$KgOArE6QpbY2iTQC0WGGS.hP72PQsHpToqbNVEEmUrd5LcEqrbzAG', 'huankai@139.com', '系统管理员', '0', '1', '1', null, '2000-01-01', null, null, '1', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:44', '4028c08162bda8ce0162bda8df6a0000', '2018-04-13 14:19:44');
 
 -- ----------------------------
 -- Table structure for sys_user_role

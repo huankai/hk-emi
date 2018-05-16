@@ -3,6 +3,7 @@ package com.hk.emi.web.controllers;
 import com.google.common.collect.Lists;
 import com.hk.commons.fastjson.JsonUtils;
 import com.hk.commons.util.ByteConstants;
+import com.hk.core.authentication.api.UserPrincipal;
 import com.hk.core.query.JpaQueryModel;
 import com.hk.core.query.QueryPageable;
 import com.hk.core.web.JsonResult;
@@ -10,9 +11,12 @@ import com.hk.core.web.controller.BaseController;
 import com.hk.pms.core.domain.SysApp;
 import com.hk.pms.core.servcie.SysAppService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -91,10 +95,22 @@ public class AppController extends BaseController {
         return JsonUtils.toJSONString(JsonResult.success());
     }
 
+    /**
+     * 判断id是否存在
+     *
+     * @param id
+     * @param userPrincipal 获取当前登陆的用户，Spring Security 可以使用 {@link AuthenticationPrincipal} 注解自动获取当前登陆的用户.
+     * @return
+     * @see https://docs.spring.io/spring-security/site/docs/4.2.7.BUILD-SNAPSHOT/reference/htmlsingle/#mvc-authentication-principal
+     */
     @GetMapping("exists/{id}")
-    public String exists(@PathVariable String id) {
-        appService.exists(id);
-        return JsonUtils.toJSONString(JsonResult.success());
+    public String exists(@PathVariable String id, @AuthenticationPrincipal UserPrincipal userPrincipal, HttpServletRequest request) throws ServletException {
+        System.out.println(userPrincipal.getUserId());
+        boolean exists = appService.exists(id);
+        System.out.println(request.getRemoteUser());
+        System.out.println(request.getUserPrincipal());
+        System.out.println(request.isUserInRole("admin"));
+        return JsonUtils.toJSONString(JsonResult.success(exists));
     }
 
     @GetMapping("count")

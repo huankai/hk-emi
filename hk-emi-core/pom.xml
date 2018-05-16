@@ -28,6 +28,10 @@
 			<artifactId>hk-core-service</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.hk</groupId>
+			<artifactId>hk-core-cache</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>

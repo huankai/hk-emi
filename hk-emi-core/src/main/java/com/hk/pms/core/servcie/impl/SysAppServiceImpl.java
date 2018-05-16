@@ -2,8 +2,8 @@ package com.hk.pms.core.servcie.impl;
 
 import com.hk.commons.util.AssertUtils;
 import com.hk.commons.util.ByteConstants;
+import com.hk.core.cache.service.EnableCacheServiceImpl;
 import com.hk.core.repository.BaseRepository;
-import com.hk.core.service.impl.EnableCacheServiceImpl;
 import com.hk.pms.core.domain.SysApp;
 import com.hk.pms.core.repository.SysAppRepository;
 import com.hk.pms.core.servcie.SysAppService;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @date 2018-04-12 11:32
  */
 @Service
-@CacheConfig(cacheNames = "SYS_APP")
+@CacheConfig(cacheNames = {"app_Cache"})
 public class SysAppServiceImpl extends EnableCacheServiceImpl<SysApp, String> implements SysAppService {
 
     @Autowired
@@ -58,6 +58,6 @@ public class SysAppServiceImpl extends EnableCacheServiceImpl<SysApp, String> im
     private SysApp updateStatus(String appId, Byte status) {
         SysApp app = getOne(appId);
         app.setAppStatus(status);
-        return saveOrUpdate(app);
+        return getCurrentProxy().saveOrUpdate(app);
     }
 }
