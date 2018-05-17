@@ -1,7 +1,6 @@
 package com.hk.emi.api;
 
 import com.hk.commons.fastjson.JsonUtils;
-import com.hk.core.authentication.api.UserPrincipal;
 import com.hk.core.web.JsonResult;
 import com.hk.core.web.controller.BaseController;
 import com.hk.pms.core.domain.SysApp;
@@ -25,7 +24,6 @@ public class ApiAppController extends BaseController {
 
     @GetMapping("{appCode}")
     public String getByCode(@PathVariable String appCode) {
-        UserPrincipal principal = getPrincipal();
         SysApp app = appService.findByAppCode(appCode);
         JsonResult result;
         if (null == app) {
