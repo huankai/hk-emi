@@ -12,14 +12,14 @@ import com.hk.commons.poi.excel.write.WriteableExcel;
 import com.hk.commons.poi.excel.write.XSSFWriteableExcel;
 import com.hk.commons.util.BeanUtils;
 import com.hk.commons.util.StringUtils;
+import com.hk.core.cache.service.EnableCacheServiceImpl;
 import com.hk.core.repository.BaseRepository;
-import com.hk.core.service.impl.BaseServiceImpl;
 import com.hk.emi.core.domain.City;
 import com.hk.emi.core.repository.CityRepository;
 import com.hk.emi.core.service.CityService;
 import com.hk.emi.core.vo.CityExcelVo;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
 import org.springframework.stereotype.Service;
@@ -35,8 +35,8 @@ import java.util.Optional;
  * @author huangkai
  */
 @Service
-//@CacheConfig(cacheNames = "City")
-public class CityServiceImpl extends BaseServiceImpl<City, String> implements CityService {
+@CacheConfig(cacheNames = "City")
+public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implements CityService {
 
     @Autowired
     private CityRepository cityRepository;
@@ -84,12 +84,6 @@ public class CityServiceImpl extends BaseServiceImpl<City, String> implements Ci
             for (CityExcelVo item : resultList) {
                 city = new City();
                 BeanUtils.copyProperties(item, city);
-
-                city.setCreatedDate(DateTime.now());
-                city.setCreatedBy("4028c08162bda8ce0162bda8df6a0000");
-                city.setLastModifiedDate(DateTime.now());
-                city.setLastModifiedBy("4028c08162bda8ce0162bda8df6a0000");
-
                 if (StringUtils.isNotEmpty(item.getParentName())) {
                     Optional<City> cityOptional = cityList.stream().filter(c -> StringUtils.equals(c.getFullName(), item.getParentName())).findFirst();
                     if (cityOptional.isPresent()) {
@@ -100,7 +94,7 @@ public class CityServiceImpl extends BaseServiceImpl<City, String> implements Ci
                 }
                 cityList.add(city);
             }
-            saveOrUpdate(cityList);
+            getCurrentProxy().saveOrUpdate(cityList);
         }
     }
 

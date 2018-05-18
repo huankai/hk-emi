@@ -1,6 +1,7 @@
 package com.hk.pms.core.servcie;
 
 import com.google.common.collect.Maps;
+import com.hk.commons.util.AssertUtils;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.authentication.api.SecurityContextUtils;
 import com.hk.core.service.BaseService;
@@ -39,6 +40,16 @@ public interface SysRoleService extends BaseService<SysRole, String> {
         return StringUtils.isNotBlank(roleCode) && getRoleListAsString(userId, appId).contains(roleCode);
     }
 
+    /**
+     * 判断用户是否有指定的角色，如果没有抛出异常
+     *
+     * @param userId   userId
+     * @param appId    appId
+     * @param roleCode 角色编号
+     */
+    default void checkRole(String userId, String appId, String roleCode) {
+        AssertUtils.isTrue(hasRole(userId, appId, roleCode), String.format("userId[%s],appId[%s], No role:[%s]", userId, appId, roleCode));
+    }
 
     /**
      * @return

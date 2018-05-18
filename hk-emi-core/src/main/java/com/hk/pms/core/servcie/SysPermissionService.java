@@ -1,6 +1,7 @@
 package com.hk.pms.core.servcie;
 
 import com.google.common.collect.Maps;
+import com.hk.commons.util.AssertUtils;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.authentication.api.SecurityContextUtils;
 import com.hk.core.service.BaseService;
@@ -47,6 +48,19 @@ public interface SysPermissionService extends BaseService<SysPermission, String>
     }
 
     /**
+     * 检查权限是否存在
+     *
+     * @param userId         用户id
+     * @param appId          appId
+     * @param permissionCode 权限编号
+     */
+    default void checkPermissioin(String userId, String appId, String permissionCode) {
+        AssertUtils.isTrue(hasPermission(userId, appId, permissionCode), String.format("userId[%s],appId[%s], No Permission:[%s]", userId, appId, permissionCode));
+    }
+
+    /**
+     * 返回当前登陆用户的所有系统权限编号列表
+     *
      * @return
      */
     default Map<String, Collection<String>> getCurrentUserAllRoleListAsString() {

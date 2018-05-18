@@ -86,6 +86,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.hk</groupId>
+				<artifactId>hk-core-cache-redis</artifactId>
+				<version>${hk.core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.hk</groupId>
 				<artifactId>hk-core-web</artifactId>
 				<version>${hk.core.version}</version>
 			</dependency>
