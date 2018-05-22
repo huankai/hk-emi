@@ -10,7 +10,6 @@ import com.hk.pms.core.servcie.*;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -43,19 +42,20 @@ public class SyUserServiceTest extends BaseTest {
         user.setOrgDept(orgDept);
         user.setOrg(orgDept.getOrg());
         user.setUserStatus(ByteConstants.ONE);
-        user.setRealName("系统管理员");
+        user.setRealName("普通用户2");
         user.setBrith(LocalDate.ofYearDay(2000, 1));
-        user.setPassword(new BCryptPasswordEncoder().encode("admin"));
+        user.setPassword("admin");
         user.setEmail("xx2@xx.com");
-        user.setPhone("18820136091");
+        user.setPhone("18820132015");
         user.setUserType(ByteConstants.ZERO);
-        user.setIsProtect(true);
+        user.setIsProtect(false);
         user.setSex(ByteConstants.ZERO);
-        user.setCreatedBy("1");
-        user.setCreatedDate(DateTime.now());
-        user.setLastModifiedBy("1");
-        user.setLastModifiedDate(DateTime.now());
-        System.out.println(JsonUtils.toJSONStringExcludes(userService.saveOrUpdate(user), "org", "orgDept"));
+//        user.setCreatedBy("4028c08162bda8ce0162bda8df6a0000");
+//        user.setCreatedDate(DateTime.now());
+//        user.setLastModifiedBy("4028c08162bda8ce0162bda8df6a0000");
+//        user.setLastModifiedDate(DateTime.now());
+        userService.saveOrUpdate(user);
+//        System.out.println(JsonUtils.toJSONStringExcludes(userService.saveOrUpdate(user), "org", "orgDept"));
     }
 
     @Test

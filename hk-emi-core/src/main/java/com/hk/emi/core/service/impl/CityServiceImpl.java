@@ -91,6 +91,7 @@ public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implem
                         city.setParent(parent);
                         city.setCityType(Byte.valueOf(Integer.valueOf(parent.getCityType() + 1).toString()));
                     }
+
                 }
                 cityList.add(city);
             }

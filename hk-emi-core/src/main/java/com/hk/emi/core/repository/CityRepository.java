@@ -17,7 +17,7 @@ public interface CityRepository extends StringRepository<City>,CustomCityReposit
     /**
      * 查询下级
      *
-     * @param parentId
+     * @param parentId parentId
      * @return
      */
     List<City> findByParentId(String parentId);

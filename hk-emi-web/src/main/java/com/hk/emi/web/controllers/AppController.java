@@ -11,6 +11,7 @@ import com.hk.core.web.controller.BaseController;
 import com.hk.pms.core.domain.SysApp;
 import com.hk.pms.core.servcie.SysAppService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +32,14 @@ public class AppController extends BaseController {
     private SysAppService appService;
 
     @RequestMapping
+    @PreAuthorize("hasAuthority('permission_list')")
     public String list(JpaQueryModel<SysApp> query) {
         QueryPageable<SysApp> pageable = appService.queryForPage(query);
         return JsonUtils.toJSONStringExcludes(JsonResult.success(pageable));
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('permission_edit')")
     public String detail(@PathVariable String id) {
         SysApp app = appService.findOne(id);
         System.out.println(appService.getOne(id));
@@ -51,6 +54,7 @@ public class AppController extends BaseController {
      * @param errors
      * @return
      */
+    @PreAuthorize("hasAuthority('permission_create')")
     @PostMapping("save")
     public String saveOrUpdate(SysApp app, Errors errors) {
         if (errors.hasErrors()) {
@@ -66,6 +70,7 @@ public class AppController extends BaseController {
      * @return
      */
     @GetMapping("savelist")
+    @PreAuthorize("hasAuthority('permission_create')")
     public String saveOrUpdateList() {
         List<SysApp> appList = Lists.newArrayList();
         SysApp app;
@@ -84,6 +89,7 @@ public class AppController extends BaseController {
     }
 
     @GetMapping("saveandflush")
+    @PreAuthorize("hasAuthority('permission_create')")
     public String saveAndFlush() {
         SysApp app = new SysApp();
         app.setAppStatus(ByteConstants.ONE);
@@ -104,6 +110,7 @@ public class AppController extends BaseController {
      * @see https://docs.spring.io/spring-security/site/docs/4.2.7.BUILD-SNAPSHOT/reference/htmlsingle/#mvc-authentication-principal
      */
     @GetMapping("exists/{id}")
+    @PreAuthorize("hasAuthority('permission_edit')")
     public String exists(@PathVariable String id, @AuthenticationPrincipal UserPrincipal userPrincipal, HttpServletRequest request) throws ServletException {
         System.out.println(userPrincipal.getUserId());
         boolean exists = appService.exists(id);
@@ -114,17 +121,20 @@ public class AppController extends BaseController {
     }
 
     @GetMapping("count")
+    @PreAuthorize("hasAuthority('permission_list')")
     public String count() {
         return JsonUtils.toJSONString(JsonResult.success(appService.count()));
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('permission_delete')")
     public String delete(@PathVariable String id) {
         appService.delete(id);
         return JsonUtils.toJSONString(JsonResult.success());
     }
 
     @DeleteMapping("deleteentity")
+    @PreAuthorize("hasAuthority('permission_delete')")
     public String deleteEntity() {
         SysApp app = new SysApp();
         app.setAppStatus(ByteConstants.ONE);
@@ -137,6 +147,7 @@ public class AppController extends BaseController {
     }
 
     @DeleteMapping("deleteall")
+    @PreAuthorize("hasAuthority('permission_delete')")
     public String deleteAll() {
         List<SysApp> appList = Lists.newArrayList();
         SysApp app;
@@ -154,12 +165,14 @@ public class AppController extends BaseController {
     }
 
     @PostMapping("disable/{id}")
+    @PreAuthorize("hasAuthority('permission_edit')")
     public String disable(@PathVariable String id) {
         appService.disable(id);
         return JsonUtils.toJSONString(JsonResult.success());
     }
 
     @PostMapping("enable/{id}")
+    @PreAuthorize("hasAuthority('permission_edit')")
     public String enable(@PathVariable String id) {
         appService.enable(id);
         return JsonUtils.toJSONString(JsonResult.success());

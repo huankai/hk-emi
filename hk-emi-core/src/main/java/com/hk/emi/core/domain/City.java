@@ -2,6 +2,7 @@ package com.hk.emi.core.domain;
 
 import com.hk.commons.annotations.EnumDisplay;
 import com.hk.commons.util.ByteConstants;
+import com.hk.commons.util.EnumDisplayUtils;
 import com.hk.emi.core.domain.ModelHolder.CityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,15 +42,26 @@ public class City extends CityBase {
         @EnumDisplay(value = "村", order = 6)
         VILLAGE(ByteConstants.SIX);
 
-        private byte cityType;
+        private Byte cityType;
 
-        CityType(byte cityType) {
+        CityType(Byte cityType) {
             this.cityType = cityType;
         }
 
         public byte getCityType() {
             return cityType;
         }
+    }
+
+    public String getCityTypeChinease() {
+        CityType[] values = CityType.values();
+        Byte cityType = getCityType();
+        for (CityType type : values) {
+            if (type.cityType.equals(cityType)) {
+                return EnumDisplayUtils.getDisplayText(type.name(), CityType.class);
+            }
+        }
+        throw new IllegalStateException("Parameters that can not be identified.paramter value :" + cityType);
     }
 
 }
