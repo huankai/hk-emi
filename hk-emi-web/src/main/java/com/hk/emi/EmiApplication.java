@@ -6,6 +6,7 @@ package com.hk.emi;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hk.commons.util.CollectionUtils;
+import com.hk.commons.util.SpringContextHolder;
 import com.hk.core.authentication.security.AbstractUserDetailService;
 import com.hk.core.authentication.security.SecurityUserPrincipal;
 import com.hk.core.web.AppCodeUtils;
@@ -72,7 +73,7 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
             protected SecurityUserPrincipal loadUserByLoginUsername(String username) {
                 SysUser user = sysUserService.findByLoginUsername(username);
                 if (null == user) {
-                    throw new UsernameNotFoundException("用户名或密码不正确");
+                    throw new UsernameNotFoundException(SpringContextHolder.getMessage("login.username_password_error", null));
                 }
                 SecurityUserPrincipal principal = new SecurityUserPrincipal(user.getIsProtect(), user.getId(), user.getRealName(), user.getPassword(), user.getRealName(),
                         user.getUserType(), user.getPhone(), user.getEmail(), user.getSex(), user.getIconPath(), user.getUserStatus());

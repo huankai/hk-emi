@@ -58,4 +58,26 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, String> impleme
         roleList.addAll(deptRoleList);
         return Lists.newArrayList(roleSet);
     }
+
+    @Override
+    public SysRole disable(String id) {
+        SysRole role = getOne(id);
+        role.setRoleStatus(ByteConstants.ZERO);
+        return saveOrUpdate(role);
+    }
+
+    @Override
+    public SysRole enable(String id) {
+        SysRole role = getOne(id);
+        role.setRoleStatus(ByteConstants.ONE);
+        return saveOrUpdate(role);
+    }
+
+    @Override
+    protected <S extends SysRole> S saveBefore(S entity) {
+        if (null == entity.getRoleStatus()) {
+            entity.setRoleStatus(ByteConstants.ONE);
+        }
+        return super.saveBefore(entity);
+    }
 }

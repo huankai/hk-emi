@@ -9,4 +9,6 @@ import com.hk.pms.core.domain.SysRolePermission;
  */
 public interface SysRolePermissionRepository extends StringRepository<SysRolePermission> {
 
+
+    void deleteByRoleIdAndPermissionId(String roleId, String permissionId);
 }

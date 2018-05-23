@@ -9,4 +9,5 @@ import com.hk.pms.core.domain.SysDeptRole;
  */
 public interface SysDeptRoleService extends BaseService<SysDeptRole,String> {
 
+    void deleteByDeptIdAndRoleId(String deptId, String roleId);
 }

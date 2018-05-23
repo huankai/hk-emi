@@ -5,12 +5,12 @@ import com.hk.commons.util.date.DatePattern;
 import com.hk.core.authentication.api.UserPrincipal;
 import com.hk.core.query.JdbcQueryModel;
 import com.hk.core.query.QueryPageable;
-import com.hk.core.web.AppCodeUtils;
 import com.hk.core.web.JsonResult;
 import com.hk.core.web.controller.BaseController;
 import com.hk.pms.core.domain.SysPermission;
 import com.hk.pms.core.servcie.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,18 +34,21 @@ public class PermissionController extends BaseController {
      * @return
      */
     @RequestMapping()
+    @PreAuthorize("hasAuthority('permission_list')")
     public String queryByPage(@RequestBody JdbcQueryModel query) {
         QueryPageable<SysPermission> pageResult = permissionService.queryForPage(query);
         return JsonUtils.toJSONStringExcludes(JsonResult.success(pageResult), "app", "parent", "child");
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('permission_delete')")
     public String deleteById(@PathVariable String id) {
         permissionService.delete(id);
         return JsonUtils.toJSONString(JsonResult.success());
     }
 
     @PostMapping("save")
+    @PreAuthorize("hasAnyAuthority('permission_create','permission_edit')")
     public String saveOrUpdate(SysPermission permission, Errors errors) {
         if (errors.hasErrors()) {
             return JsonUtils.toJSONString(JsonResult.error(errors.getFieldError().getDefaultMessage()));
@@ -55,8 +58,9 @@ public class PermissionController extends BaseController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('permission_list')")
     public String detail(@PathVariable String id) {
-        SysPermission permission = permissionService.findOne(id);
+        SysPermission permission = permissionService.getOne(id);
         return JsonUtils.toJSONStringExcludes(JsonResult.success(permission), DatePattern.YYYY_MM_DD_HH_MM_SS, "app", "parent", "child");
     }
 
@@ -65,10 +69,10 @@ public class PermissionController extends BaseController {
      *
      * @return
      */
-    @GetMapping("mypermission")
+    @GetMapping("my")
     public String getMyPermissionList() {
         UserPrincipal principal = getPrincipal();
-        return JsonUtils.toJSONString(JsonResult.success(principal.getAppPermissionSet().get(principal.getAppId())));
+        return JsonUtils.toJSONString(JsonResult.success(principal.getPermissionByAppId(principal.getAppId())));
     }
 
     /**
@@ -76,9 +80,9 @@ public class PermissionController extends BaseController {
      *
      * @return
      */
-    @GetMapping("mypermissiondetail")
+    @GetMapping("my/detail")
     public String getMyPermissionDetailList() {
-        List<SysPermission> permissionList = permissionService.getCurrentUserPermissionList(AppCodeUtils.getCurrentAppId());
+        List<SysPermission> permissionList = permissionService.getCurrentUserPermissionList(getPrincipal().getAppId());
         return JsonUtils.toJSONStringExcludes(JsonResult.success(permissionList), "app");
     }
 

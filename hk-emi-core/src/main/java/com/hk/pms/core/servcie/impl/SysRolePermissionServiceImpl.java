@@ -27,4 +27,9 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
     protected BaseRepository<SysRolePermission, String> getBaseRepository() {
         return sysRolePermissionRepository;
     }
+
+    @Override
+    public void deleteByRoleIdAndPermissionId(String roleId, String permissionId) {
+        sysRolePermissionRepository.deleteByRoleIdAndPermissionId(roleId,permissionId);
+    }
 }

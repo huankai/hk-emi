@@ -5,6 +5,7 @@ import com.hk.core.service.impl.BaseServiceImpl;
 import com.hk.pms.core.domain.SysDeptRole;
 import com.hk.pms.core.repository.SysDeptRoleRepository;
 import com.hk.pms.core.servcie.SysDeptRoleService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,10 @@ public class SysDeptRoleServiceImpl extends BaseServiceImpl<SysDeptRole, String>
     @Override
     protected BaseRepository<SysDeptRole, String> getBaseRepository() {
         return sysDeptRoleRepository;
+    }
+
+    @Override
+    public void deleteByDeptIdAndRoleId(String deptId, String roleId) {
+        sysDeptRoleRepository.deleteByDeptIdAndRoleId(deptId, roleId);
     }
 }

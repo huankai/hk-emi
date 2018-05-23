@@ -1,9 +1,6 @@
 package com.hk.pms.core.servcie.impl;
 
 import com.google.common.collect.Lists;
-import com.hk.commons.util.AssertUtils;
-import com.hk.commons.util.StringUtils;
-import com.hk.core.authentication.api.PermissionContants;
 import com.hk.core.repository.BaseRepository;
 import com.hk.core.service.impl.BaseServiceImpl;
 import com.hk.pms.core.domain.SysPermission;
@@ -37,12 +34,6 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Str
     @Override
     protected BaseRepository<SysPermission, String> getBaseRepository() {
         return sysPermissionRepository;
-    }
-
-    @Override
-    protected <S extends SysPermission> S saveBefore(S entity) {
-        AssertUtils.isTrue(StringUtils.notEquals(entity.getPermissionCode(), PermissionContants.PROTECT_ADMIN_PERMISSION), "非法的权限编号");
-        return super.saveBefore(entity);
     }
 
     @Override

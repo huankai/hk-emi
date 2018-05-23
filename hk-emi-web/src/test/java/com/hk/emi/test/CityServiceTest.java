@@ -7,6 +7,7 @@ import com.hk.core.query.QueryModel;
 import com.hk.core.query.QueryPageable;
 import com.hk.emi.core.domain.City;
 import com.hk.emi.core.service.CityService;
+import com.hk.pms.core.servcie.SysPermissionService;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +104,9 @@ public class CityServiceTest extends BaseTest {
      */
     @Test
     public void testDeletePK() {
-        cityService.delete("402881e7634f6cf701634f6d429d001c");
+        cityService.delete("4028c081638a9ceb01638a9d08440015");
     }
 
+    @Autowired
+    private SysPermissionService permissionService;
 }

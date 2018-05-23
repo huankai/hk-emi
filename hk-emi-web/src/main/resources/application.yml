@@ -1,5 +1,9 @@
 #################################################### 激活配置文件
-spring: 
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
 #  mvc:
 #    message-codes-resolver-format: postfix-error-code
 #    date-format: yyyy-MM-dd
@@ -9,22 +13,21 @@ spring:
       enabled: true
       max-file-size: 50
       max-request-size: 50
-      
+
   messages:
-    basename: org/springframework/security/messages_zh_CN,messages_zh_CN # 指定message的basename，多个以逗号分隔，如果不加包名的话，默认从classpath路径开始，默认: messages
+    basename: org/springframework/security/messages,i18n/messages,messages # 指定message的basename，多个以逗号分隔，如果不加包名的话，默认从classpath路径开始，默认: messages
     cache-seconds: -1  # 设定加载的资源文件缓存失效时间，-1的话为永不过期，默认为-1
     encoding: UTF-8    # 设定Message bundles的编码，默认: UTF-8
-      
+
 #  output:
 #    ansi:
-#      enabled: ALWAYS # If your terminal supports ANSI, color output will be used to aid readability. 
-  profiles: 
+#      enabled: ALWAYS # If your terminal supports ANSI, color output will be used to aid readability.
+  profiles:
     active:
     - dev
   application:
     name: HK_EMI
-    
-#################################################### 日志配置    
+#################################################### 日志配置
 logging: 
   config: classpath:log4j2.xml   #日志文件配置路径
 

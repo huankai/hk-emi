@@ -91,4 +91,19 @@ public interface SysRoleService extends BaseService<SysRole, String> {
         return getRoleList(SecurityContextUtils.getPrincipal().getUserId(), appId);
     }
 
+    /**
+     * 禁用
+     *
+     * @param id
+     * @return
+     */
+    SysRole disable(String id);
+
+    /**
+     * 启用
+     *
+     * @param id
+     * @return
+     */
+    SysRole enable(String id);
 }

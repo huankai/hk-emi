@@ -8,4 +8,6 @@ import com.hk.pms.core.domain.SysUserRole;
  * @date 2018-04-12 17:02
  */
 public interface SysUserRoleService extends BaseService<SysUserRole,String> {
+
+    void deleteByUserIdAndRoleId(String userId, String roleId);
 }

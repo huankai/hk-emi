@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -84,6 +85,10 @@ public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implem
             for (CityExcelVo item : resultList) {
                 city = new City();
                 BeanUtils.copyProperties(item, city);
+                city.setLastModifiedBy("4028c08163872c4e0163872c65e30000");
+                city.setCreatedBy("4028c08163872c4e0163872c65e30000");
+                city.setLastModifiedDate(LocalDateTime.now());
+                city.setCreatedDate(LocalDateTime.now());
                 if (StringUtils.isNotEmpty(item.getParentName())) {
                     Optional<City> cityOptional = cityList.stream().filter(c -> StringUtils.equals(c.getFullName(), item.getParentName())).findFirst();
                     if (cityOptional.isPresent()) {

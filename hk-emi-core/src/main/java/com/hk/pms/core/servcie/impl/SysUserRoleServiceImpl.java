@@ -27,4 +27,9 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRole,String> 
     protected BaseRepository<SysUserRole, String> getBaseRepository() {
         return sysUserRoleRepository;
     }
+
+    @Override
+    public void deleteByUserIdAndRoleId(String userId, String roleId) {
+        sysUserRoleRepository.deleteByUserIdAndRoleId(userId,roleId);
+    }
 }

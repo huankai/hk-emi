@@ -31,8 +31,14 @@ public class CityController extends BaseController {
     @Autowired
     private CityService cityService;
 
+    /**
+     * Search
+     *
+     * @param query query
+     * @return json result
+     */
     @RequestMapping
-    public String search(@RequestBody JpaQueryModel<City> query) {
+    public String search(JpaQueryModel<City> query) {
         QueryPageable<City> page = cityService.queryForPage(query);
         return JsonUtils.toJSONString(JsonResult.success(page));
     }
@@ -40,8 +46,8 @@ public class CityController extends BaseController {
     /**
      * 查询下级
      *
-     * @param parentId
-     * @return
+     * @param parentId parentId
+     * @return json result
      */
     @RequestMapping("child/{parentId}")
     public String childList(@PathVariable String parentId) {
@@ -52,14 +58,21 @@ public class CityController extends BaseController {
     /**
      * 详情
      *
-     * @param id
-     * @return
+     * @param id id
+     * @return json result
      */
     @RequestMapping("{id}")
     public String get(@PathVariable String id) {
         return JsonUtils.toJSONStringExcludes(cityService.findOne(id), "parentId");
     }
 
+    /**
+     * Save Or update
+     *
+     * @param city   city
+     * @param errors errors
+     * @return json result
+     */
     @PostMapping("save")
     public String save(City city, Errors errors) {
         if (errors.hasErrors()) {
@@ -71,7 +84,7 @@ public class CityController extends BaseController {
 
     /**
      * @param id 根据id删除
-     * @return
+     * @return json result
      */
     @DeleteMapping("{id}")
     public String deleteById(@PathVariable String id) {
@@ -82,8 +95,8 @@ public class CityController extends BaseController {
     /**
      * 导入
      *
-     * @param multipartFile
-     * @return
+     * @param multipartFile multipartFile
+     * @return json result
      */
     @PostMapping("import")
     public String importExcel(@RequestParam("file") MultipartFile multipartFile) throws IOException {
@@ -94,8 +107,8 @@ public class CityController extends BaseController {
     /**
      * 导出
      *
-     * @param city
-     * @return
+     * @param city city
+     * @return json result
      */
     @GetMapping("export")
     public ResponseEntity<byte[]> exportExcel(City city) {
