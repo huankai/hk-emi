@@ -1,7 +1,7 @@
 package com.hk.emi.test.controller;
 
 import com.google.common.collect.Lists;
-import com.hk.commons.fastjson.JsonUtils;
+import com.hk.commons.util.JsonUtils;
 import com.hk.core.query.JdbcQueryModel;
 import com.hk.core.query.Operator;
 import com.hk.core.query.QueryCondition;

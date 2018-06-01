@@ -96,22 +96,12 @@
 			</dependency>
 			<dependency>
 				<groupId>com.hk</groupId>
-				<artifactId>hk-core-webmvc</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
 				<artifactId>hk-core-authentication-api</artifactId>
 				<version>${hk.core.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.hk</groupId>
 				<artifactId>hk-core-i18n</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-core-authentication-shiro</artifactId>
 				<version>${hk.core.version}</version>
 			</dependency>
 			<dependency>

@@ -1,6 +1,6 @@
 package com.hk.emi.test;
 
-import com.hk.commons.fastjson.JsonUtils;
+import com.hk.commons.util.JsonUtils;
 import com.hk.pms.core.domain.SysOrgDept;
 import com.hk.pms.core.servcie.SysOrgDeptService;
 import com.hk.pms.core.servcie.SysOrgService;

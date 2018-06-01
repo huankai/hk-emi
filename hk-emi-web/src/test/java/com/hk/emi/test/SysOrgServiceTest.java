@@ -1,6 +1,6 @@
 package com.hk.emi.test;
 
-import com.hk.commons.fastjson.JsonUtils;
+import com.hk.commons.util.JsonUtils;
 import com.hk.pms.core.domain.SysOrg;
 import com.hk.pms.core.servcie.SysOrgService;
 import org.joda.time.DateTime;

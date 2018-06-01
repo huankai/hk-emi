@@ -1,6 +1,6 @@
 package com.hk.pms.web.controllers;
 
-import com.hk.commons.fastjson.JsonUtils;
+import com.hk.commons.util.JsonUtils;
 import com.hk.core.web.JsonResult;
 import com.hk.core.web.controller.BaseController;
 import com.hk.pms.core.domain.SysUserRole;

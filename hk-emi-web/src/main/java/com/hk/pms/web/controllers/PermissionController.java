@@ -1,6 +1,6 @@
 package com.hk.pms.web.controllers;
 
-import com.hk.commons.fastjson.JsonUtils;
+import com.hk.commons.util.JsonUtils;
 import com.hk.commons.util.date.DatePattern;
 import com.hk.core.authentication.api.UserPrincipal;
 import com.hk.core.query.JdbcQueryModel;

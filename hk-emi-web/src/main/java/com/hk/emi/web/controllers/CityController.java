@@ -3,7 +3,7 @@
  */
 package com.hk.emi.web.controllers;
 
-import com.hk.commons.fastjson.JsonUtils;
+import com.hk.commons.util.JsonUtils;
 import com.hk.core.query.JpaQueryModel;
 import com.hk.core.query.QueryPageable;
 import com.hk.core.web.JsonResult;

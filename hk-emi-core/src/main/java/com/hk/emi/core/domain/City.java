@@ -3,10 +3,11 @@ package com.hk.emi.core.domain;
 import com.hk.commons.annotations.EnumDisplay;
 import com.hk.commons.util.ByteConstants;
 import com.hk.commons.util.EnumDisplayUtils;
-import com.hk.emi.core.domain.ModelHolder.CityBase;
+import com.hk.core.domain.AbstractTreePersistable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -20,7 +21,58 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sys_city")
 @EqualsAndHashCode(callSuper = true)
-public class City extends CityBase {
+public class City extends AbstractTreePersistable<City> {
+
+    /**
+     * 行政代码
+     */
+    @Column(name = "code")
+    private String code;
+
+    /**
+     * 全称
+     */
+    @Column(name = "full_name")
+    private String fullName;
+
+    /**
+     * 简名
+     */
+    @Column(name = "short_name")
+    private String shortName;
+
+    /**
+     * 英文名
+     */
+    @Column(name = "english_name")
+    private String englishName;
+
+    /**
+     * <pre>
+     * 城市类型:
+     *     1:国家,
+     *     2:省或直辖市,
+     *     3:市,
+     *     4:区或县,
+     *     5:镇,
+     *     6:村
+     * </pre>
+     * @see com.hk.emi.core.domain.City.CityType
+     */
+    @Column(name = "city_type")
+    private Byte cityType;
+
+    /**
+     * 邮编
+     */
+    @Column(name = "post_office")
+    private String postOffice;
+
+    /**
+     * 描述
+     */
+    @Column(name = "description")
+    private String description;
 
     public enum CityType {
 

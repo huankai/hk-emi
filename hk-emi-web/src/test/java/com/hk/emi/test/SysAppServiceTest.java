@@ -1,7 +1,7 @@
 package com.hk.emi.test;
 
-import com.hk.commons.fastjson.JsonUtils;
 import com.hk.commons.util.ByteConstants;
+import com.hk.commons.util.JsonUtils;
 import com.hk.core.query.JpaQueryModel;
 import com.hk.core.query.QueryModel;
 import com.hk.core.query.QueryPageable;

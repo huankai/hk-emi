@@ -1,7 +1,7 @@
 package com.hk.emi.test;
 
-import com.hk.commons.fastjson.JsonUtils;
 import com.hk.commons.util.ByteConstants;
+import com.hk.commons.util.JsonUtils;
 import com.hk.core.web.AppCodeUtils;
 import com.hk.pms.core.domain.SysOrgDept;
 import com.hk.pms.core.domain.SysRole;

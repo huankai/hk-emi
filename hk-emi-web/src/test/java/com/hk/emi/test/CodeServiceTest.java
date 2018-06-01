@@ -1,7 +1,7 @@
 package com.hk.emi.test;
 
-import com.hk.commons.fastjson.JsonUtils;
 import com.hk.commons.util.ByteConstants;
+import com.hk.commons.util.JsonUtils;
 import com.hk.emi.core.domain.BaseCode;
 import com.hk.emi.core.domain.ChildCode;
 import com.hk.emi.core.service.BaseCodeService;

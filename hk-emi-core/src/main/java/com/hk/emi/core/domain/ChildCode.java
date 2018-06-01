@@ -1,10 +1,10 @@
 package com.hk.emi.core.domain;
 
+import com.hk.core.domain.AbstractAuditable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author: huangkai
@@ -14,12 +14,22 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sys_child_code")
 @EqualsAndHashCode(callSuper = true)
-public class ChildCode extends ModelHolder.ChildCodeBase {
+public class ChildCode extends AbstractAuditable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6562442354700499998L;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private BaseCode baseCode;
+
+    @Column(name = "child_code")
+    private String childCode;
+
+    @Column(name = "code_name")
+    private String codeName;
+
+    @Column(name = "state")
+    private Byte state;
+
+    @Column(name = "description")
+    private String description;
 
 
 }
