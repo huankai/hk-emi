@@ -8,7 +8,6 @@ import com.hk.pms.core.repository.SysUserRepository;
 import com.hk.pms.core.servcie.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,9 +19,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
 
     @Autowired
     private SysUserRepository sysUserRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     /**
      * 返回 BaseRepository
@@ -77,7 +73,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
         if (null == entity.getIsProtect()) {
             entity.setIsProtect(Boolean.FALSE);
         }
-        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         return super.saveBefore(entity);
     }
 

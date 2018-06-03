@@ -5,6 +5,10 @@ import com.hk.core.query.JpaQueryModel;
 import com.hk.core.query.Order;
 import com.hk.core.query.QueryModel;
 import com.hk.core.query.QueryPageable;
+import com.hk.core.query.jdbc.JdbcSession;
+import com.hk.core.query.jdbc.ListResult;
+import com.hk.core.query.jdbc.SelectArguments;
+import com.hk.core.query.jdbc.SimpleCondition;
 import com.hk.emi.core.domain.City;
 import com.hk.emi.core.service.CityService;
 import com.hk.pms.core.servcie.SysPermissionService;
@@ -14,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Persistable;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author huangkai
@@ -22,6 +27,21 @@ public class CityServiceTest extends BaseTest {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private JdbcSession jdbcSession;
+
+    @Test
+    public void mycatTest(){
+        SelectArguments arguments = new SelectArguments();
+        arguments.setFrom("employee");
+        arguments.setDistinct(true);
+        arguments.getConditions().addCondition(new SimpleCondition("name","me"));
+        ListResult<Map<String, Object>> result = jdbcSession.queryForList(arguments, false);
+        for (Map<String, Object> map : result.getResult()) {
+            System.out.println(map);
+        }
+    }
 
     /**
      * Test method for
