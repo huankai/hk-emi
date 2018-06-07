@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>com.hk</groupId>
-            <artifactId>hk-emi-vo</artifactId>
+            <artifactId>hk-emi-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

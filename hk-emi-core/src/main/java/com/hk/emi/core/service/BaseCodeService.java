@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.hk.emi.core.service;
 
 import com.hk.core.service.BaseService;

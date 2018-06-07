@@ -1,6 +1,6 @@
 package com.hk.emi.core.repository;
 
-import com.hk.core.repository.StringRepository;
+import com.hk.core.data.jpa.repository.StringRepository;
 import com.hk.emi.core.domain.ChildCode;
 
 /**

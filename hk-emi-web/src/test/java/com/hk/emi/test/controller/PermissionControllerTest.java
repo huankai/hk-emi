@@ -1,18 +1,11 @@
 package com.hk.emi.test.controller;
 
-import com.google.common.collect.Lists;
-import com.hk.commons.util.JsonUtils;
-import com.hk.core.query.JdbcQueryModel;
-import com.hk.core.query.Operator;
-import com.hk.core.query.QueryCondition;
 import com.hk.emi.test.WebAppBaseTest;
 import org.junit.Test;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.List;
 
 /**
  * 权限测试
@@ -59,25 +52,25 @@ public class PermissionControllerTest extends WebAppBaseTest {
      *
      * @throws Exception
      */
-    @Test
-    public void permissionListTest() throws Exception {
-        JdbcQueryModel query = new JdbcQueryModel();
-        List<QueryCondition> conditions = Lists.newArrayList();
-        QueryCondition condition = new QueryCondition();
-        condition.setEnabled(true);
-        condition.setName("permission_code");
-        condition.setValue("user");
-        condition.setOperator(Operator.LIKEANYWHERE);
-        conditions.add(condition);
-        query.setParams(conditions);
-
-        getMockMvc().perform(MockMvcRequestBuilders.get("/permissions")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(JsonUtils.toJSONString(query))
-                .session(getHttpSession())).andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-    }
+//    @Test
+//    public void permissionListTest() throws Exception {
+//        JdbcQueryModel query = new JdbcQueryModel();
+//        List<QueryCondition> conditions = Lists.newArrayList();
+//        QueryCondition condition = new QueryCondition();
+//        condition.setEnabled(true);
+//        condition.setName("permission_code");
+//        condition.setValue("user");
+//        condition.setOperator(Operator.LIKEANYWHERE);
+//        conditions.add(condition);
+//        query.setParams(conditions);
+//
+//        getMockMvc().perform(MockMvcRequestBuilders.get("/permissions")
+//                .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                .content(JsonUtils.toJSONString(query))
+//                .session(getHttpSession())).andExpect(MockMvcResultMatchers.status().isOk())
+//                .andDo(MockMvcResultHandlers.print())
+//                .andReturn();
+//    }
 
     /**
      * 获取当前登陆用户的权限

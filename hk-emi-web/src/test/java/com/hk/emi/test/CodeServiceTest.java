@@ -62,7 +62,7 @@ public class CodeServiceTest extends BaseTest {
 
     @Test
     public void deleteTest() {
-        baseCodeService.delete("4028c08162be197b0162be198bc50000");
+        baseCodeService.deleteById("4028c08162be197b0162be198bc50000");
     }
 
 }

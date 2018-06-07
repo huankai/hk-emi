@@ -1,27 +1,19 @@
-/**
- *
- */
 package com.hk.emi.core.service.impl;
 
 import com.hk.commons.poi.excel.model.ReadParam;
 import com.hk.commons.poi.excel.model.ReadResult;
-import com.hk.commons.poi.excel.model.WriteParam;
 import com.hk.commons.poi.excel.read.ReadableExcel;
 import com.hk.commons.poi.excel.read.SimpleSaxReadExcel;
-import com.hk.commons.poi.excel.write.WriteableExcel;
-import com.hk.commons.poi.excel.write.XSSFWriteableExcel;
 import com.hk.commons.util.BeanUtils;
 import com.hk.commons.util.StringUtils;
 import com.hk.core.cache.service.EnableCacheServiceImpl;
-import com.hk.core.repository.BaseRepository;
+import com.hk.core.data.commons.BaseDao;
 import com.hk.emi.core.domain.City;
 import com.hk.emi.core.repository.CityRepository;
 import com.hk.emi.core.service.CityService;
 import com.hk.emi.core.vo.CityExcelVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,15 +35,8 @@ public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implem
     private CityRepository cityRepository;
 
     @Override
-    protected BaseRepository<City, String> getBaseRepository() {
+    protected BaseDao<City, String> getBaseDao() {
         return cityRepository;
-    }
-
-    @Override
-    protected ExampleMatcher ofExampleMatcher() {
-        return ExampleMatcher.matching()
-                .withMatcher("code", GenericPropertyMatchers.exact())
-                .withIgnoreNullValues();
     }
 
     /**
@@ -106,14 +91,14 @@ public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implem
 
     @Override
     public byte[] exportExcelData(City city) {
-        List<CityExcelVo> cityList = cityRepository.findExportExcelData(city);
-        WriteParam<CityExcelVo> param = WriteParam.<CityExcelVo>builder()
-                .beanClazz(CityExcelVo.class)
-                .data(cityList)
-                .build();
-        WriteableExcel<CityExcelVo> writeableExcel = new XSSFWriteableExcel<>();
+//        List<CityExcelVo> cityList = cityRepository.findExportExcelData(city);
+//        WriteParam<CityExcelVo> param = WriteParam.<CityExcelVo>builder()
+//                .beanClazz(CityExcelVo.class)
+//                .data(cityList)
+//                .build();
+//        WriteableExcel<CityExcelVo> writeableExcel = new XSSFWriteableExcel<>();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        writeableExcel.write(param, baos);
+//        writeableExcel.write(param, baos);
         return baos.toByteArray();
     }
 }

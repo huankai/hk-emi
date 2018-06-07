@@ -1,10 +1,11 @@
 package com.hk.emi.api;
 
-import com.hk.commons.util.*;
+import com.hk.commons.util.ArrayUtils;
+import com.hk.commons.util.JsonUtils;
+import com.hk.commons.util.NumberUtils;
 import com.hk.commons.util.date.DatePattern;
 import com.hk.commons.util.date.DateTimeIntervalUtils;
 import com.hk.commons.util.date.DateTimeUtils;
-import com.hk.core.query.jdbc.DateRangeCondition;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,22 +25,22 @@ import java.util.stream.Collectors;
 @RequestMapping("api/date")
 public class DateRangeController {
 
-    /**
-     * 查询日期
-     *
-     * @param ingores ingores
-     * @return result
-     */
-    @RequestMapping("range")
-    public String rangeList(String... ingores) {
-        List<EnumDisplayUtils.EnumItem> enumItems = EnumDisplayUtils.getEnumItems(DateRangeCondition.DateRange.class);
-        if (ArrayUtils.isNotEmpty(ingores)) {
-            enumItems = enumItems.stream().filter(item -> !StringUtils.equalsAny(item.getValue().toString(), ingores))
-                    .sorted(Comparator.comparingInt(EnumDisplayUtils.EnumItem::getOrder))
-                    .collect(Collectors.toList());
-        }
-        return JsonUtils.toJSONString(enumItems);
-    }
+//    /**
+//     * 查询日期
+//     *
+//     * @param ingores ingores
+//     * @return result
+//     */
+//    @RequestMapping("range")
+//    public String rangeList(String... ingores) {
+//        List<EnumDisplayUtils.EnumItem> enumItems = EnumDisplayUtils.getEnumItems(DateRangeCondition.DateRange.class);
+//        if (ArrayUtils.isNotEmpty(ingores)) {
+//            enumItems = enumItems.stream().filter(item -> !StringUtils.equalsAny(item.getValue().toString(), ingores))
+//                    .sorted(Comparator.comparingInt(EnumDisplayUtils.EnumItem::getOrder))
+//                    .collect(Collectors.toList());
+//        }
+//        return JsonUtils.toJSONString(enumItems);
+//    }
 
     /**
      * 查询某年所有月份

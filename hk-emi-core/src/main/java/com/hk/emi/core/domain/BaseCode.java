@@ -1,6 +1,6 @@
 package com.hk.emi.core.domain;
 
-import com.hk.core.domain.AbstractUUIDPersistable;
+import com.hk.core.data.jpa.domain.AbstractUUIDPersistable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

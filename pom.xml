@@ -1,231 +1,236 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.hk</groupId>
-	<artifactId>hk-emi</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <groupId>com.hk</groupId>
+    <artifactId>hk-emi</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<name>hk-emi</name>
-	<url>http://maven.apache.org</url>
+    <name>hk-emi</name>
+    <url>http://maven.apache.org</url>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.9.RELEASE</version>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+    </parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<google.guava.version>21.0</google.guava.version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <google.guava.version>21.0</google.guava.version>
 
-		<junit.version>4.12</junit.version>
+        <junit.version>4.12</junit.version>
 
-		<beanutils.version>1.9.3</beanutils.version>
-		<commons.lang3.version>3.6</commons.lang3.version>
-		<commons.collection4.version>4.1</commons.collection4.version>
-		<commons.text.version>1.1</commons.text.version>
-		<commons.io.version>2.5</commons.io.version>
-		<commons.math3.version>3.6.1</commons.math3.version>
+        <beanutils.version>1.9.3</beanutils.version>
+        <commons.lang3.version>3.6</commons.lang3.version>
+        <commons.collection4.version>4.1</commons.collection4.version>
+        <commons.text.version>1.1</commons.text.version>
+        <commons.io.version>2.5</commons.io.version>
+        <commons.math3.version>3.6.1</commons.math3.version>
 
-		<shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.4.0</shiro.version>
 
-		<spring.boot.version>1.5.9.RELEASE</spring.boot.version>
-		<thymeleaf.version>3.0.5.RELEASE</thymeleaf.version>
-		<thymeleaf-layout-dialect.version>2.2.1</thymeleaf-layout-dialect.version>
+        <spring.boot.version>1.5.9.RELEASE</spring.boot.version>
+        <thymeleaf.version>3.0.5.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.2.1</thymeleaf-layout-dialect.version>
 
-		<hk.commons.version>1.0.0.RELEASE</hk.commons.version>
-		<hk.core.version>1.0.0.RELEASE</hk.core.version>
-	</properties>
-	<modules>
-		<module>hk-emi-core</module>
-		<module>hk-emi-vo</module>
-		<module>hk-emi-web</module>
-	</modules>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-				<scope>test</scope>
-			</dependency>
+        <hk.commons.version>1.0.0.RELEASE</hk.commons.version>
+        <hk.core.version>1.0.0.RELEASE</hk.core.version>
+    </properties>
+    <modules>
+        <module>hk-emi-core</module>
+        <module>hk-emi-api</module>
+        <module>hk-emi-web</module>
+    </modules>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
 
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-commons-util</artifactId>
-				<version>${hk.commons.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-commons-poi</artifactId>
-				<version>${hk.commons.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-commons-httpclient</artifactId>
-				<version>${hk.commons.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-commons-util</artifactId>
+                <version>${hk.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-commons-poi</artifactId>
+                <version>${hk.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-commons-httpclient</artifactId>
+                <version>${hk.commons.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-core-data</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-core-service</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-core-cache</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-core-cache-redis</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-core-web</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-core-authentication-api</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-core-i18n</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-core-authentication-security</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.hk</groupId>
-				<artifactId>hk-core-autoconfigure</artifactId>
-				<version>${hk.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter</artifactId>
-				<version>${spring.boot.version}</version>
-				<!-- 排除默认logging,使用 log4j2 -->
-				<exclusions>
-					<exclusion>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-starter-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<!-- Spring boot log4j2 -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-log4j2</artifactId>
-				<version>${spring.boot.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-data</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-service</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-data-jpa</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-cache</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-cache-redis</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-web</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-authentication-api</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-i18n</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-authentication-security</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-autoconfigure</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring.boot.version}</version>
+                <!-- 排除默认logging,使用 log4j2 -->
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- Spring boot log4j2 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-log4j2</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-web</artifactId>
-				<version>${spring.boot.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>com.fasterxml.jackson.core</groupId>
-						<artifactId>jackson-databind</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-databind</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-mail</artifactId>
-				<version>${spring.boot.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-data-redis</artifactId>
-				<version>${spring.boot.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-	<build>
-		<pluginManagement>
-			<!-- 注意体会插件配置的顺序，这正体现了一个maven的运行流程 -->
-			<plugins>
-				<!-- Maven Clean Plugin -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-clean-plugin</artifactId>
-					<version>3.0.0</version>
-					<configuration>
-						<skip>false</skip> <!-- 忽略clean [mvn clean -Dmaven.clean.skip=true] -->
-						<failOnError>false</failOnError> <!-- clean时忽略错误 [mvn clean -Dmaven.clean.failOnError=false] -->
-					</configuration>
-					<executions>
-						<execution>
-							<id>auto-clean</id>
-							<phase>clean</phase> <!-- clean生命周期clean阶段 -->
-							<goals>
-								<goal>clean</goal> <!-- 执行clean插件的clean目标 -->
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+    <build>
+        <pluginManagement>
+            <!-- 注意体会插件配置的顺序，这正体现了一个maven的运行流程 -->
+            <plugins>
+                <!-- Maven Clean Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <skip>false</skip> <!-- 忽略clean [mvn clean -Dmaven.clean.skip=true] -->
+                        <failOnError>false</failOnError> <!-- clean时忽略错误 [mvn clean -Dmaven.clean.failOnError=false] -->
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>auto-clean</id>
+                            <phase>clean</phase> <!-- clean生命周期clean阶段 -->
+                            <goals>
+                                <goal>clean</goal> <!-- 执行clean插件的clean目标 -->
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
 
-				<!-- compiler插件, 设定JDK版本 -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.5.1</version>
-					<configuration>
-						<source>${java.version}</source> <!-- 源代码使用的jdk版本 -->
-						<target>${java.version}</target> <!-- 构建后生成class文件jdk版本 -->
-						<encoding>${project.build.sourceEncoding}</encoding> <!-- 构建使用的编码 -->
-					</configuration>
-				</plugin>
+                <!-- compiler插件, 设定JDK版本 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.5.1</version>
+                    <configuration>
+                        <source>${java.version}</source> <!-- 源代码使用的jdk版本 -->
+                        <target>${java.version}</target> <!-- 构建后生成class文件jdk版本 -->
+                        <encoding>${project.build.sourceEncoding}</encoding> <!-- 构建使用的编码 -->
+                    </configuration>
+                </plugin>
 
-				<!-- 运行Maven 单元测试 -->
-				<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId> 
-					<version>2.20.1</version> </plugin> -->
+                <!-- 运行Maven 单元测试 -->
+                <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.20.1</version> </plugin> -->
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.0.2</version>
-				</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
 
-				<!-- maven war -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>3.2.0</version>
-				</plugin>
+                <!-- maven war -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
 
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-					<version>${spring.boot.version}</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>repackage</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

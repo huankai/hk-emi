@@ -1,24 +1,13 @@
 package com.hk.emi.test;
 
 import com.hk.commons.util.JsonUtils;
-import com.hk.core.query.JpaQueryModel;
-import com.hk.core.query.Order;
-import com.hk.core.query.QueryModel;
-import com.hk.core.query.QueryPageable;
-import com.hk.core.query.jdbc.JdbcSession;
-import com.hk.core.query.jdbc.ListResult;
-import com.hk.core.query.jdbc.SelectArguments;
-import com.hk.core.query.jdbc.SimpleCondition;
 import com.hk.emi.core.domain.City;
 import com.hk.emi.core.service.CityService;
-import com.hk.pms.core.servcie.SysPermissionService;
-import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Persistable;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author huangkai
@@ -28,19 +17,19 @@ public class CityServiceTest extends BaseTest {
     @Autowired
     private CityService cityService;
 
-    @Autowired
-    private JdbcSession jdbcSession;
+//    @Autowired
+//    private JdbcSession jdbcSession;
 
     @Test
     public void mycatTest(){
-        SelectArguments arguments = new SelectArguments();
-        arguments.setFrom("employee");
-        arguments.setDistinct(true);
-        arguments.getConditions().addCondition(new SimpleCondition("name","me"));
-        ListResult<Map<String, Object>> result = jdbcSession.queryForList(arguments, false);
-        for (Map<String, Object> map : result.getResult()) {
-            System.out.println(map);
-        }
+//        SelectArguments arguments = new SelectArguments();
+//        arguments.setFrom("employee");
+//        arguments.setDistinct(true);
+//        arguments.getConditions().addCondition(new SimpleCondition("name","me"));
+//        ListResult<Map<String, Object>> result = jdbcSession.queryForList(arguments, false);
+//        for (Map<String, Object> map : result.getResult()) {
+//            System.out.println(map);
+//        }
     }
 
     /**
@@ -83,31 +72,31 @@ public class CityServiceTest extends BaseTest {
 
     @Test
     public void testQueryForPage() {
-        QueryModel model = new QueryModel();
-        model.setPageIndex(2);
-        model.setPageSize(10);
-        model.setOrders(Lists.newArrayList(Order.asc("createdDate")));
-        QueryPageable<City> page = cityService.queryForPage(model);
-        System.out.println(page.getTotalRowCount());
-        for (City city : page.getData()) {
-            System.out.println(city.getFullName());
-        }
+//        QueryModel model = new QueryModel();
+//        model.setPageIndex(2);
+//        model.setPageSize(10);
+//        model.setOrders(Lists.newArrayList(Order.asc("createdDate")));
+//        QueryPageable<City> page = cityService.queryForPage(model);
+//        System.out.println(page.getTotalRowCount());
+//        for (City city : page.getData()) {
+//            System.out.println(city.getFullName());
+//        }
     }
 
     @Test
     public void testJpaQueryForPage() {
-        JpaQueryModel<City> model = new JpaQueryModel<>();
-        model.setPageIndex(1);
-        model.setPageSize(10);
-        City city = new City();
-//		city.setCode("110115");
-        model.setParams(city);
-        model.setOrders(Lists.newArrayList(Order.asc("createdDate")));
-        QueryPageable<City> page = cityService.queryForPage(model);
-        System.out.println(page.getTotalRowCount());
-        for (City item : page.getData()) {
-            System.out.println(item.getFullName());
-        }
+//        JpaQueryModel<City> model = new JpaQueryModel<>();
+//        model.setPageIndex(1);
+//        model.setPageSize(10);
+//        City city = new City();
+////		city.setCode("110115");
+//        model.setParams(city);
+//        model.setOrders(Lists.newArrayList(Order.asc("createdDate")));
+//        QueryPageable<City> page = cityService.queryForPage(model);
+//        System.out.println(page.getTotalRowCount());
+//        for (City item : page.getData()) {
+//            System.out.println(item.getFullName());
+//        }
     }
 
     /**
@@ -116,6 +105,7 @@ public class CityServiceTest extends BaseTest {
      */
     @Test
     public void testGetOne() {
+        System.out.println(JsonUtils.toJSONString(cityService.findOne("4028c08162be57660162be5779cb0000")));
     }
 
     /**
@@ -124,9 +114,9 @@ public class CityServiceTest extends BaseTest {
      */
     @Test
     public void testDeletePK() {
-        cityService.delete("4028c081638a9ceb01638a9d08440015");
+//        cityService.delete("4028c081638a9ceb01638a9d08440015");
     }
 
-    @Autowired
-    private SysPermissionService permissionService;
+//    @Autowired
+//    private SysPermissionService permissionService;
 }

@@ -1,8 +1,8 @@
 package com.hk.emi.web.controllers;
 
 import com.hk.commons.util.JsonUtils;
-import com.hk.core.query.JpaQueryModel;
-import com.hk.core.query.QueryPageable;
+import com.hk.core.data.commons.query.QueryModel;
+import com.hk.core.data.commons.query.QueryPage;
 import com.hk.core.web.JsonResult;
 import com.hk.core.web.controller.BaseController;
 import com.hk.emi.core.domain.BaseCode;
@@ -29,8 +29,8 @@ public class BaseCodeController extends BaseController {
      * @return
      */
     @GetMapping
-    public String search(JpaQueryModel<BaseCode> query) {
-        QueryPageable<BaseCode> pageable = baseCodeService.queryForPage(query);
+    public String search(QueryModel query) {
+        QueryPage<BaseCode> pageable = baseCodeService.queryForPage(query);
         return JsonUtils.toJSONStringExcludes(JsonResult.success(pageable), "childCodes");
     }
 
@@ -54,7 +54,7 @@ public class BaseCodeController extends BaseController {
      */
     @DeleteMapping("{id}")
     public String delete(@PathVariable String id) {
-        baseCodeService.delete(id);
+        baseCodeService.deleteById(id);
         return JsonUtils.toJSONString(JsonResult.success());
     }
 

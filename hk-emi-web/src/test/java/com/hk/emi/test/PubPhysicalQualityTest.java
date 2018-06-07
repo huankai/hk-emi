@@ -3,27 +3,14 @@ package com.hk.emi.test;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.hk.commons.poi.excel.annotations.ReadExcel;
-import com.hk.commons.poi.excel.model.ReadParam;
-import com.hk.commons.poi.excel.model.ReadResult;
-import com.hk.commons.poi.excel.read.ReadableExcel;
-import com.hk.commons.poi.excel.read.SimpleSaxReadExcel;
-import com.hk.commons.util.JsonUtils;
-import com.hk.commons.util.StringUtils;
 import com.hk.commons.util.date.DateTimeUtils;
-import com.hk.core.query.jdbc.JdbcSession;
-import com.hk.core.query.jdbc.SelectArguments;
 import org.junit.Test;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * 指标导入
@@ -59,55 +46,55 @@ public class PubPhysicalQualityTest extends BaseTest {
         PROPERTIES.add(new PubPhysicalValueProperty("G12", "高三", "gradeTwelveMin", "gradeTwelveMax"));
     }
 
-    @Autowired
-    private JdbcSession jdbcSession;
+//    @Autowired
+//    private JdbcSession jdbcSession;
     //
     @Autowired
     private PubPhysicalValueRepository physicalValueRepository;
 
     @Test
     public void parseTest() throws FileNotFoundException {
-        SelectArguments arguments = new SelectArguments();
-        arguments.setFields("physical_quality_id as id ,quality_title as title");
-        arguments.setFrom("pub_physical_quality");
-        List<PubPhysicalQuality> physicalQualityList = jdbcSession.queryForList(arguments, false, PubPhysicalQuality.class).getResult();
-
-
-        ReadParam<PubPhysicalValueExcel> readableParam = ReadParam.<PubPhysicalValueExcel>builder()
-                .beanClazz(PubPhysicalValueExcel.class)
-                .titleRow(1)
-                .dataStartRow(2)
-                .build();
-
-        ReadableExcel<PubPhysicalValueExcel> readableExcel = new SimpleSaxReadExcel<>(readableParam);
-        ReadResult<PubPhysicalValueExcel> readResult = readableExcel.read(new FileInputStream(new File("C:/Users/sjq-278/Desktop/体质健康标准 - 整理后v1.5.xls")));
-
-        List<PubPhysicalValue> list = Lists.newArrayList();
-        List<PubPhysicalValueExcel> allSheetData = readResult.getAllSheetData();
-        for (int i = 0; i < allSheetData.size(); i++) {
-            PubPhysicalValueExcel item = allSheetData.get(i);
-            BeanWrapper wrapper = new BeanWrapperImpl(item);
-            Optional<PubPhysicalQuality> physicalQuality = physicalQualityList.stream().filter(quality -> StringUtils.equals(quality.getTitle(), item.getTitle())).findFirst();
-            if (physicalQuality.isPresent()) {
-                for (PubPhysicalValueProperty property : PROPERTIES) {
-                    Double maxValue = (Double) wrapper.getPropertyValue(property.getMaxProperty());
-                    Double minValue = (Double) wrapper.getPropertyValue(property.getMinProperty());
-                    if (null != maxValue && null != minValue) {
-                        if (minValue > maxValue) {
-                            throw new RuntimeException("row:" + i + ",  " + property.getGradeName() + "最小值大于最大值,最小值为:" + minValue + ",最大值为:" + maxValue);
-                        }
-                        list.add(createPubPhysicalValue(property.getGradeCode(), item.getLevelCode(), maxValue, minValue,
-                                physicalQuality.get().getId(), item.getLevel(), item.getScore(), item.getSex()));
-                    }
-                }
-            } else {
-                System.out.println(i + ",Title ::" + item.getTitle());
-            }
-        }
-
-        System.out.println("list size :" + list.size());
-        System.out.println("list :" + JsonUtils.toJSONString(list));
-        physicalValueRepository.save(list);
+//        SelectArguments arguments = new SelectArguments();
+//        arguments.setFields("physical_quality_id as id ,quality_title as title");
+//        arguments.setFrom("pub_physical_quality");
+//        List<PubPhysicalQuality> physicalQualityList = jdbcSession.queryForList(arguments, false, PubPhysicalQuality.class).getResult();
+//
+//
+//        ReadParam<PubPhysicalValueExcel> readableParam = ReadParam.<PubPhysicalValueExcel>builder()
+//                .beanClazz(PubPhysicalValueExcel.class)
+//                .titleRow(1)
+//                .dataStartRow(2)
+//                .build();
+//
+//        ReadableExcel<PubPhysicalValueExcel> readableExcel = new SimpleSaxReadExcel<>(readableParam);
+//        ReadResult<PubPhysicalValueExcel> readResult = readableExcel.read(new FileInputStream(new File("C:/Users/sjq-278/Desktop/体质健康标准 - 整理后v1.5.xls")));
+//
+//        List<PubPhysicalValue> list = Lists.newArrayList();
+//        List<PubPhysicalValueExcel> allSheetData = readResult.getAllSheetData();
+//        for (int i = 0; i < allSheetData.size(); i++) {
+//            PubPhysicalValueExcel item = allSheetData.get(i);
+//            BeanWrapper wrapper = new BeanWrapperImpl(item);
+//            Optional<PubPhysicalQuality> physicalQuality = physicalQualityList.stream().filter(quality -> StringUtils.equals(quality.getTitle(), item.getTitle())).findFirst();
+//            if (physicalQuality.isPresent()) {
+//                for (PubPhysicalValueProperty property : PROPERTIES) {
+//                    Double maxValue = (Double) wrapper.getPropertyValue(property.getMaxProperty());
+//                    Double minValue = (Double) wrapper.getPropertyValue(property.getMinProperty());
+//                    if (null != maxValue && null != minValue) {
+//                        if (minValue > maxValue) {
+//                            throw new RuntimeException("row:" + i + ",  " + property.getGradeName() + "最小值大于最大值,最小值为:" + minValue + ",最大值为:" + maxValue);
+//                        }
+//                        list.add(createPubPhysicalValue(property.getGradeCode(), item.getLevelCode(), maxValue, minValue,
+//                                physicalQuality.get().getId(), item.getLevel(), item.getScore(), item.getSex()));
+//                    }
+//                }
+//            } else {
+//                System.out.println(i + ",Title ::" + item.getTitle());
+//            }
+//        }
+//
+//        System.out.println("list size :" + list.size());
+//        System.out.println("list :" + JsonUtils.toJSONString(list));
+//        physicalValueRepository.save(list);
     }
 
     private PubPhysicalValue createPubPhysicalValue(String grade, String level, Double maxValue, Double minValue, String qualityId,

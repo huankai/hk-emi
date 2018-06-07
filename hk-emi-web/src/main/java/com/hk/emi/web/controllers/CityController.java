@@ -1,11 +1,8 @@
-/**
- *
- */
 package com.hk.emi.web.controllers;
 
 import com.hk.commons.util.JsonUtils;
-import com.hk.core.query.JpaQueryModel;
-import com.hk.core.query.QueryPageable;
+import com.hk.core.data.commons.query.QueryPage;
+import com.hk.core.data.jpa.query.JpaQueryModel;
 import com.hk.core.web.JsonResult;
 import com.hk.core.web.Webs;
 import com.hk.core.web.controller.BaseController;
@@ -39,7 +36,7 @@ public class CityController extends BaseController {
      */
     @RequestMapping
     public String search(JpaQueryModel<City> query) {
-        QueryPageable<City> page = cityService.queryForPage(query);
+        QueryPage<City> page = cityService.queryForPage(query);
         return JsonUtils.toJSONString(JsonResult.success(page));
     }
 
@@ -88,7 +85,7 @@ public class CityController extends BaseController {
      */
     @DeleteMapping("{id}")
     public String deleteById(@PathVariable String id) {
-        cityService.delete(id);
+        cityService.deleteById(id);
         return JsonUtils.toJSONString(JsonResult.success());
     }
 

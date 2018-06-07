@@ -1,11 +1,8 @@
-/**
- *
- */
 package com.hk.emi.core.service.impl;
 
 import com.google.common.collect.Lists;
 import com.hk.commons.util.ArrayUtils;
-import com.hk.core.repository.BaseRepository;
+import com.hk.core.data.commons.BaseDao;
 import com.hk.core.service.impl.BaseServiceImpl;
 import com.hk.emi.core.domain.ChildCode;
 import com.hk.emi.core.repository.ChildCodeRepostory;
@@ -27,7 +24,7 @@ public class ChildCodeServiceImpl extends BaseServiceImpl<ChildCode, String> imp
     private ChildCodeRepostory childCodeRepostory;
 
     @Override
-    protected BaseRepository<ChildCode, String> getBaseRepository() {
+    protected BaseDao<ChildCode, String> getBaseDao() {
         return childCodeRepostory;
     }
 

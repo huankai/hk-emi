@@ -3,7 +3,7 @@ package com.hk.emi.core.domain;
 import com.hk.commons.annotations.EnumDisplay;
 import com.hk.commons.util.ByteConstants;
 import com.hk.commons.util.EnumDisplayUtils;
-import com.hk.core.domain.AbstractTreePersistable;
+import com.hk.core.data.jpa.domain.AbstractTreePersistable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

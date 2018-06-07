@@ -1,16 +1,12 @@
-/**
- *
- */
 package com.hk.emi.core.service.impl;
 
 import com.hk.core.cache.service.EnableCacheServiceImpl;
-import com.hk.core.repository.BaseRepository;
+import com.hk.core.data.commons.BaseDao;
 import com.hk.emi.core.domain.BaseCode;
 import com.hk.emi.core.repository.BaseCodeRepostory;
 import com.hk.emi.core.service.BaseCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,12 +21,7 @@ public class BaseCodeServiceImpl extends EnableCacheServiceImpl<BaseCode, String
     private BaseCodeRepostory baseCodeRepostory;
 
     @Override
-    protected BaseRepository<BaseCode, String> getBaseRepository() {
+    protected BaseDao<BaseCode, String> getBaseDao() {
         return baseCodeRepostory;
-    }
-
-    @Override
-    protected ExampleMatcher ofExampleMatcher() {
-        return ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
     }
 }

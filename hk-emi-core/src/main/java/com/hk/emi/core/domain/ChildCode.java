@@ -1,6 +1,6 @@
 package com.hk.emi.core.domain;
 
-import com.hk.core.domain.AbstractAuditable;
+import com.hk.core.data.jpa.domain.AbstractAuditable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
