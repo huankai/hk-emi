@@ -5,7 +5,6 @@ package com.hk.emi.core.repository;
 
 import com.hk.core.data.jpa.repository.StringRepository;
 import com.hk.emi.core.domain.City;
-import org.springframework.data.domain.ExampleMatcher;
 
 import java.util.List;
 
@@ -21,12 +20,4 @@ public interface CityRepository extends StringRepository<City> {
      * @return
      */
     List<City> findByParentId(String parentId);
-
-
-    @Override
-    default ExampleMatcher ofExampleMatcher() {
-        return ExampleMatcher.matching()
-                .withMatcher("code", ExampleMatcher.GenericPropertyMatchers.exact())
-                .withIgnoreNullValues();
-    }
 }

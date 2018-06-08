@@ -1,8 +1,8 @@
 package com.hk.emi.web.controllers;
 
 import com.hk.commons.util.JsonUtils;
+import com.hk.core.data.commons.query.QueryModel;
 import com.hk.core.data.commons.query.QueryPage;
-import com.hk.core.data.jpa.query.JpaQueryModel;
 import com.hk.core.web.JsonResult;
 import com.hk.core.web.controller.BaseController;
 import com.hk.emi.core.domain.ChildCode;
@@ -23,7 +23,7 @@ public class ChildCodeController extends BaseController {
     private ChildCodeService childCodeService;
 
     @RequestMapping
-    public String search(JpaQueryModel<ChildCode> queryModel) {
+    public String search(QueryModel<ChildCode> queryModel) {
         QueryPage<ChildCode> queryResult = childCodeService.queryForPage(queryModel);
         return JsonUtils.toJSONStringExcludes(JsonResult.success(queryResult));
     }

@@ -1,8 +1,8 @@
 package com.hk.emi.web.controllers;
 
 import com.hk.commons.util.JsonUtils;
+import com.hk.core.data.commons.query.QueryModel;
 import com.hk.core.data.commons.query.QueryPage;
-import com.hk.core.data.jpa.query.JpaQueryModel;
 import com.hk.core.web.JsonResult;
 import com.hk.core.web.Webs;
 import com.hk.core.web.controller.BaseController;
@@ -35,7 +35,7 @@ public class CityController extends BaseController {
      * @return json result
      */
     @RequestMapping
-    public String search(JpaQueryModel<City> query) {
+    public String search(QueryModel<City> query) {
         QueryPage<City> page = cityService.queryForPage(query);
         return JsonUtils.toJSONString(JsonResult.success(page));
     }
@@ -60,7 +60,7 @@ public class CityController extends BaseController {
      */
     @RequestMapping("{id}")
     public String get(@PathVariable String id) {
-        return JsonUtils.toJSONStringExcludes(cityService.findOne(id), "parentId");
+        return JsonUtils.toJSONStringExcludes(cityService.findOne(id), "parent","childs");
     }
 
     /**

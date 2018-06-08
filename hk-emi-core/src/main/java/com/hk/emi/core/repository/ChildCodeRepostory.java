@@ -9,5 +9,4 @@ import com.hk.emi.core.domain.ChildCode;
  */
 public interface ChildCodeRepostory extends StringRepository<ChildCode> {
 
-//    List<ChildCode> findByBaseCodeId(String baseCodeId);
 }

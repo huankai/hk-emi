@@ -1,7 +1,7 @@
 package com.hk.emi.core.service.impl;
 
-import com.hk.core.cache.service.EnableCacheServiceImpl;
 import com.hk.core.data.commons.BaseDao;
+import com.hk.core.service.impl.BaseServiceImpl;
 import com.hk.emi.core.domain.BaseCode;
 import com.hk.emi.core.repository.BaseCodeRepostory;
 import com.hk.emi.core.service.BaseCodeService;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @CacheConfig(cacheNames = {"BaseCode"})
-public class BaseCodeServiceImpl extends EnableCacheServiceImpl<BaseCode, String> implements BaseCodeService {
+public class BaseCodeServiceImpl extends BaseServiceImpl<BaseCode, String> implements BaseCodeService {
 
     @Autowired
     private BaseCodeRepostory baseCodeRepostory;

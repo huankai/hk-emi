@@ -37,7 +37,7 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
         return new AbstractUserDetailService() {
             @Override
             protected SecurityUserPrincipal loadUserByLoginUsername(String username) {
-                return new SecurityUserPrincipal(true, "1", "admin", "admin", "admin", ByteConstants.ONE, "", "", ByteConstants.ZERO, "", ByteConstants.ONE);
+                return new SecurityUserPrincipal(true, "1", "admin", "$2a$10$KgOArE6QpbY2iTQC0WGGS.hP72PQsHpToqbNVEEmUrd5LcEqrbzAG", "admin", ByteConstants.ONE, "", "", ByteConstants.ZERO, "", ByteConstants.ONE);
             }
         };
     }
