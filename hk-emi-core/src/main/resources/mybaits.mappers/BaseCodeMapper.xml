@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper>
+
+    <select id="findAll" parameterType="com.hk.emi.core.domain.BaseCode" resultType="com.hk.emi.core.domain.BaseCode">
+        select *
+        from sys_base_code
+        <where>
+            <include refid="findall_where" />
+        </where>
+        <include refid="findall_order" />
+
+    </select>
+
+    <sql id="findall_where">
+        <if test="baseCode != null and baseCode != ''">and baseCode = #{param.baseCode}</if>
+    </sql>
+
+    <sql id="findall_order">
+        <if test="orders != null and orders.size > 0">
+            ORDER BY
+            <foreach collection="orders" item="order" separator=",">
+                ${order.name}
+            </foreach>
+        </if>
+    </sql>
+</mapper>
