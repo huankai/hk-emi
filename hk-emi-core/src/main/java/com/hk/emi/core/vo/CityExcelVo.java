@@ -2,15 +2,20 @@ package com.hk.emi.core.vo;
 
 import com.hk.commons.poi.excel.annotations.ReadExcel;
 import com.hk.commons.poi.excel.annotations.WriteExcel;
+import com.hk.commons.util.StringUtils;
 import com.hk.emi.core.domain.City;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
  * 城市导入Vo
  *
- * @author: huangkai
+ * @author: kevin
  * @date 2018-04-13 16:34
  */
 @Data
@@ -27,6 +32,8 @@ public class CityExcelVo implements Serializable {
      */
     @ReadExcel(start = 1)
     @WriteExcel(index = 0, value = "行政代码")
+    @NotBlank(message = "")
+    @Length(max = 20, message = "")
     private String code;
 
     /**
@@ -34,6 +41,8 @@ public class CityExcelVo implements Serializable {
      */
     @ReadExcel(start = 2)
     @WriteExcel(index = 1, value = "全称")
+    @NotBlank(message = "")
+    @Length(max = 50, message = "")
     private String fullName;
 
     /**
@@ -52,9 +61,12 @@ public class CityExcelVo implements Serializable {
 
     /**
      * 城市类型
+     *
      * @see City#getCityType()
      */
     @ReadExcel(start = 5)
+    @NotNull
+    @Range(min = 1, max = 6, message = "")
     private Byte cityType;
 
     /**
@@ -62,4 +74,11 @@ public class CityExcelVo implements Serializable {
      */
     @ReadExcel(start = 6)
     private String description;
+
+    /**
+     * @return
+     */
+    public String getShortName() {
+        return StringUtils.isEmpty(shortName) ? StringUtils.substring(fullName, 0, fullName.length() - 1) : shortName;
+    }
 }

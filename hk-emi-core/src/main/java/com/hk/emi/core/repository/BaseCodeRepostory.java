@@ -5,7 +5,7 @@ import com.hk.emi.core.domain.BaseCode;
 
 
 /**
- * @author huangkai
+ * @author: kevin
  * @date 2017年12月1日下午2:20:48
  */
 public interface BaseCodeRepostory extends StringRepository<BaseCode> {

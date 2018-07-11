@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @author: huangkai
+ * @author: kevin
  * @date 2018-04-13 14:32
  */
 public class CodeServiceTest extends BaseTest {
@@ -28,7 +28,7 @@ public class CodeServiceTest extends BaseTest {
         BaseCode baseCode = new BaseCode();
         baseCode.setCodeName("是否类型");
         baseCode.setBaseCode("SFLX");
-        baseCodeService.saveOrUpdate(baseCode);
+        baseCodeService.insertOrUpdate(baseCode);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class CodeServiceTest extends BaseTest {
         childCode.setLastModifiedDate(DateTime.now());
         childCode.setCreatedBy("4028c08162bda8ce0162bda8df6a0000");
         childCode.setLastModifiedBy("4028c08162bda8ce0162bda8df6a0000");
-        childCodeService.saveOrUpdate(childCode);
+        childCodeService.insertOrUpdate(childCode);
     }
 
     @Test

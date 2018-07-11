@@ -3,7 +3,7 @@ package com.hk.emi.vo;
 import lombok.Data;
 
 /**
- * @author huangkai
+ * @author: kevin
  * @date 2018-6-2 22:28
  */
 @Data

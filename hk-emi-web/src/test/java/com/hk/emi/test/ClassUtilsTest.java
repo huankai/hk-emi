@@ -1,7 +1,7 @@
 package com.hk.emi.test;
 
 /**
- * @author: huangkai
+ * @author: kevin
  * @date 2018-04-19 09:02
  */
 public class ClassUtilsTest {

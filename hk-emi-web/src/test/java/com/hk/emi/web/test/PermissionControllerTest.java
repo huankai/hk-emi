@@ -1,6 +1,5 @@
-package com.hk.emi.test.controller;
+package com.hk.emi.web.test;
 
-import com.hk.emi.test.WebAppBaseTest;
 import org.junit.Test;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -10,7 +9,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 /**
  * 权限测试
  *
- * @author: huangkai
+ * @author: kevin
  * @date 2018-05-23 08:48
  */
 public class PermissionControllerTest extends WebAppBaseTest {

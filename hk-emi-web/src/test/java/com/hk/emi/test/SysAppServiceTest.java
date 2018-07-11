@@ -1,7 +1,7 @@
 package com.hk.emi.test;
 
 /**
- * @author: huangkai
+ * @author: kevin
  * @date 2018-04-12 17:10
  */
 public class SysAppServiceTest extends BaseTest {

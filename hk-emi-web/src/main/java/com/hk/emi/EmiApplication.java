@@ -6,15 +6,13 @@ import com.hk.core.authentication.security.SecurityUserPrincipal;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 
 /**
- * @author kally
+ * @author: kevin
  * @date 2018年1月24日上午11:39:55
  */
 @SpringBootApplication
-@ServletComponentScan(basePackages = {"com.hk.core"})
 // @EnableScheduling
 public class EmiApplication /* extends SpringBootServletInitializer */ {
 
@@ -30,14 +28,17 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
 //	 return builder.sources(EmiApplication.class).bannerMode(Mode.OFF);
 //	 }
 
-	/*   **************************Spring Security Config **********************************    */
+    /*   **************************Spring Security Config **********************************    */
 
     @Bean
     public AbstractUserDetailService userDetailService() {
         return new AbstractUserDetailService() {
             @Override
             protected SecurityUserPrincipal loadUserByLoginUsername(String username) {
-                return new SecurityUserPrincipal(true, "1", "admin", "$2a$10$KgOArE6QpbY2iTQC0WGGS.hP72PQsHpToqbNVEEmUrd5LcEqrbzAG", "admin", ByteConstants.ONE, "", "", ByteConstants.ZERO, "", ByteConstants.ONE);
+                return new SecurityUserPrincipal(true, "4028c08162bda8ce0162bda8df6a0000",
+                        "18820136090", "$2a$10$KgOArE6QpbY2iTQC0WGGS.hP72PQsHpToqbNVEEmUrd5LcEqrbzAG",
+                        "admin", ByteConstants.ONE, "18820136090", "huankai@139.com",
+                        ByteConstants.ZERO, null, ByteConstants.ONE);
             }
         };
     }
@@ -92,7 +93,7 @@ public class EmiApplication /* extends SpringBootServletInitializer */ {
 
 
 
-	/* *****************文件处理器 ************************************ */
+    /* *****************文件处理器 ************************************ */
 
 //	/**
 //	 * 文件上传基本路径

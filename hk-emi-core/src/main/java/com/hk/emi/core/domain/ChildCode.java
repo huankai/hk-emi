@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 
 /**
- * @author: huangkai
+ * @author: kevin
  * @date 2017-11-29 17:11
  */
 @Data

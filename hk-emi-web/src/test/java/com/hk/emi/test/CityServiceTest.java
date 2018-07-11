@@ -4,7 +4,7 @@ import com.hk.emi.core.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author huangkai
+ * @author: kevin
  */
 public class CityServiceTest extends BaseTest {
 

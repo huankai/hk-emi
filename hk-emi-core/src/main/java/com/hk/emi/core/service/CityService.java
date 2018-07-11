@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * @author huangkai
+ * @author: kevin
  */
 public interface CityService extends BaseService<City, String> {
 

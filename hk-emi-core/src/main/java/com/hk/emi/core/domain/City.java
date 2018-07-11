@@ -8,11 +8,12 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Arrays;
 
 /**
  * 城市表
  *
- * @author huangkai
+ * @author: kevin
  * @date 2017年12月24日下午8:14:32
  */
 @Data
@@ -56,12 +57,6 @@ public class City extends AbstractTreePersistable<City> {
     private String shortName;
 
     /**
-     * 英文名
-     */
-    @Column(name = "english_name")
-    private String englishName;
-
-    /**
      * 邮编
      */
     @Column(name = "post_office")
@@ -73,6 +68,9 @@ public class City extends AbstractTreePersistable<City> {
     @Column(name = "description")
     private String description;
 
+    /**
+     * 城市类型级别
+     */
     public enum CityType {
 
         COUNTRY(ByteConstants.ONE, "国家"),
@@ -107,13 +105,11 @@ public class City extends AbstractTreePersistable<City> {
 
     public String getCityTypeChinease() {
         CityType[] values = CityType.values();
-        Byte cityType = getCityType();
-        for (CityType type : values) {
-            if (type.cityType.equals(cityType)) {
-                return type.value;
-            }
-        }
-        throw new IllegalStateException("Parameters that can not be identified.paramter value :" + cityType);
+        return Arrays.stream(values)
+                .filter(item -> item.cityType.equals(cityType))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Parameters that can not be identified.paramter value :" + cityType))
+                .value;
     }
 
 }

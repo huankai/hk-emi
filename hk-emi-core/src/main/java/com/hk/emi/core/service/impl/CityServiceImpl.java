@@ -14,29 +14,42 @@ import com.hk.emi.core.service.CityService;
 import com.hk.emi.core.vo.CityExcelVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * @author huangkai
+ * @author: kevin
  */
 @Service
 @CacheConfig(cacheNames = "City")
 public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implements CityService {
 
+    private final CityRepository cityRepository;
+
     @Autowired
-    private CityRepository cityRepository;
+    public CityServiceImpl(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
+    }
 
     @Override
     protected BaseDao<City, String> getBaseDao() {
         return cityRepository;
+    }
+
+    @Override
+    protected ExampleMatcher ofExampleMatcher() {
+        return ExampleMatcher.matching()
+                .withIgnoreNullValues()
+                .withMatcher("cityType", ExampleMatcher.GenericPropertyMatchers.exact())
+                .withMatcher("code", ExampleMatcher.GenericPropertyMatchers.contains())
+                .withMatcher("fullName", ExampleMatcher.GenericPropertyMatchers.contains());
     }
 
     /**
@@ -70,22 +83,19 @@ public class CityServiceImpl extends EnableCacheServiceImpl<City, String> implem
             for (CityExcelVo item : resultList) {
                 city = new City();
                 BeanUtils.copyProperties(item, city);
-                city.setLastModifiedBy("4028c08163872c4e0163872c65e30000");
-                city.setCreatedBy("4028c08163872c4e0163872c65e30000");
-                city.setLastModifiedDate(LocalDateTime.now());
-                city.setCreatedDate(LocalDateTime.now());
                 if (StringUtils.isNotEmpty(item.getParentName())) {
-                    Optional<City> cityOptional = cityList.stream().filter(c -> StringUtils.equals(c.getFullName(), item.getParentName())).findFirst();
+                    Optional<City> cityOptional = cityList.stream()
+                            .filter(c -> StringUtils.equals(c.getFullName(), item.getParentName()))
+                            .findFirst();
                     if (cityOptional.isPresent()) {
                         City parent = cityOptional.get();
                         city.setParent(parent);
-                        city.setCityType(Byte.valueOf(Integer.valueOf(parent.getCityType() + 1).toString()));
                     }
 
                 }
                 cityList.add(city);
             }
-            getCurrentProxy().saveOrUpdate(cityList);
+//            getCurrentProxy().insertOrUpdate(cityList);
         }
     }
 

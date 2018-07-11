@@ -1,5 +1,6 @@
-package com.hk.emi.test;
+package com.hk.emi.web.test;
 
+import com.hk.emi.test.BaseTest;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpSession;
@@ -16,7 +17,7 @@ import javax.servlet.Filter;
 import javax.servlet.http.HttpSession;
 
 /**
- * @author: huangkai
+ * @author: kevin
  * @date 2018-05-23 08:46
  */
 @WebAppConfiguration

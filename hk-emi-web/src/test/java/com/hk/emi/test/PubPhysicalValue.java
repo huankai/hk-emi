@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * @author: huangkai
+ * @author: kevin
  * @date 2018-04-17 09:56
  */
 @Entity

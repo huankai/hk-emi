@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 字典
  *
- * @author: huangkai
+ * @author: kevin
  * @date 2017-11-29 16:27
  */
 @Data

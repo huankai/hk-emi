@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author: huangkai
+ * @author: kevin
  * @date 2018-04-20 10:44
  */
 public class PubPhysicalQualityWeightTest extends BaseTest {

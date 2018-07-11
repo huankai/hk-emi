@@ -12,7 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author: huangkai
+ * @author: kevin
  * @date 2018-04-08 13:26
  */
 @RestController
@@ -28,12 +28,12 @@ public class ChildCodeController extends BaseController {
         return JsonUtils.toJSONStringExcludes(JsonResult.success(queryResult));
     }
 
-    @GetMapping("{id}")
+    @GetMapping(path = "{id}")
     public String get(@PathVariable String id) {
         return JsonUtils.toJSONString(JsonResult.success(childCodeService.findOne(id)));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping(path = "{id}")
     public String deleteById(@PathVariable String id) {
         childCodeService.deleteById(id);
         return JsonUtils.toJSONString(JsonResult.success());
@@ -45,19 +45,18 @@ public class ChildCodeController extends BaseController {
      * @param baseId
      * @return
      */
-    @GetMapping("get_base_id/{baseId}")
+    @GetMapping(path = "base-id/{baseId}")
     public String getByBaseId(@PathVariable String baseId) {
         return JsonUtils.toJSONString(JsonResult.success(childCodeService.findByBaseCodeId(baseId)));
     }
 
 
-
-    @PostMapping("save")
+    @PostMapping(path = "save")
     public String save(ChildCode childCode, Errors errors) {
         if (errors.hasErrors()) {
             return JsonUtils.toJSONString(JsonResult.badRueqest(errors.getFieldError().getDefaultMessage()));
         }
-        childCodeService.saveOrUpdate(childCode);
+        childCodeService.insertOrUpdate(childCode);
         return JsonUtils.toJSONString(JsonResult.success());
     }
 }

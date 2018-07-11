@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**
- * @author: huangkai
+ * @author: kevin
  * @date 2018-06-08 11:32
  */
 public class BaseCodeTest extends BaseTest {
@@ -32,7 +32,7 @@ public class BaseCodeTest extends BaseTest {
         baseCode.setId("4028c08163dd77bf0163dd77d1550000");
         baseCode.setBaseCode("YES_NO_");
         baseCode.setCodeName("是否");
-        baseCodeService.saveOrUpdate(baseCode);
+        baseCodeService.insertOrUpdate(baseCode);
     }
 
     /**
@@ -51,7 +51,7 @@ public class BaseCodeTest extends BaseTest {
             code.setCodeName("Item_name" + i);
             list.add(code);
         }
-        baseCodeService.saveOrUpdate(list);
+        baseCodeService.insertOrUpdate(list);
     }
 
     /**
