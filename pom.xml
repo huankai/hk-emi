@@ -72,7 +72,12 @@
 
             <dependency>
                 <groupId>com.hk</groupId>
-                <artifactId>hk-core-data</artifactId>
+                <artifactId>hk-core-data-commons</artifactId>
+                <version>${hk.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hk</groupId>
+                <artifactId>hk-core-data-mybatis</artifactId>
                 <version>${hk.core.version}</version>
             </dependency>
             <dependency>
